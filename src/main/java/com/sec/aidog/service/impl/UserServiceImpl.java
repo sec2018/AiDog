@@ -5,7 +5,9 @@ import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -17,7 +19,7 @@ public class UserServiceImpl implements UserService {
         Managers manager = null;
         manager = managersMapper.findUserByName(username);
         try {
-            if(util.decryptData(pwd).equals(manager.getPassword())){
+            if(util.encryptData(pwd).equals(manager.getPassword())){
                 return manager;
             }
         } catch (Exception e) {

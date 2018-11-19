@@ -32,7 +32,7 @@ public class LoginAop {
     private RedisService redisService;
 
     /**
-     * 定义拦截规则：拦截标有com.christ.annotation.Login类中注解的所有方法
+     * 定义拦截规则：拦截标有com.sec.aidog.service.LoginService类中注解的所有方法
      */
     @Pointcut("@annotation(com.sec.aidog.service.LoginService)")
     public void loginMethodPointcut(){}
@@ -59,7 +59,6 @@ public class LoginAop {
             //获取request请求
             if(arg instanceof HttpServletRequest){
                 HttpServletRequest request = (HttpServletRequest) arg;
-                //System.out.println(isLogin(request));
                 //判断用户是否登录
                 if(!isLogin(request)){
                     //JsonResult与ResultCode是我自己封装的返回类及enum类
@@ -92,12 +91,16 @@ public class LoginAop {
 //            String name = cookiesHandle.getCookieByName("last_login_username").getValue();
             //将redis缓存中的用户信息取出
             String token = request.getHeader("token");
-            token  = redisService.get("token:" + token);
+            String managerstr  = redisService.get("_token:" + token);
             //System.out.println(token);
-            if(token == null)
+            if(token == null){
                 return false;
-            else if(token.equals("wang"))
-                return true;
+            }
+            else{
+                if(managerstr!=null){
+                    return true;
+                }
+            }
         }catch (Exception e){
             System.out.println("aop获取redis缓存中的token失败");
             return false;

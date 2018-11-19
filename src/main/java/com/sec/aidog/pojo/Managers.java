@@ -4,9 +4,11 @@ import com.sec.aidog.model.ManagersKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Mapper
 @Component
-public class Managers extends ManagersKey {
+public class Managers extends ManagersKey implements Serializable {
     private String managername;
 
     private String logintime;
@@ -256,4 +258,5 @@ public class Managers extends ManagersKey {
     public void setDistrictcode(Long districtcode) {
         this.districtcode = districtcode;
     }
+
 }

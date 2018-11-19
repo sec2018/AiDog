@@ -1,5 +1,6 @@
 package com.sec.aidog.service;
 
+
 public interface RedisService {
     /**
      * set存数据
