@@ -1,6 +1,7 @@
 package com.sec.aidog.controller;
 
 import com.sec.aidog.common.Constant;
+import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.LoginService;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
@@ -31,12 +32,12 @@ public class LoginController {
      * @return
      */
     @PostMapping(value = "/login")
-    public JsonResult login(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam String name, @RequestParam String pass){
+    public JsonResult login(HttpServletRequest request, @RequestParam String name, @RequestParam String pwd){
         //判断登录
         try{
             //userService为自己定义的Service类
-            if(userService.userLogin(name, pass)){
+            Managers managers = userService.userLogin(name, pwd);
+            if(managers!=null){
 //                CookiesHandle cookiesHandle = new CookiesHandle(request, response);
 //                //将用户名存到cookie中
 //                cookiesHandle.addCookie("last_login_username", name, 60*60*24);
