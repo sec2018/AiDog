@@ -1,0 +1,49 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8882
+    servlet:
+      context-path: /aidog
+
+# mysql
+spring:
+    profiles:
+      active: dev
+    # ָ����̬��Դ��·��
+    resources:
+      static-locations: classpath:/adminlte/,classpath:/bootstrap/
+    http:
+      encoding:
+        force: true
+        charset: UTF-8
+        enabled: true
+
+    devtools:
+        restart:
+            enabled: true #�Ƿ�֧���Ȳ���
+        redis:
+            database: 2 #������Ĭ��Ϊ0��
+            host: 112.122.252.45 #��ַ
+            port: 6379 #�˿ں�
+            password: 123456 #�������루Ĭ�Ͽգ�
+            jedis:
+              pool:
+                max-idle: 8 #���ӳ��е�����������
+                min-idle: 0 #���ӳ��е���С��������
+                max-active: 8 #���ӳ������������ʹ�ø�ֵ��ʾû�����ƣ�
+                max-wait: -1 #���ӳ���������ȴ�ʱ�䣨ʹ�ø�ֵ��ʾû�����ƣ�
+            #sentinel:
+              #master: mymaster # �ڱ�������Redis server������
+              #nodes:
+              #127.0.0.1:26379,127.0.0.1:26479,127.0.0.1:26579 #�ڱ��������б�
+            timeout: 2000 #���ӳ�ʱʱ�䣨���룩
+    data:
+      mongodb:
+        uri: mongodb://wang:123456@122.112.252.45:27017/aidog
+
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
