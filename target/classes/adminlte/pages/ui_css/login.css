@@ -1,7 +1,8 @@
 .login-page {
-    background: url("../../dist/img/loginbg1.jpg") no-repeat;
+    background: url("../../dist/img/loginbg1.jpg") no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    overflow: hidden;
 }
