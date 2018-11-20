@@ -14,7 +14,7 @@ spring:
       active: dev
     # 指定静态资源的路径
     resources:
-      static-locations: classpath:/adminlte/,classpath:/bootstrap/
+      static-locations: classpath:/adminlte/
     http:
       encoding:
         force: true

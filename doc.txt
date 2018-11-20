@@ -1,0 +1,328 @@
+package com.sec.aidog.aop;
+
+import com.sec.aidog.common.Constant;
+import com.sec.aidog.pojo.Managers;
+import com.sec.aidog.service.RedisService;
+import com.sec.aidog.util.JSONUtil;
+import com.sec.aidog.util.JsonResult;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+
+/**
+ * 必须添加这两个注解
+ * @Component: 泛指组件，讲该类纳入bean中
+ * @Aspect: 通过该注解及表达式就可以轻松的使用POJO来定义切面
+ */
+@Aspect
+@Component
+public class LoginAop {
+
+    /**
+     * 此方法封装了对redis的一些常用操作，
+     * 通过此方法，我们可以去redis里寻找用户的身份是否存在，方便判断身份，
+     * 如果不使用redis的话，可以将以下所有出现过该方法的地方替换成对应的Service即可.
+     */
+    @Resource
+    private RedisService redisService;
+
+    /**
+     * 定义拦截规则：拦截标有com.sec.aidog.service.LoginService类中注解的所有方法
+     */
+    @Pointcut("@annotation(com.sec.aidog.service.LoginService)")
+    public void loginMethodPointcut(){}
+
+    /**
+     * 拦截器具体实现
+     * @param point
+     * @return JsonResult（被拦截方法的执行结果，或需要登录的错误提示。）
+     */
+    @Around("loginMethodPointcut()")
+    public Object Interceptor(ProceedingJoinPoint point){
+
+        //正在被通知的方法相关信息
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        //获取被拦截的方法
+        Method method = signature.getMethod();
+        //获取被拦截的方法名
+        String methodName = method.getName();
+        //返回的结果
+        Object result = null;
+        //返回方法参数
+        Object[] args = point.getArgs();
+        for(Object arg : args){
+            //获取request请求
+            if(arg instanceof HttpServletRequest){
+                HttpServletRequest request = (HttpServletRequest) arg;
+                //判断用户是否登录
+                switch (isLogin(request)){
+                    case 0:
+                        //JsonResult与ResultCode是我自己封装的返回类及enum类
+                        result = new JsonResult(Constant.NOT_LOGIN.getCode(), Constant.NOT_LOGIN.getMsg(),false, null);
+                        break;
+                    case 1:
+                        result = new JsonResult(Constant.LOGIN_ALREADY.getCode(), Constant.LOGIN_ALREADY.getMsg(),false, null);
+                        break;
+                    case 200:
+                        //正常
+                        break;
+                }
+            }
+        }
+        try{
+            if(result == null)
+                // 一切正常的情况下，继续执行被拦截的方法
+                result = point.proceed();
+        }catch (Throwable e){
+            result = new JsonResult(Constant.LOGIN_EXCEPTION.getCode(), Constant.LOGIN_EXCEPTION.getMsg(),false, null);
+        }
+        return result;
+    }
+
+    /**
+     * 判断方法是否需要登录
+     * @param request
+     * @return
+     */
+    private int isLogin(HttpServletRequest request){
+        try {
+            //将cookie中的用户信息取出
+            //CooikesHandle类是我自己封装的一个处理Cookie的类
+//            CookiesHandle cookiesHandle = new CookiesHandle(request, null);
+//            String uuid = cookiesHandle.getCookieByName("uuid").getValue();
+//            String name = cookiesHandle.getCookieByName("last_login_username").getValue();
+            //将redis缓存中的用户信息取出
+            String token = request.getHeader("token");
+            String managerstr  = redisService.get("_token:" + token);
+            String username = ((Managers)JSONUtil.JSONToObj(managerstr,Managers.class)).getUsername();
+            String value_token = redisService.get("_token:" + username);
+            System.out.println(username);
+            if(token == null){
+                return 0;
+            }
+            else{
+                if(token.equals(value_token)){
+                    return 200;
+                }else{
+                    System.out.println("用户已在其他地方登录！");
+                    return 1;
+                }
+            }
+        }catch (Exception e){
+            System.out.println("aop获取redis缓存中的token失败");
+            return 0;
+        }
+    }
+}
+
+
+
+package com.sec.aidog.service;
+
+import java.lang.annotation.*;
+
+/*
+ * 安全认证
+ * */
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface LoginService {
+
+    /**
+     * 是否已登录
+     * @return
+     */
+    boolean isLogin() default true;
+}
+
+package com.sec.aidog.controller;
+
+import com.sec.aidog.common.Constant;
+import com.sec.aidog.pojo.Managers;
+import com.sec.aidog.service.RedisService;
+import com.sec.aidog.service.UserService;
+import com.sec.aidog.util.JSONUtil;
+import com.sec.aidog.util.JsonResult;
+
+import com.sec.aidog.util.TokenGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSONObject;
+
+@RestController
+public class LoginController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RedisService redisService;
+    /**
+     * 登录
+     * @param request
+     * @param username
+     * @return
+     */
+    @PostMapping(value = "/login")
+    public JsonResult login(HttpServletRequest request, @RequestParam String username, @RequestParam String password){
+        //判断登录
+        try{
+            //userService为自己定义的Service类
+            Managers managers = userService.userLogin(username, password);
+            if(managers!=null){
+//                CookiesHandle cookiesHandle = new CookiesHandle(request, response);
+//                //将用户名存到cookie中
+//                cookiesHandle.addCookie("last_login_username", name, 60*60*24);
+
+                //PassHandle为自己定义的一个生成Token的类，可以根据自己喜好来改
+                String token = TokenGenerator.generateValue();
+
+                //将token存到redis缓存中
+                String managerjson = JSONUtil.objectToJson(managers).toString();
+                redisService.set("_token:"+ token, managerjson);
+                redisService.set("_token:"+managers.getUsername(),"_token:"+ token);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("token", token);     //此data为token
+//                //将token存到cookie中
+//                cookiesHandle.addCookie("uuid", token, 60*60*24);
+
+                return new JsonResult(Constant.SUCCESS.getCode(), "登录"+Constant.SUCCESS.getMsg(),true, jsonObject);
+            } else
+                return new JsonResult(Constant.LOGIN_EXCEPTION.getCode(), Constant.LOGIN_EXCEPTION.getMsg(),false, null);
+        }catch (Exception e){
+            return new JsonResult(Constant.LOGIN_EXCEPTION.getCode(), Constant.LOGIN_EXCEPTION.getMsg(),false, null);
+        }
+    }
+
+
+    /**
+     * 判断用户是否已登
+     * @Login： 为上面我们自己配置的注解类，
+     * 括号中可以选择对应的注解，
+     * 这里因为我们只配置了一个，因此可不写
+     * 如果通过了AOP的身份认证，该方法就会被调用
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/islogin")
+    public JsonResult isLogin(HttpServletRequest request){
+        String token = request.getHeader("token");
+//        CookiesHandle cookiesHandle = new CookiesHandle(request, response);
+//        String name = cookiesHandle.getCookieByName("last_login_username").getValue();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String manager = redisService.get("_token:"+token);
+            if (manager == null)
+                return new JsonResult(Constant.LOGIN_USERNOTEXIST.getCode(), Constant.LOGIN_USERNOTEXIST.getMsg(),false, null);
+            else
+                return new JsonResult(Constant.LOGIN_ALREADY.getCode(), Constant.LOGIN_ALREADY.getMsg(),false, null);
+        }catch (Exception e){
+            return new JsonResult(Constant.LOGIN_USERNOTEXIST.getCode(), Constant.LOGIN_USERNOTEXIST.getMsg(),false, null);
+        }
+    }
+}
+
+package com.sec.aidog.service;
+
+import com.sec.aidog.util.JsonResult;
+
+public interface AuthTokenService {
+
+    JsonResult powerCheck(String token);
+}
+
+
+package com.sec.aidog.service.impl;
+
+import com.sec.aidog.service.AuthTokenService;
+import com.sec.aidog.service.RedisService;
+import com.sec.aidog.util.JsonResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+@Component
+public class AuthTokenServiceImpl implements AuthTokenService {
+
+    @Autowired
+    private RedisService redisService;
+    /*
+     * 验证请求头token是否合法
+     * */
+    @Override
+    public JsonResult powerCheck(String token) {
+
+        JsonResult res = new JsonResult();
+        res.setCode(200);
+        res.setMsg("token验证通过");
+        res.setSuccess(true);
+
+        System.out.println("token的值为:" + token);
+
+        if (StringUtils.isEmpty(token) == true) {
+            res.setMsg("authtoken为空");
+            return res;
+        }
+        //处理黑名单
+        res = checkForbidList(token);
+        if (res.isSuccess() == false) {
+            return res;
+        }
+
+        //处理白名单
+        res = checkAllowList(token);
+        if (res.isSuccess() == false) {
+            return res;
+        }
+
+        String key = String.format("aidog.api.%s", token);
+
+        //从缓存中取
+//        String existToken = redisService.get(key);
+
+        String existToken = "wang";
+        if (StringUtils.isEmpty(existToken) == true) {
+            res.setMsg(String.format("不存在此authtoken：%s", token));
+            return res;
+        }
+        //比较token是否相同
+        Boolean isEqual = token.equals(existToken);
+        if (isEqual == false) {
+            res.setMsg(String.format("不合法的authtoken:%s", token));
+            return res;
+        }
+        //do something
+
+        return res;
+    }
+
+    public JsonResult checkForbidList(String token){
+        JsonResult res = new JsonResult();
+        res.setCode(200);
+        res.setMsg("token验证通过");
+        res.setSuccess(true);
+        return res;
+    }
+
+    public JsonResult checkAllowList(String token){
+        JsonResult res = new JsonResult();
+        res.setCode(200);
+        res.setMsg("token验证通过");
+        res.setSuccess(true);
+        return res;
+    }
+}

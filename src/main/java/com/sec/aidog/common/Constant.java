@@ -4,6 +4,10 @@ import org.springframework.data.redis.core.types.Expiration;
 
 public class Constant {
 
+    //常量
+    public static final String[]  NO_MATCH_PATHLIST = {".*/(login).*",".*/(bootstrap).*",".*/(dist).*",".*/(pages).*"};
+
+
     //redis过期时间
     public final static Expiration expire = Expiration.seconds(7200);//7200秒后数据过期
     private int code;
@@ -44,5 +48,6 @@ public class Constant {
     public static Constant LOGIN_EXCEPTION = new Constant(50102, "登录异常");
     public static Constant LOGIN_USERNOTEXIST = new Constant(50103, "用户不存在");
     public static Constant LOGIN_ALREADY = new Constant(50104, "用户已登录");
+
 }
 

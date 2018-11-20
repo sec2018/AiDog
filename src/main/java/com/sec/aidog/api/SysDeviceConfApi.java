@@ -104,11 +104,13 @@ public class SysDeviceConfApi {
         	
         	boolean flag  = sysDeviceconfMapper.updateByPrimaryKey(sysDeviceconf)==1?true:false;
         	boolean flag2  = false;
-        	if(flag) {
-        		String command03 = Analyse.Command_03_Send(sysDeviceconf);
-        		flag2  = redisService.set("device_"+mid, command03);
-        	}
-        	if(flag && flag2) {
+			boolean flag3 = false;
+			if(flag) {
+				String command03 = Analyse.Command_03_Send(sysDeviceconf);
+				flag2  = redisService.set("device_"+mid, command03);
+				flag3 = redisService.persistKey("device_"+mid);
+			}
+			if(flag2 && flag3) {
         		r.setCode(200);
                 r.setMsg("配置项圈信息成功！");
                 r.setData(null);

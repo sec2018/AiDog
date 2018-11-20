@@ -135,11 +135,13 @@ public class SysLayconfigApi {
         	sysLayconfigMapper.updateOtherLayConfigflag(mid);
         	boolean flag  = sysLayconfigMapper.insert(layconfig)==1?true:false;
         	boolean flag2  = false;
-        	if(flag) {
-        		String command02 = Analyse.Command_02_Send(layconfig);
-        		flag2  = redisService.set("time_"+mid, command02);
-        	}
-        	if(flag && flag2) {
+            boolean flag3 = false;
+            if(flag) {
+                String command02 = Analyse.Command_02_Send(layconfig);
+                flag2  = redisService.set("time_"+mid, command02);
+                flag3 = redisService.persistKey("time_"+mid);
+            }
+            if(flag2 && flag3) {
         		//删除最老的一条记录
         		SysLayconfigExample example = new SysLayconfigExample();
         		SysLayconfigExample.Criteria criteria = example.createCriteria();

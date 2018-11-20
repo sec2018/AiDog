@@ -67,6 +67,10 @@ public class RedisServiceImpl implements RedisService {
         return result;
     }
 
-
+    @Override
+    public boolean persistKey(String key) {
+        // TODO Auto-generated method stub
+        return redisTemplate.persist(prefix + key);
+    }
 }
 

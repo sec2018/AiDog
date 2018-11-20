@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 public class TokenGenerator {
     public static String generateValue(){
-        return generateValue(UUID.randomUUID().toString());
+        return generateValue(UUID.randomUUID().toString().replaceAll("-", ""));
     }
 
     private static final char[] hexcode="0123456789abcdef".toCharArray();
