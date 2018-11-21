@@ -10,7 +10,7 @@ $(function(){
             data: "mid="+$("#in_necketid").val(),   //方法1
             success: function (data) {
             	if (data.data == null) {
-            		alert("该项圈不存在！");
+            		alert(data.msg);
     	            return;
             	}else{
             		neckletid = data.data.mid;
