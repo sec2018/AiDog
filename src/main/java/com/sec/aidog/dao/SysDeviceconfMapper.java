@@ -1,17 +1,14 @@
 package com.sec.aidog.dao;
 
+import com.sec.aidog.pojo.SysDeviceconf;
 import com.sec.aidog.model.SysDeviceconfExample;
 import com.sec.aidog.model.SysDeviceconfKey;
-import com.sec.aidog.pojo.SysDeviceconf;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 @Mapper
-@Component("sysDeviceconfMapper")
 public interface SysDeviceconfMapper {
     int countByExample(SysDeviceconfExample example);
 
@@ -25,9 +22,9 @@ public interface SysDeviceconfMapper {
 
     List<SysDeviceconf> selectByExample(SysDeviceconfExample example);
 
-    SysDeviceconf selectDeviceConfigByMid(String mid);
-
     SysDeviceconf selectByPrimaryKey(SysDeviceconfKey key);
+
+    SysDeviceconf selectDeviceConfigByMid(String mid);
 
     int updateByExampleSelective(@Param("record") SysDeviceconf record, @Param("example") SysDeviceconfExample example);
 

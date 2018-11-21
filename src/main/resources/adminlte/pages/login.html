@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition login-page">
+    <div class="login-box-bg"></div>
 <div class="login-box" >
     <div class="login-logo">
         <a href="../../index2.html"><b>AI</b>智能牧犬监控</a>
@@ -51,13 +52,13 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> 记住我
+                            <input type="checkbox"><span class="checkbox-span">记住我</span>
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button>
+                    <div class="login-forget text-right"><a href="#">忘记密码？</a></div>
                 </div>
                 <!-- /.col -->
             </div>
@@ -65,8 +66,9 @@
 
         <!-- /.social-auth-links -->
 
-        <a href="#">忘记密码？</a><br>
-        <a href="register.html" class="text-center">注册新会员</a>
+        
+        <div><button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button></div>
+        <div class="text-center mt10"><a href="register.html" >注册新会员&nbsp;&gt;&gt;</a></div>
 
     </div>
     <!-- /.login-box-body -->

@@ -1,42 +1,57 @@
 package com.sec.aidog.service.impl;
 
-import com.sec.aidog.common.Constant;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
+
 import com.sec.aidog.service.RedisService;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisStringCommands;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
-
 @Service("redisService")
 public class RedisServiceImpl implements RedisService {
 
-    @Resource
+	@Resource
     private RedisTemplate<String, ?> redisTemplate;
-
-    private String prefix = "aidog_";
-    private Expiration expire = Constant.expire;//7200秒后数据过期
-
+	
+	private String prefix = "secwatchdog_";
+	private Expiration expire = Expiration.seconds(7200);//7200秒后数据过期
+	
     @Override
     public boolean set(final String key, final String value) {
-
+ 
         boolean result = redisTemplate.execute(new RedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
                 RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-                connection.set(serializer.serialize(prefix + key), serializer.serialize(value),expire, RedisStringCommands.SetOption.SET_IF_ABSENT);
+                connection.set(serializer.serialize(prefix + key), serializer.serialize(value),expire,RedisStringCommands.SetOption.SET_IF_ABSENT);
                 return true;
             }
         });
         return result;
     }
-
+ 
+    @Override
+    public boolean setpersist(final String key, final String value) {
+    	 
+        boolean result = redisTemplate.execute(new RedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
+                RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
+                connection.set(serializer.serialize(prefix + key), serializer.serialize(value),Expiration.seconds(-1),RedisStringCommands.SetOption.SET_IF_ABSENT);
+                return true;
+            }
+        });
+        return result;
+    }
+ 
+    
     @Override
     public String get(final String key) {
         String result = redisTemplate.execute(new RedisCallback<String>() {
@@ -49,7 +64,7 @@ public class RedisServiceImpl implements RedisService {
         });
         return result;
     }
-    @Override
+   @Override
     public boolean expire(final String key, long expire) {
         return redisTemplate.expire(prefix + key, expire, TimeUnit.SECONDS);
     }
@@ -67,10 +82,11 @@ public class RedisServiceImpl implements RedisService {
         return result;
     }
 
-    @Override
-    public boolean persistKey(String key) {
-        // TODO Auto-generated method stub
-        return redisTemplate.persist(prefix + key);
-    }
-}
+//	@Override
+//	public boolean persistKey(String key) {
+//		// TODO Auto-generated method stub
+//		return redisTemplate.persist(prefix + key);
+//	}
+ 
 
+}
