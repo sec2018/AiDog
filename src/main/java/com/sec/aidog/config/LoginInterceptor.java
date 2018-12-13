@@ -39,7 +39,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return  true;
         } else if(null == token || "".equals(token)) {
             // 找不到用户Token，重定位到登录
-            response.sendRedirect(request.getContextPath()+"/page/login");
+            response.sendRedirect(request.getContextPath()+"/login");
             return false;
         } else {
             //设置其他地方登录后，本次登录失效
@@ -53,7 +53,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     return true;
                 } else {
                     System.out.println("用户已在其他地方登录！");
-                    response.sendRedirect(request.getContextPath() + "/page/login");
+                    response.sendRedirect(request.getContextPath() + "/login");
                     return false;
                 }
             }catch (Exception e){

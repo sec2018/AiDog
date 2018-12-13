@@ -10,9 +10,9 @@ public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有的controller
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/api/**","/page/**")
-                .excludePathPatterns("/page/login")
-                .excludePathPatterns("/page/sublogin**");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/api/**")
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/sublogin**");
         super.addInterceptors(registry);
     }
 

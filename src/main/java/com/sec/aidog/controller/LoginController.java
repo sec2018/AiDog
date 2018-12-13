@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/page")
 public class LoginController {
 
     @Autowired
@@ -48,7 +47,11 @@ public class LoginController {
                 //将token存到redis缓存中
                 String managerjson = JSONUtil.objectToJson(managers).toString();
                 redisService.set("token:"+ token, managerjson);
-                redisService.remove("token:"+managers.getUsername());
+                String originusername = redisService.get("token:" + managers.getUsername());
+                if(originusername!=""&&originusername!=null){
+                    //只让一个人登录
+                    redisService.remove("token:"+managers.getUsername());
+                }
                 redisService.set("token:"+managers.getUsername(),token);
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("token", token);     //此data为token
@@ -64,8 +67,10 @@ public class LoginController {
 
     @GetMapping(value = "/login")
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        response.sendRedirect(request.getContextPath()+"/adminlte/pages/login.html");
         response.sendRedirect(request.getContextPath()+"/adminlte/pages/login.html");
     }
+
 
 
 }
