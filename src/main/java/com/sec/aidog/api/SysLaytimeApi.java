@@ -20,7 +20,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("api")
 @Controller
@@ -45,7 +44,6 @@ public class SysLaytimeApi {
                                                             @RequestParam(value = "pagesize")Integer pagesize)
     {
         JsonResult r = new JsonResult();
-        Map<String, Object> map = null;
         try {
             ////通过MySQL
 //        	SysLaytimeExample example = new SysLaytimeExample();
@@ -53,10 +51,10 @@ public class SysLaytimeApi {
 //        	criteria.andMidEqualTo(mid);
 //        	List<SysLaytime> layconfiglist  = sysLaytimeMapper.selectByExample(example);
             ////通过mongodb
-            map = mgLaytimeService.getMidLaytimeList(mid, startitem, pagesize);
+            List<MgSysLaytime> laytimelist = mgLaytimeService.getMidLaytimeList(mid, startitem, pagesize);
             r.setCode(200);
             r.setMsg("获取项圈反馈成功！");
-            r.setData(map);
+            r.setData(laytimelist);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
@@ -67,5 +65,27 @@ public class SysLaytimeApi {
         }
         return ResponseEntity.ok(r);
     }
-	
+
+
+    @ApiOperation(value = "获取所有项圈当前位置", notes = "获取所有项圈当前位置")
+    @RequestMapping(value="getdeviceposition",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetDevicePosition(){
+        JsonResult r = new JsonResult();
+        try {
+//            List<SysLaytime> allDevicePosition  = sysLaytimeMapper.getAllDevicePosition();
+            List<MgSysLaytime> allDevicePosition = mgLaytimeService.getAllDevicePosition();
+            r.setCode(200);
+            r.setMsg("获取所有项圈位置成功！");
+            r.setData(allDevicePosition);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取所有项圈位置失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
 }

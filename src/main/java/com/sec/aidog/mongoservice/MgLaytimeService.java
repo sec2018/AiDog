@@ -7,5 +7,7 @@ import java.util.Map;
 
 public interface MgLaytimeService {
 
-    Map<String, Object> getMidLaytimeList(String mid, int startitem,int pagesize);
+    List<MgSysLaytime> getMidLaytimeList(String mid, int startitem,int pagesize);
+
+    List<MgSysLaytime> getAllDevicePosition();
 }
