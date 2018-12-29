@@ -44,6 +44,9 @@
     jQuery.ajax({
         url: '/aidog/api/getdeviceposition',
         method: "GET",
+        beforeSend: function(request) {
+            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+        },
         success:function(data){
             if(data.code==500){
                 alert("未找到指定项圈！")

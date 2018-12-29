@@ -29,7 +29,7 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page"  onkeydown="keyLogin();">
     <div class="login-box-bg"></div>
 <div class="login-box" >
     <div class="login-logo">
@@ -103,7 +103,7 @@
                 async: false,
                 data: userinfo,
                 success: function (data) {
-                    if (data == "" || data == null) {
+                    if (data.success == false) {
                         alert("用户名或密码错误！");
                     } else {
 //                        data = eval("("+data+")");
@@ -117,7 +117,8 @@
 //                        } else {
 //                            delCookie("rememberuser");
 //                        }
-                        window.location.href = "index_iframe.html?token="+data.data.token;
+                        window.localStorage.setItem("aidog_token",data.data.token);
+                        window.location.href = "index_iframe.html?user="+escape(usrn);
                         return true;
                     }
                 }
@@ -140,6 +141,12 @@
             url = url + "?timestamp=" + getTimestamp;
         }
         return url;
+    }
+
+
+    function keyLogin(){
+        if (event.keyCode==13)  //回车键的键值为13
+            document.getElementById("btnsubmit").click(); //调用登录按钮的登录事件
     }
 </script>
 </body>

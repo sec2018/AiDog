@@ -43,7 +43,7 @@ public class LoginController {
             if(managers!=null){
                 //PassHandle为自己定义的一个生成Token的类，可以根据自己喜好来改
                 String token = TokenGenerator.generateValue();
-
+                managers.setPassword("皮一下逗逗你");
                 //将token存到redis缓存中
                 String managerjson = JSONUtil.objectToJson(managers).toString();
                 redisService.set("token:"+ token, managerjson);
@@ -71,6 +71,15 @@ public class LoginController {
         response.sendRedirect(request.getContextPath()+"/adminlte/pages/login.html");
     }
 
-
+    @GetMapping(value = "/logout")
+    @ResponseBody
+    public String logout(String username) throws IOException {
+        //删除Redis中缓存的token
+        String originusername = redisService.get("token:" + username);
+        if(originusername!=""&&originusername!=null){
+            redisService.remove("token:"+username);
+        }
+        return "success";
+    }
 
 }

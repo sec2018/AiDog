@@ -17,7 +17,7 @@ public class MgSysLaytime implements Serializable {
     private String _id;
 
     @Indexed(unique = true)
-    private Integer id;
+    private String id;
 
     private String mid;
 
@@ -44,7 +44,7 @@ public class MgSysLaytime implements Serializable {
     private Date updatetime;
 
     @PersistenceConstructor
-    public MgSysLaytime(Integer id, String mid, String latitude, String longitude, Date grantgmt, String err, Double voltage, Byte temperature, Byte type, Date timegmt, Byte islay, Byte signallevel, Date updatetime) {
+    public MgSysLaytime(String id, String mid, String latitude, String longitude, Date grantgmt, String err, Double voltage, Byte temperature, Byte type, Date timegmt, Byte islay, Byte signallevel, Date updatetime) {
         this.id = id;
         this.mid = mid;
         this.latitude = latitude;
@@ -64,11 +64,11 @@ public class MgSysLaytime implements Serializable {
         super();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

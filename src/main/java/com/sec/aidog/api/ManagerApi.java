@@ -35,7 +35,7 @@ public class ManagerApi {
         JsonResult r = new JsonResult();
         try {
             //取出存在缓存中的已登录用户的信息
-            String managerstr = redisService.get("_token:"+token);
+            String managerstr = redisService.get("token:"+token);
             r.setCode(200);
             r.setMsg("获取用户信息成功！");
             r.setData(managerstr);

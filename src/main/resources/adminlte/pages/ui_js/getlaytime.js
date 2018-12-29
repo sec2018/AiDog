@@ -4,12 +4,22 @@ $(function(){
 			alert("搜索内容不能为空");
 			return;
 		}
+		var startitem = 1;
+		var pagesize = 10;
+		var data = {};
+		data.startitem = startitem;
+		data.pagesize = pagesize;
+		data.mid = $("#in_necketid").val();
 		$.ajax({
-			url: '/sec/api/getlaytimebynecid.do',
+			url: '/aidog/api/getlaytimebynecid',
 			method: "POST",
-			data: "mid="+$("#in_necketid").val(),
+			// data: "mid="+$("#in_necketid").val(),
+			data: data,
+            beforeSend: function(request) {
+                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+            },
 			success:function(data){
-				if(data.code.indexOf("500")!=-1){
+				if(data.code == 500){
 					alert("未找到指定项圈！")
 					return;
 				}

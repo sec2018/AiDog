@@ -37,7 +37,7 @@ public class SysLaytimeApi {
         @ApiImplicitParam(name = "startitem", value = "第几页", required = true, dataType = "Integer",paramType = "query"),
         @ApiImplicitParam(name = "pagesize", value = "每页条数", required = true, dataType = "Integer",paramType = "query")
 	})
-	@RequestMapping(value="getlaytimebynecid",method = RequestMethod.GET)
+	@RequestMapping(value="getlaytimebynecid",method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<JsonResult> GetLayTimeByNeckletId(@RequestParam(value = "mid")String mid,
                                                             @RequestParam(value = "startitem")Integer startitem,
