@@ -537,9 +537,9 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.3.8
+            <b>Version</b> 2.0.1
         </div>
-        <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        <strong>Copyright &copy; 2018-2020 包虫病防控犬驱虫远程管理系统.</strong> All rights
         reserved.
     </footer>
 
@@ -842,8 +842,8 @@
                 children: [
                     {
                         id: "90011",
-                        text: "百度",
-                        url: "https://www.baidu.com",
+                        text: "地图模块化",
+                        url: "UI/modularizemap.html",
                         targetType: "iframe-tab",
                         icon: "fa fa-circle-o",
                         urlType: 'abosulte'
@@ -1053,30 +1053,35 @@
                     XMLHttpRequest.setRequestHeader("token", token);
                 },
                 success: function (data) {
-                    data = eval("(" + data.data + ")");
-                    $("#manager_name").html(data.managername);
-                    $("#manager_info").html(data.workplace+" "+data.managername);
-                    var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managertel + " "+ data.managerphone +'</small>';
-                    $("#manager_info").append(tel);
-                    switch (data.privilegelevel){
-                        case 1:
-                            $("#manager_area").html("国家级管理员");
-                            break;
-                        case 2:
-                            $("#manager_area").html(data.province+"管理员");
-                            break;
-                        case 3:
-                            $("#manager_area").html(data.city+"管理员");
-                            break;
-                        case 4:
-                            $("#manager_area").html(data.county+"管理员");
-                            break;
-                        case 5:
-                            $("#manager_area").html(data.village+"管理员");
-                            break;
-                        case 6:
-                            $("#manager_area").html(data.hamlet+"管理员");
-                            break;
+                    try {
+                        data = eval("(" + data.data + ")");
+                        $("#manager_name").html(data.managername);
+                        $("#manager_info").html(data.workplace+" "+data.managername);
+                        var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managertel + " "+ data.managerphone +'</small>';
+                        $("#manager_info").append(tel);
+                        switch (data.privilegelevel){
+                            case 1:
+                                $("#manager_area").html("国家级管理员");
+                                break;
+                            case 2:
+                                $("#manager_area").html(data.province+"管理员");
+                                break;
+                            case 3:
+                                $("#manager_area").html(data.city+"管理员");
+                                break;
+                            case 4:
+                                $("#manager_area").html(data.county+"管理员");
+                                break;
+                            case 5:
+                                $("#manager_area").html(data.village+"管理员");
+                                break;
+                            case 6:
+                                $("#manager_area").html(data.hamlet+"管理员");
+                                break;
+                        }
+                    }catch (Exception){
+                        window.localStorage.removeItem("aidog_token");
+                        window.location.href = "login.html";
                     }
                 }
             });

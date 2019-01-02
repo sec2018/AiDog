@@ -57,7 +57,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
             }catch (Exception e){
-                System.out.println("aop获取redis缓存中的token失败");
+                System.out.println("获取redis缓存中的token失败");
                 response.sendRedirect(request.getContextPath()+"/login");
                 return false;
             }

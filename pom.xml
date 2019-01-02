@@ -6,7 +6,7 @@
 	<groupId>com.sec.aidog</groupId>
 	<artifactId>aidog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>aidog</name>
 	<description>Demo project for Spring Boot</description>
@@ -134,11 +134,18 @@
 
 	<build>
 		<plugins>
+			<!--<plugin>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+			<!--</plugin>-->
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!--如果想在没有web.xml文件的情况下构建WAR，请设置为false。-->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
-
 
 			<!-- mybatis generator 自动生成代码插件 -->
 			<plugin>

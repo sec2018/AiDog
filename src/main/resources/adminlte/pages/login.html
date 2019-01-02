@@ -52,7 +52,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"><span class="checkbox-span">记住我</span>
+                            <input id="remember_me"  type="checkbox"><span class="checkbox-span">记住我</span>
                         </label>
                     </div>
                 </div>
@@ -83,6 +83,13 @@
 <script src="../bootstrap/js/icheck.min.js"></script>
 <script>
     $(function () {
+        var u_p = getCookie("aidoguser");
+        if (u_p !== "" && u_p != null) {
+            $("#remember_me").attr("checked", 'true');
+            $("#username").val(u_p.split('+')[0]);
+            $("#password").val(u_p.split('+')[1]);
+        }
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
@@ -112,11 +119,11 @@
 //                            return;
 //                        }
 //                        setCookie("watchdogusername", usrn, "s6000");
-//                        if ($("#remember_me")[0].checked) {
-//                            setCookie("rememberuser", usrn + "+" + psw, "s10000");
-//                        } else {
-//                            delCookie("rememberuser");
-//                        }
+                        if ($("#remember_me")[0].checked) {
+                            setCookie("aidoguser", usrn + "+" + psw, "s10000");
+                        } else {
+                            delCookie("aidoguser");
+                        }
                         window.localStorage.setItem("aidog_token",data.data.token);
                         window.location.href = "index_iframe.html?user="+escape(usrn);
                         return true;
@@ -126,11 +133,41 @@
         });
     });
 
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
     function setCookie(name, value, time) {
         var strsec = getsec(time);
         var exp = new Date();
         exp.setTime(exp.getTime() + strsec * 1);
         document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    }
+
+    function getsec(str) {
+        var str1 = str.substring(1, str.length) * 1;
+        var str2 = str.substring(0, 1);
+        if (str2 == "s") {
+            return str1 * 1000;
+        }
+        else if (str2 == "h") {
+            return str1 * 60 * 60 * 1000;
+        }
+        else if (str2 == "d") {
+            return str1 * 24 * 60 * 60 * 1000;
+        }
     }
 
     function timestamp(url) {
