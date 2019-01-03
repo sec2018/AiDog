@@ -16,7 +16,39 @@
 <div id="container"></div>
 
 <div class="input-card">
-    <h4>下属行政区查询</h4>
+    <div class="info">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h4>基本信息填写</h4><hr>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >姓名</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >身份证号</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >手机号码</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >用户名(*)</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >密码</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+                <div class="input-item">
+                    <div class="input-item-prepend"><span class="input-item-text" >确认密码</span></div>
+                    <input style="width:150px;margin-left: 10px"></input>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    <h4>所属行政区</h4><hr>
     <div class="input-item">
         <div class="input-item-prepend"><span class="input-item-text" >省市区</span></div>
         <select id='province' style="width:100px" onchange='search(this)'></select>
@@ -30,9 +62,10 @@
         <select id='district' style="width:100px" onchange='search(this)'></select>
     </div>
     <div class="input-item">
-        <div class="input-item-prepend"><span class="input-item-text" >街道</span></div>
+        <div class="input-item-prepend"><span class="input-item-text" >乡/街道</span></div>
         <select id='street' style="width:100px" onchange='setCenter(this)'></select>
     </div>
+    <hr><button class="btn" onclick="register()" style="margin-right:1rem;width: 30%">注册</button>
 </div>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=a95f2a626d3afd67fb6ae4231c8997d5&plugin=AMap.DistrictSearch"></script>
 <script type="text/javascript">
@@ -125,6 +158,10 @@
     }
     function setCenter(obj){
         map.setCenter(obj[obj.options.selectedIndex].center)
+    }
+
+    function register() {
+        alert("请联系管理员！");
     }
 </script>
 <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
