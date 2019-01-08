@@ -251,7 +251,8 @@
             onRegionClick: function(event, code){
                 $.each(dataStatus, function (i, items) {
                     if ((code == items.cha) && (items.des != '')) {
-                        window.location.href = items.url;
+//                        window.location.href = items.des;
+                        alert(items.name);
                     }
                 });
             }

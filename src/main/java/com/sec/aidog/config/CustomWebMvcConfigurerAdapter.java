@@ -1,25 +1,34 @@
 package com.sec.aidog.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableWebMvc
 public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有的controller
-        registry.addInterceptor(loginInterceptor()).addPathPatterns("/api/**")
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/*")
                 .excludePathPatterns("/login")
-                .excludePathPatterns("/sublogin**");
+                .excludePathPatterns("/sublogin*");
         super.addInterceptors(registry);
     }
 
-    @Bean
-    LoginInterceptor loginInterceptor() {
-        return new LoginInterceptor();
-    }
+//    @Bean                                   //注入方法2，去掉Component
+//    LoginInterceptor loginInterceptor() {
+//        return new LoginInterceptor();
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -36,4 +45,6 @@ public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
         registry.jsp("/templates/",".html");
         super.configureViewResolvers(registry);
     }
+
+
 }

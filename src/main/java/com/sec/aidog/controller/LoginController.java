@@ -67,9 +67,9 @@ public class LoginController {
 
     @GetMapping(value = "/login")
     public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        response.sendRedirect(request.getContextPath()+"/adminlte/pages/login.html");
         response.sendRedirect(request.getContextPath()+"/adminlte/pages/login.html");
     }
+
 
     @GetMapping(value = "/logout")
     @ResponseBody

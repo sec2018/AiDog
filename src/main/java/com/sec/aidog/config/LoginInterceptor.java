@@ -5,11 +5,13 @@ import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.util.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
