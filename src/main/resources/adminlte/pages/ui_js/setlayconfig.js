@@ -5,7 +5,7 @@ var neckletid = "";
 $(function(){
 	$("#search_neckletid").click(function(){
 		$.ajax({
-        	url: "/sec/api/getlayconfigbynecid.do",
+        	url: "/aidog/api/getlayconfigbynecid.do",
             method: "POST",
             data: "mid="+$("#in_necketid").val(),   //方法1
             success: function (data) {

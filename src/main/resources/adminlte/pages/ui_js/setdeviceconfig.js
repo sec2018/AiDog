@@ -2,7 +2,7 @@ var neckletid = "";
 $(function(){
 	$("#search_neckletid").click(function(){
 		$.ajax({
-        	url: "/sec/api/getdeviceconfigbynecid.do",
+        	url: "/aidog/api/getdeviceconfigbynecid.do",
             method: "POST",
             data: "mid="+$("#in_necketid").val(),   //方法1
             success: function (data) {
