@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.types.Expiration;
 public class Constant {
 
     //常量
-    public static final String[]  NO_MATCH_PATHLIST = {".*/(login).*",".*/(bootstrap).*",".*/(dist).*",".*/(pages).*",".*/adminlte/pages/(register.html).*"};
+    public static final String[]  NO_MATCH_PATHLIST = {".*/(login).*",".*/(register).*",".*/(bootstrap).*",".*/(dist).*",".*/(pages).*",".*/adminlte/pages/(register.html).*"};
 
 
     //redis过期时间

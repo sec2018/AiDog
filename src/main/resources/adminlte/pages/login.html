@@ -33,7 +33,7 @@
     <div class="login-box-bg"></div>
 <div class="login-box" >
     <div class="login-logo">
-        <a href="../../index2.html"><b>AI</b>智能牧犬监控</a>
+        <a href="#"><b>AI</b>智能牧犬监控</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -68,10 +68,105 @@
 
         
         <div><button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button></div>
-        <div class="text-center mt10"><a href="register.html" >注册新会员&nbsp;&gt;&gt;</a></div>
+        <div class="text-center mt10"><a href="#registerDiv" data-toggle="modal"  style="cursor:pointer">注册新会员&nbsp;&gt;&gt;</a></div>
 
     </div>
     <!-- /.login-box-body -->
+
+    <!-- /.modal -->
+    <div class="modal fade" id="registerDiv" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">管理员注册</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">姓名(*)</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_managername">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">管理等级(*)</label>
+                            <div class="col-md-8">
+                                <select id="modalselect_adminlevel">
+                                    <option value="2">省级</option>
+                                    <option value="3">市级</option>
+                                    <option value="4">县级</option>
+                                    <option value="5">乡级</option>
+                                    <option value="6">村级</option>
+                                </select>
+                                (注：<span style="color:red">请先选择管理等级</span>）
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">所属区域(*)</label>
+                            <div class="col-md-8">
+                                <select id="select_province">
+                                    <option value="-1">请选择</option>
+                                    <option value="150000000000">内蒙古自治区</option>
+                                    <option value="510000000000">四川省</option>
+                                    <option value="530000000000">云南省</option>
+                                    <option value="540000000000">西藏自治区</option>
+                                    <option value="610000000000">陕西省</option>
+                                    <option value="620000000000">甘肃省</option>
+                                    <option value="630000000000">青海省</option>
+                                    <option value="640000000000">宁夏回族自治区</option>
+                                </select>
+                                <select id="select_city" style="display:none">
+                                    <option value="-1">请选择</option>
+                                </select>
+                                <select id="select_county" style="display:none"><option value="-1">请选择</option></select>
+                                <br /><br />
+                                <select id="select_village" style="display:none"><option value="-1">请选择</option></select>
+                                <select id="select_hamlet" style="display:none"><option value="-1">请选择</option></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">身份证号</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_identity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">手机号码(*)</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_tel">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">用户名(*)</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">密码(*)</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">确认密码(*)</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_confirmpassword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-center col-md-12">
+                                <button id="btn_adduser" class="btn-glow primary">确认添加</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 </div>
 <!-- /.login-box -->
 
@@ -122,7 +217,6 @@
 //                            alert("账户未激活！");
 //                            return;
 //                        }
-//                        setCookie("watchdogusername", usrn, "s6000");
                         if ($("#remember_me")[0].checked) {
                             setCookie("aidoguser", usrn + "+" + psw, "s10000");
                         } else {
@@ -135,6 +229,209 @@
                 }
             })
         });
+
+
+        //注册相关
+        var datares = {};
+        $.ajax({
+            url: "/aidog/api/register/4",
+            async:false,
+            type: "GET",
+            success: function (data) {
+                datares = eval("(" + data + ")");
+            }
+        });
+        $('#modalselect_adminlevel').on('change', function () {
+            var selectText = $(this).find('option:selected').text();
+            var levelinfo = {};
+            switch (selectText) {
+                case "省级":
+                    $("#select_city").css("display", "none");
+                    $("#select_county").css("display", "none");
+                    $("#select_village").css("display", "none");
+                    $("#select_hamlet").css("display", "none");
+                    break;
+                case "市级":
+                    $("#select_city").css("display", "inline");
+                    $("#select_county").css("display", "none");
+                    $("#select_village").css("display", "none");
+                    $("#select_hamlet").css("display", "none");
+                    break;
+                case "县级":
+                    $("#select_city").css("display", "inline");
+                    $("#select_county").css("display", "inline");
+                    $("#select_village").css("display", "none");
+                    $("#select_hamlet").css("display", "none");
+                    break;
+                case "乡级":
+                    $("#select_city").css("display", "inline");
+                    $("#select_county").css("display", "inline");
+                    $("#select_village").css("display", "inline");
+                    $("#select_hamlet").css("display", "none");
+                    break;
+                case "村级":
+                    $("#select_city").css("display", "inline");
+                    $("#select_county").css("display", "inline");
+                    $("#select_village").css("display", "inline");
+                    $("#select_hamlet").css("display", "inline");
+                    break;
+            }
+        });
+
+        $("#select_province").on('change', function () {
+            var selectvalue = $(this).find('option:selected').val();
+            selectvalue = selectvalue.substring(0,2);
+            $("#select_city").find("option").remove();
+            var select_city = document.getElementById("select_city");
+            select_city.options.add(new Option("请选择", "-1"));
+            if ($('#modalselect_adminlevel').find('option:selected').text()!="省级") {
+                for (var i = 0; i < datares.data1.length; i++) {
+                    if (datares.data1[i].districtcode.toString().substring(0, 2) == selectvalue) {
+                        //遍历后台传回的结果，一项项往select中添加option
+                        select_city.options.add(new Option(datares.data1[i].districtname, datares.data1[i].districtcode));
+                    }
+                }
+            }
+            $("#select_county").find("option").remove();
+            var select_county = document.getElementById("select_county");
+            select_county.options.add(new Option("请选择", "-1"));
+
+            $("#select_village").find("option").remove();
+            var select_village = document.getElementById("select_village");
+            select_village.options.add(new Option("请选择", "-1"));
+
+            $("#select_hamlet").find("option").remove();
+            var select_hamlet = document.getElementById("select_hamlet");
+            select_hamlet.options.add(new Option("请选择", "-1"));
+        });
+        $("#select_city").on('change', function () {
+            var selectvalue = $(this).find('option:selected').val();
+            $("#select_county").find("option").remove();
+            selectvalue = selectvalue.substring(0, 4);
+            var select_county = document.getElementById("select_county");
+            select_county.options.add(new Option("请选择", "-1"));
+            if ($('#modalselect_adminlevel').find('option:selected').text() != "市级") {
+                for (var i = 0; i < datares.data2.length; i++) {
+                    if (datares.data2[i].districtcode.toString().substring(0, 4) == selectvalue) {
+                        //遍历后台传回的结果，一项项往select中添加option
+                        select_county.options.add(new Option(datares.data2[i].districtname, datares.data2[i].districtcode));
+                    }
+                }
+            }
+            $("#select_village").find("option").remove();
+            var select_village = document.getElementById("select_village");
+            select_village.options.add(new Option("请选择", "-1"));
+
+            $("#select_hamlet").find("option").remove();
+            var select_hamlet = document.getElementById("select_hamlet");
+            select_hamlet.options.add(new Option("请选择", "-1"));
+        });
+        $("#select_county").on('change', function () {
+            var selectvalue = $(this).find('option:selected').val();
+            $("#select_village").find("option").remove();
+            selectvalue = selectvalue.substring(0, 6);
+            var select_village = document.getElementById("select_village");
+            select_village.options.add(new Option("请选择", "-1"));
+            if ($('#modalselect_adminlevel').find('option:selected').text() != "县级") {
+                for (var i = 0; i < datares.data3.length; i++) {
+                    if (datares.data3[i].districtcode.toString().substring(0, 6) == selectvalue) {
+                        //遍历后台传回的结果，一项项往select中添加option
+                        select_village.options.add(new Option(datares.data3[i].districtname, datares.data3[i].districtcode));
+                    }
+                }
+            }
+            $("#select_hamlet").find("option").remove();
+            var select_hamlet = document.getElementById("select_hamlet");
+            select_hamlet.options.add(new Option("请选择", "-1"));
+        });
+        $("#select_village").on('change', function () {
+            var selectvalue = $(this).find('option:selected').val();
+            $("#select_hamlet").find("option").remove();
+            selectvalue = selectvalue.substring(0, 9);
+            var select_hamlet = document.getElementById("select_hamlet");
+            select_hamlet.options.add(new Option("请选择", "-1"));
+            if ($('#modalselect_adminlevel').find('option:selected').text() != "乡级") {
+                for (var i = 0; i < datares.data4.length; i++) {
+                    if (datares.data4[i].districtcode.toString().substring(0, 9) == selectvalue) {
+                        //遍历后台传回的结果，一项项往select中添加option
+                        select_hamlet.options.add(new Option(datares.data4[i].districtname, datares.data4[i].districtcode));
+                    }
+                }
+            }
+        });
+
+        $("#btn_adduser").click(function () {
+            var senddata = {};
+            senddata.click_type = "AddUser";
+            var privilegelevel = -1;
+            var adduserarea = "";
+            var selectText = $("#modalselect_adminlevel").find("option:selected").text();
+            switch (selectText) {
+                case "省级":
+                    privilegelevel = 2;
+                    adduserarea = $("#select_province").find("option:selected").text();
+                    break;
+                case "市级":
+                    privilegelevel = 3;
+                    adduserarea = $("#select_province").find("option:selected").text() + "-" + $("#select_city").find("option:selected").text();
+                    break;
+                case "县级":
+                    privilegelevel = 4;
+                    adduserarea = $("#select_province").find("option:selected").text() + "-" + $("#select_city").find("option:selected").text() + "-" + $("#select_county").find("option:selected").text();
+                    break;
+                case "乡级":
+                    privilegelevel = 5;
+                    adduserarea = $("#select_province").find("option:selected").text() + "-" + $("#select_city").find("option:selected").text() + "-"
+                        + $("#select_county").find("option:selected").text() + "-" + $("#select_village").find("option:selected").text();
+                    break;
+                case "村级":
+                    privilegelevel = 6;
+                    adduserarea = $("#select_province").find("option:selected").text() + "-" + $("#select_city").find("option:selected").text() + "-"
+                        + $("#select_county").find("option:selected").text() + "-" + $("#select_village").find("option:selected").text() + "-" + $("#select_hamlet").find("option:selected").text();
+                    break;
+            }
+            senddata.area = adduserarea;
+            senddata.privilegelevel = privilegelevel;
+            senddata.managername = $("#input_managername").val();
+            senddata.address = "";
+            senddata.identity = $("#input_identity").val();
+            senddata.officecall = "";
+            senddata.tel = $("#input_tel").val();
+            senddata.username = $("#input_username").val();
+            var reg = /^[a-zA-Z\d]\w{3,11}[a-zA-Z\d]$/;//正则表达式
+            if (!reg.test($("#input_username").val())) {
+                alert('用户名为4到12位字母(大小写敏感)，数字，下划线，不能以下划线开头和结尾！');
+                return;
+            }
+            senddata.password = $("#input_password").val();
+            senddata.addtype = "self";
+            if ($("#input_managername").val() == null || $("#input_managername").val() == "" || $("#input_username").val() == null || $("#input_username").val() == "" || $("#input_password").val() == null || $("#input_password").val() == "") {
+                alert("带(*)选项为必填项！");
+                return;
+            }
+            if (adduserarea.indexOf("请选择")>0) {
+                alert("地址选择有误！");
+                return;
+            }
+            if (senddata.password != $("#input_confirmpassword").val()) {
+                alert("两次输入的密码不一致！");
+                //window.location.href = "#";
+                return;
+            } else {
+                $.ajax({
+                    url: "user/adduser.do",
+                    type: "POST",
+                    data: senddata,
+                    success: function (data) {
+                        alert(data);
+                        if (data == "添加用户成功！") {
+                            window.location.reload();
+                        }
+                    }
+                })
+            }
+        });
+
     });
 
     function getCookie(name) {
@@ -189,6 +486,8 @@
         if (event.keyCode==13)  //回车键的键值为13
             document.getElementById("btnsubmit").click(); //调用登录按钮的登录事件
     }
+
+
 </script>
 </body>
 </html>

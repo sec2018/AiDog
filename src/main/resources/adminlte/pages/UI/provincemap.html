@@ -7,15 +7,19 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
 
-    <title>国家级地图</title>
+    <title>省级地图</title>
     <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../ui_js/echarts.js"></script>
-    <script src="../ui_js/countrymap.js"></script>
-
-
+    <script src="../ui_js/provincemap.js"></script>
 </head>
 <body>
+    这是省级地图。。。
+    <a id="back" style="cursor: pointer;color: #00a7d0">返回</a>
     <div class="content">
+
+        <!-- upper main stats -->
+        <!-- end upper main stats -->
+
         <div id="pad-wrapper">
             <!-- statistics chart built with jQuery Flot -->
             <div class="row chart">
@@ -26,7 +30,7 @@
                     <div id="statsChart" style="width: 1150px; height: 600px;"></div>
                 </div>
                 <div class="col-md-3">
-                    <table class="table table-hover text-center" style="margin: 20px auto">
+                    <table class="table table-hover text-center" style="margin:20px auto">
                         <tbody>
                         <!-- row -->
                         <tr class="success">
@@ -37,12 +41,13 @@
                                 数量（个）
                             </td>
                         </tr>
-                        <tr id="tr_epidemicprovice">
+                        <!--<tr id="tr_epidemicprovice">
                             <td>
                                 省级
                             </td>
-                            <td id="proviceepidemictotal"></td>
-                        </tr>
+                            <td id="proviceepidemictotal">
+                            </td>
+                        </tr>-->
                         <tr id="tr_epidemiccity">
                             <td>
                                 地市级
@@ -75,17 +80,18 @@
                                 数量（人）
                             </td>
                         </tr>
-                        <tr id="tr_admincountry">
+                        <!--<tr id="tr_admincountry">
                             <td>
-                                国家级
+                                省级
                             </td>
-                            <td id="countryadmintotal"></td>
-                        </tr>
+                            <td id="countryadmintotal">
+                            </td>
+                        </tr>-->
                         <tr id="tr_adminprovince">
                             <td>
                                 省级
                             </td>
-                            <td id="proviceadmintotal"></td>
+                            <td id="provinceadmintotal"></td>
                         </tr>
                         <tr id="tr_admincity">
                             <td>
@@ -113,7 +119,7 @@
                         </tr>
                         <tr class="success">
                             <td>
-                                犬的总数量
+                                犬只总数
                             </td>
                             <td>
                                 数量（只）
@@ -121,13 +127,13 @@
                         </tr>
                         <tr>
                             <td id="td_areaalldognumtotal">
-                                全国总数
+                                全省总数
                             </td>
                             <td id="countryalldognumtotal"></td>
                         </tr>
                         <tr class="success">
                             <td>
-                                佩戴项圈犬的数量
+                                已佩项圈犬只数
                             </td>
                             <td>
                                 数量（只）
@@ -135,13 +141,13 @@
                         </tr>
                         <tr>
                             <td id="td_areadognumtotal">
-                                全国总数
+                                全省总数
                             </td>
-                            <td id="countrydognumtotal"></td>
+                            <td id="neckdognumtotal"></td>
                         </tr>
                         <tr class="success">
                             <td>
-                                使用喂饲器犬的数量
+                                使用喂饲器数
                             </td>
                             <td>
                                 数量（只）
@@ -149,13 +155,13 @@
                         </tr>
                         <tr>
                             <td id="td_areawsqdognumtotal">
-                                全国总数
+                                全省总数
                             </td>
                             <td id="countrywsqdognumtotal"></td>
                         </tr>
                         <tr class="success">
                             <td>
-                                智能驱虫总次数
+                                驱虫总次数
                             </td>
                             <td>
                                 数量（次）
@@ -163,13 +169,13 @@
                         </tr>
                         <tr>
                             <td id="td_areamednumtotal">
-                                全国总数
+                                全省总数
                             </td>
                             <td id="countrymednumtotal"></td>
                         </tr>
                         <tr class="success">
                             <td>
-                                使用硬件驱虫比
+                                驱虫犬只比
                             </td>
                             <td>
                                 单位（%）
@@ -177,7 +183,7 @@
                         </tr>
                         <tr>
                             <td id="td_arearatedognumtotal">
-                                全国
+                                全省
                             </td>
                             <td id="countryratedognumtotal"></td>
                         </tr>
@@ -187,5 +193,12 @@
             </div>
         </div>
     </div>
+    <script>
+       $(function () {
+           $("#back").click(function () {
+               history.go(-1);
+           });
+       })
+    </script>
 </body>
 </html>

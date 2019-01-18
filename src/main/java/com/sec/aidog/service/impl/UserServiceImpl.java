@@ -9,6 +9,8 @@ import com.sec.aidog.util.AESUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.sf.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -221,5 +223,65 @@ public class UserServiceImpl implements UserService {
             }
         }
         return map;
+    }
+
+    @Override
+    public List<Map<String, String>> GetAllCities() throws Exception {
+        List<Map<String,String>> citylist = new ArrayList<Map<String,String>>();
+        List<Districts> list = districtsDao.getAllCities();
+        Map<String,String> maptemp = null;
+        JSONObject object = null;
+        for (Districts districts : list) {
+            maptemp = new HashMap<String,String>();
+            maptemp.put("districtcode", districts.districtcode);
+            maptemp.put("districtname", districts.districtname);
+            citylist.add(maptemp);
+        }
+        return citylist;
+    }
+
+    @Override
+    public List<Map<String, String>> GetAllCounties() throws Exception {
+        List<Map<String,String>> countylist = new ArrayList<Map<String,String>>();
+        List<Districts> list = districtsDao.getAllCounties();
+        Map<String,String> maptemp = null;
+        JSONObject object = null;
+        for (Districts districts : list) {
+            maptemp = new HashMap<String,String>();
+            maptemp.put("districtcode", districts.districtcode);
+            maptemp.put("districtname", districts.districtname);
+            countylist.add(maptemp);
+        }
+        return countylist;
+    }
+
+    @Override
+    public List<Map<String, String>> GetAllVillages() throws Exception {
+        List<Map<String,String>> villagelist = new ArrayList<Map<String,String>>();
+        List<Districts> list = districtsDao.getAllVillages();
+        Map<String,String> maptemp = null;
+        JSONObject object = null;
+        for (Districts districts : list) {
+            maptemp = new HashMap<String,String>();
+            maptemp.put("districtcode", districts.districtcode);
+            maptemp.put("districtname", districts.districtname);
+            villagelist.add(maptemp);
+        }
+        return villagelist;
+    }
+
+    @Override
+    public List<Map<String, String>> GetAllHamlets() throws Exception {
+        List<Map<String,String>> hamletlist = new ArrayList<Map<String,String>>();
+        List<Districts> list = districtsDao.getAllHamlets();
+        Map<String,String> maptemp = null;
+        JSONObject object = null;
+        for (Districts districts : list) {
+            maptemp = new HashMap<String,String>();
+            maptemp.put("districtcode", districts.districtcode);
+            maptemp.put("districtname", districts.districtname);
+            hamletlist.add(maptemp);
+        }
+        return hamletlist;
     }
 }

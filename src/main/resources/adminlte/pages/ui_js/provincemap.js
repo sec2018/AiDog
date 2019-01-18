@@ -1,6 +1,7 @@
 $(function () {
+
     $.ajax({
-        url: "/aidog/api/getindexmap",
+        url: "/aidog/api/getprovincemap",
         method: "GET",
         beforeSend: function(request) {
             request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
@@ -8,26 +9,25 @@ $(function () {
         success: function (data) {
             if (data.data != null) {
                 if (data.data.data1.privilegelevel == 1) {
-                    //下面的表格
-                    $("#proviceepidemictotal").text(data.data.data2.provinceepidemictotal);
-                    $("#cityepidemictotal").text("73");
-                    $("#countyepidemictotal").text("368");
-                    $("#villageepidemictotal").text(data.data.data2.villageepidemictotal);
-                    $("#hamletepidemictotal").text(data.data.data2.hamletepidemictotal);
+                    $("#cityepidemictotal").text(data.data2.cityepidemictotal);
+                    $("#countyepidemictotal").text(data.data2.countyepidemictotal);
+                    $("#villageepidemictotal").text(data.data2.villageepidemictotal);
+                    $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
-                    $("#countryadmintotal").text(data.data.data2.countryadmintotal);
-                    $("#proviceadmintotal").text(data.data.data2.provinceadmintotal);
-                    $("#cityadmintotal").text(data.data.data2.cityadmintotal);
-                    $("#countyadmintotal").text(data.data.data2.countyadmintotal);
-                    $("#villageadmintotal").text(data.data.data2.villageadmintotal);
-                    $("#hamletadmintotal").text(data.data.data2.hamletadmintotal);
-                    $("#countrydognumtotal").text("3472856");
-                    $("#countryalldognumtotal").text("23");
-                    $("#countrywsqdognumtotal").text("0");
-                    $("#countryratedognumtotal").text(((data.data.data2.countrydognumtotal + data.data.data2.feedernumtotal) * 100 / data.data.data2.alldognumtotal).toFixed(6));
-                    $("#countrymednumtotal").text(data.data.data2.countrymednumtotal);
+                    //$("#tr_admincountry").css("display", "none");
+                    $("#provinceadmintotal").text(data.data2.provinceadmintotal);
+                    $("#cityadmintotal").text(data.data2.cityadmintotal);
+                    $("#countyadmintotal").text(data.data2.countyadmintotal);
+                    $("#villageadmintotal").text(data.data2.villageadmintotal);
+                    $("#hamletadmintotal").text(data.data2.hamletadmintotal);
+
+                    $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+                    $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+                    $("#countrywsqdognumtotal").text(data.data2.feedernumtotal);
+                    $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
+                    $("#countrymednumtotal").text(data.data2.countrymednumtotal);
                 }
-                GetCountryEcharts(data.data);
+                GetProvinceEcharts(data.data);
             }
         }
     })
@@ -42,9 +42,10 @@ function objToArray(array) {
 }
 
 
-function GetCountryEcharts(data) {
+function GetProvinceEcharts(data) {
+
     var p_names = new Array();
-    var p_city_values = new Array();
+    var p_county_values = new Array();
     var p_dog_values = new Array();
     var p_manager_values = new Array();
     var p_necklet_values = new Array();
@@ -52,34 +53,40 @@ function GetCountryEcharts(data) {
     var p_percents = new Array();
     var p_feeders = new Array();
 
+    var provinceGov = "" + data.data4.provinceGov;
+    var provinceEchartsAreaName="" + data.data4.provinceEchartsAreaName;
+    $("#h3_logtitle").html(provinceGov);
+    var map_ctrl = {};
+    map_ctrl[provinceEchartsAreaName] = true;
+
     var necklet_max = 100;
     var cur = 1;
     data.data3 = objToArray(data.data3);
     for (var t = 0; t < data.data3.length; t++) {
-        p_names.push(data.data3[t].provincename);
-        p_city_values.push({ "name": data.data3[t].provincename, "value_1": data.data3[t].citynum });
-        p_dog_values.push({ "name": data.data3[t].provincename, "value_1": data.data3[t].dognum });
-        p_manager_values.push({ "name": data.data3[t].provincename, "value_1": data.data3[t].managernum });
-        p_necklet_values.push({ "name": data.data3[t].provincename, "value_1": data.data3[t].neckletnum });
-        p_med_values.push({ "name": data.data3[t].provincename, "value_1": data.data3[t].mednum });
-        p_feeders.push({ "name": data.data3[t].provincename, "value_1": 0 });
 
+        p_names.push(data.data3[t].cityname);
+        p_county_values.push({ "name": data.data3[t].cityname, "value_1": data.data3[t].countynum });
+        p_dog_values.push({ "name": data.data3[t].cityname, "value_1": data.data3[t].dognum });
+        p_manager_values.push({ "name": data.data3[t].cityname, "value_1": data.data3[t].managernum });
+        p_necklet_values.push({ "name": data.data3[t].cityname, "value_1": data.data3[t].neckletnum});
+        p_med_values.push({ "name": data.data3[t].cityname, "value_1": data.data3[t].mednum });
+        cur = data.data3[t].neckletnum;
+        cur > necklet_max ? necklet_max = cur : null;
+
+        p_feeders.push({ "name": data.data3[t].cityname, "value_1": 0 });
         percent = (data.data3[t].neckletnum / data.data3[t].dognum).toFixed(3);
         if (isNaN(percent)) {
             percent = 0.0;
         }
-        p_percents.push({ "name": data.data3[t].provincename, "value": percent, "value_1": percent });
-        cur = data.data3[t].neckletnum;
-        cur > necklet_max ? necklet_max = cur : null;
-    }
+        p_percents.push({ "name": data.data3[t].cityname, "value": percent, "value_1": percent });
 
+    }
     // 路径配置
     require.config({
         paths: {
-            echarts: '../ui_js'
+            echarts: '../js'
         }
     });
-
     // 使用
     require(
         [
@@ -89,21 +96,13 @@ function GetCountryEcharts(data) {
         function (ec) {
             // 基于准备好的dom，初始化echarts图表
             var myChart = ec.init(document.getElementById('statsChart'));
-            var valueAxis = [
-                {
-                    type: 'value',
-                    boundaryGap: [0, 0.01]
-                }
-            ];
-
-            var option = {
+            option = {
                 title: {
-                    text: '',
+                    text: "",
                     x: 'center',
                     textStyle: {
-                        fontSize: 28,
+                        fontSize: 18,
                     }
-
                 },
                 tooltip: {
                     trigger: 'item',
@@ -114,13 +113,6 @@ function GetCountryEcharts(data) {
                             for (var k = 0; k < myseries[i].data.length; k++) {
                                 if (myseries[i].data[k].name == params.name) {
                                     res += myseries[i].name + ":" + myseries[i].data[k].value_1 + '<br />';
-                                }
-                            }
-                            if (myseries[i].markPoint) {
-                                for (var k = 0; k < myseries[i].markPoint.data.length; k++) {
-                                    if (myseries[i].markPoint.data[k].name == params.name) {
-                                        res += myseries[i].name + ":" + myseries[i].markPoint.data[k].value_1 + '<br />';
-                                    }
                                 }
                             }
                         }
@@ -138,22 +130,23 @@ function GetCountryEcharts(data) {
                     calculable: true
                 },
                 series: [
+
                     {
-                        name: '流行城市数量',
+                        name: '流行县数量',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
                             emphasis: { label: { show: true } }
                         },
                         selectedMode: 'single',
-                        data: p_city_values
+                        data: p_county_values
                     },
                     {
                         name: '管理员总数量',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -165,7 +158,7 @@ function GetCountryEcharts(data) {
                     {
                         name: '牧犬总数量',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -177,7 +170,7 @@ function GetCountryEcharts(data) {
                     {
                         name: '项圈总数量',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -189,7 +182,7 @@ function GetCountryEcharts(data) {
                     {
                         name: '喂饲器数量',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -201,7 +194,7 @@ function GetCountryEcharts(data) {
                     {
                         name: '投药总次数',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -213,7 +206,7 @@ function GetCountryEcharts(data) {
                     {
                         name: '项圈犬占比',
                         type: 'map',
-                        mapType: 'china',
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -221,24 +214,26 @@ function GetCountryEcharts(data) {
                         },
                         selectedMode: 'single',
                         data: p_percents
-                    },
+                    }
                 ]
             };
-
             //responsive
             if (screen.width < 768) {
                 option.series[0].itemStyle.normal.label.textStyle = { fontSize: 8 };
             }
+
             var name_selected = '';
             myChart.on("click", function (param) {
+                // alert(param.seriesName + 'S'+ (param.name == name_selected));
                 if (param.seriesName != '' && param.name == name_selected) {
-                    alert(param.name);
-                    // window.location.href = encodeURI(encodeURI("../UI/provincemap.html?province=" + param.name));
-                    window.location.href = "../UI/provincemap.html?province=" + escape(param.name);
+
+                    window.location.href = encodeURI(encodeURI("../city/city.do?city=" + param.name + "&province=" + provinceGov));
+                    //alert(param.name);
                 } else {
                     name_selected = param.name;
                 }
             });
+            // 为echarts对象加载数据
             myChart.setOption(option);
         }
     );

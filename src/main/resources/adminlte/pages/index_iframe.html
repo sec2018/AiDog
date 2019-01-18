@@ -767,24 +767,18 @@
     function search_menu() {
         //要搜索的值
         var text = $('input[name=q]').val();
-
         var $ul = $('.sidebar-menu');
         $ul.find("a.nav-link").each(function () {
             var $a = $(this).css("border", "");
-
             //判断是否含有要搜索的字符串
             if ($a.children("span.menu-text").text().indexOf(text) >= 0) {
-
                 //如果a标签的父级是隐藏的就展开
                 $ul = $a.parents("ul");
-
                 if ($ul.is(":hidden")) {
                     $a.parents("ul").prev().click();
                 }
-
                 //点击该菜单
                 $a.click().css("border", "1px solid");
-
 //                return false;
             }
         });
@@ -792,232 +786,8 @@
 
     $(function () {
 //        console.log(window.location);
-
         App.setbasePath("../");
         App.setGlobalImgPath("dist/img/");
-
-        addTabs({
-            id: '10008',
-            title: '主页',
-            close: false,
-            url: 'index.html',
-            urlType: "relative"
-        });
-
-        App.fixIframeCotent();
-
-        /*addTabs({
-         id: '10009',
-         title: '404',
-         close: true,
-         url: 'UI/buttons_iframe2.html'
-         });*/
-
-        /*
-         <li class="treeview">
-         <a href="#">
-         <i class="fa fa-edit"></i> <span>Forms</span>
-         <span class="pull-right-container">
-         <i class="fa fa-angle-left pull-right"></i>
-         </span>
-         </a>
-         <ul class="treeview-menu">
-         <li><a href="forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-         <li><a href="forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-         <li><a href="forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
-         </ul>
-         </li>
-         */
-        var menus = [
-            {
-                id: "9000",
-                text: "header",
-                icon: "",
-                isHeader: true
-            },
-            {
-                id: "9001",
-                text: "辖区总览",
-                icon: "fa fa-edit",
-                children: [
-                    {
-                        id: "90011",
-                        text: "地图模块化",
-                        url: "UI/modularizemap.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    }
-                ]
-            },
-            {
-                id: "9002",
-                text: "用户管理",
-                icon: "fa fa-edit",
-                children: [
-                    {
-                        id: "90021",
-                        text: "添加/激活",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90022",
-                        text: "修改/删除",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    }
-                ]
-            },
-            {
-                id: "9003",
-                text: "项圈管理",
-                icon: "fa fa-edit",
-                children: [
-                    {
-                        id: "90031",
-                        text: "项圈佩戴激活",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90032",
-                        text: "投药时间设置",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90033",
-                        text: "基本信息配置",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90034",
-                        text: "历史数据分析",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90035",
-                        text: "设备故障报警",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    }
-                ]
-            },
-            {
-                id: "9004",
-                text: "数据统计",
-                icon: "fa fa-edit",
-                children: [
-                    {
-                        id: "90041",
-                        text: "犬只基本信息",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90042",
-                        text: "犬粪检测登记",
-                        url: "https://www.baidu.com",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90043",
-                        text: "国家地图",
-                        url: "UI/countrymap.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    },
-                    {
-                        id: "90044",
-                        text: "地图测试01",
-                        url: "UI/maptest01.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    }
-                ]
-            },
-            {
-                id: "9005",
-                text: "设置",
-                icon: "fa fa-laptop",
-                children: [
-                    {
-                        id: "90051",
-                        text: "设置投药时间",
-                        icon: "fa fa-circle-o",
-                        url: "UI/setlayconfig.html",
-                        targetType: "iframe-tab"
-                    },
-                    {
-                        id: "90052",
-                        text: "设置硬件基本信息",
-                        url: "UI/setdeviceconfig.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o"
-                    },
-                    {
-                        id: "90053",
-                        text: "硬件反馈信息",
-                        url: "UI/getlaytime.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o"
-                    },
-                    {
-                        id: "90054",
-                        text: "添加设备（项圈）",
-                        url: "UI/adddevice.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o"
-                    },
-                    {
-                        id: "90055",
-                        text: "设备地图",
-                        url: "UI/gaodemap.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o"
-                    }
-                ]
-            },
-            {
-                id: "9006",
-                text: "其他",
-                icon: "fa fa-edit",
-                children: [
-                    {
-                        id: "90061",
-                        text: "报表测试",
-                        url: "UI/baobiaotest.html",
-                        targetType: "iframe-tab",
-                        icon: "fa fa-circle-o",
-                        urlType: 'abosulte'
-                    }
-                ]
-            }
-        ];
-        $('.sidebar-menu').sidebarMenu({data: menus});
 
         // 动态创建菜单后，可以重新计算 SlimScroll
         // $.AdminLTE.layout.fixSidebar();
@@ -1038,6 +808,7 @@
 
         var token = window.localStorage.getItem("aidog_token");
         var username = "";
+        var usermap = "";
         if (location.search.length > 0) {
             username = unescape(location.search.split('?')[1].split('=')[1]);
         }
@@ -1062,9 +833,11 @@
                         switch (data.privilegelevel){
                             case 1:
                                 $("#manager_area").html("国家级管理员");
+                                usermap = "UI/countrymap.html";
                                 break;
                             case 2:
                                 $("#manager_area").html(data.province+"管理员");
+                                usermap = "UI/provincemap.html";
                                 break;
                             case 3:
                                 $("#manager_area").html(data.city+"管理员");
@@ -1079,6 +852,206 @@
                                 $("#manager_area").html(data.hamlet+"管理员");
                                 break;
                         }
+
+                        addTabs({
+                            id: '10008',
+                            title: '主页',
+                            close: false,
+                            url: 'index.html',
+                            urlType: "relative"
+                        });
+                        App.fixIframeCotent();
+                        var menus = [
+                            {
+                                id: "9000",
+                                text: "header",
+                                icon: "",
+                                isHeader: true
+                            },
+                            {
+                                id: "9001",
+                                text: "辖区总览",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90011",
+                                        text: "地图模块化",
+                                        url: "UI/modularizemap.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9002",
+                                text: "用户管理",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90021",
+                                        text: "添加/激活",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90022",
+                                        text: "修改/删除",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9003",
+                                text: "项圈管理",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90031",
+                                        text: "项圈佩戴激活",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90032",
+                                        text: "投药时间设置",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90033",
+                                        text: "基本信息配置",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90034",
+                                        text: "历史数据分析",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90035",
+                                        text: "设备故障报警",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9004",
+                                text: "数据统计",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90041",
+                                        text: "犬只基本信息",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90042",
+                                        text: "犬粪检测登记",
+                                        url: "https://www.baidu.com",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90043",
+                                        text: "辖区地图",
+                                        url: usermap,
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90044",
+                                        text: "地图测试01",
+                                        url: "UI/maptest01.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9005",
+                                text: "设置",
+                                icon: "fa fa-laptop",
+                                children: [
+                                    {
+                                        id: "90051",
+                                        text: "设置投药时间",
+                                        icon: "fa fa-circle-o",
+                                        url: "UI/setlayconfig.html",
+                                        targetType: "iframe-tab"
+                                    },
+                                    {
+                                        id: "90052",
+                                        text: "设置硬件基本信息",
+                                        url: "UI/setdeviceconfig.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o"
+                                    },
+                                    {
+                                        id: "90053",
+                                        text: "硬件反馈信息",
+                                        url: "UI/getlaytime.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o"
+                                    },
+                                    {
+                                        id: "90054",
+                                        text: "添加设备（项圈）",
+                                        url: "UI/adddevice.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o"
+                                    },
+                                    {
+                                        id: "90055",
+                                        text: "设备地图",
+                                        url: "UI/gaodemap.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o"
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9006",
+                                text: "其他",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90061",
+                                        text: "报表测试",
+                                        url: "UI/baobiaotest.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            }
+                        ];
+                        $('.sidebar-menu').sidebarMenu({data: menus});
+
                     }catch (Exception){
                         window.localStorage.removeItem("aidog_token");
                         window.location.href = "login.html";

@@ -1,6 +1,7 @@
 package com.sec.aidog.api;
 
 import com.sec.aidog.pojo.Managers;
+import com.sec.aidog.service.ProvinceService;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.CommonThreadPool;
@@ -13,12 +14,12 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -33,6 +34,9 @@ public class MapApi {
 
     @Autowired
     private UserService userService;
+
+    @Resource
+    private ProvinceService provinceService;
 
     @Autowired
     private Gson gson;
@@ -91,9 +95,7 @@ public class MapApi {
                     r.setSuccess(true);
                     break;
                 case 2:
-//                    redirectAttributes.addAttribute("province", resultUser.getProvince());
-//                    return "redirect:/province/province.do";
-
+                    return GetProvinceMap(resultUser.getProvince(),request);
                 case 3:
 //                    redirectAttributes.addAttribute("city", resultUser.getCity());
 //                    redirectAttributes.addAttribute("province", resultUser.getProvince());
@@ -118,10 +120,141 @@ public class MapApi {
         } catch (Exception e) {
             r.setCode(500);
             r.setData(e.getClass().getName() + ":" + e.getMessage());
-            r.setMsg("获取用户信息失败");
+            r.setMsg("获取默认地图信息失败");
             r.setSuccess(false);
             e.printStackTrace();
         }
         return ResponseEntity.ok(r);
+    }
+
+    @RequestMapping(value="/provincemap",produces="text/plain;charset=UTF-8")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "province", value = "省份", required = true, dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
+    })
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetProvinceMap(@RequestParam(value="province") String province, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = redisService.get("token:"+token);
+            Managers resultUser = ((Managers) JSONUtil.JSONToObj(managerstr, Managers.class));
+            JSONObject jsStr = null;
+            Map<String,Object> data = new HashMap<String,Object>();
+            data.put("data1",resultUser);//data1保存用户信息
+            if(province.equals("建设兵团")) {//查看建设兵团的详情
+                Map<String,Integer> armyIndexInfo = provinceService.GetArmyIndexLogo(province);//获得建设兵团的总体数据信息
+                data.put("data2",armyIndexInfo);
+                Map<String,Object> armyProvinceMap = provinceService.GetArmyProvinceMap(province);//获得该建设兵团下各个流行师的详细数据
+                data.put("data3", armyProvinceMap);
+                Map<String,Object> data4 = provinceService.GetDistrictcode(province);//获得该建设兵团的区域编码
+                data.put("data4", data4);
+            }else {//如果非建设兵团，即省
+                Map<String,Integer> provinceIndexInfo = provinceService.GetIndexLogoInfo(province);//获得该省的总体数据信息
+                data.put("data2",provinceIndexInfo);
+                Map<String,Object> ProvinceMap = provinceService.GetProvinceMap(province);//获得该省下各个流行市的详细数据
+                data.put("data3", ProvinceMap);
+                Map<String,Object> data4 = provinceService.GetDistrictcode(province);//获得该省的区域编码
+                data.put("data4", data4);
+            }
+            jsStr = JSONObject.fromObject(data);//数据转为json格式
+            r.setCode(200);
+            r.setMsg("获取用户信息成功！");
+            r.setData(jsStr);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取省级地图信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
+
+
+
+    @RequestMapping(value="/register/{id}", produces="text/html;charset=UTF-8",method=RequestMethod.GET)
+    @ResponseBody
+    public String register(@PathVariable(value="id")Integer id) {
+        Map<String,Object> data = new HashMap<String,Object>();
+        String json = "";
+        switch(id) {
+            case 1:
+                json = redisService.get("_registerAllcities");
+                if(json == null) {
+                    try {
+                        List<Map<String, String>> map = null;
+                        map = userService.GetAllCities();
+                        data.put("data1",map);
+                        json = JSONObject.fromObject(data).toString();
+                        redisService.set("_registerAllcities", json);
+                        break;
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case 2:
+                json = redisService.get("_registerAllcounties");
+                if(json == null) {
+                    try {
+                        List<Map<String, String>> map1 = userService.GetAllCities();
+                        data.put("data1",map1);
+                        List<Map<String, String>> map2 = userService.GetAllCounties();
+                        data.put("data2",map2);
+                        json = JSONObject.fromObject(data).toString();
+                        redisService.set("_registerAllcounties", json);
+                        break;
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case 3:
+                json = redisService.get("_registerAllvillages");
+                if(json == null) {
+                    try {
+                        List<Map<String, String>> map1 = userService.GetAllCities();
+                        data.put("data1",map1);
+                        List<Map<String, String>> map2 = userService.GetAllCounties();
+                        data.put("data2",map2);
+                        List<Map<String, String>> map3 = userService.GetAllVillages();
+                        data.put("data3",map3);
+                        json = JSONObject.fromObject(data).toString();
+                        redisService.set("_registerAllvillages", json);
+                        break;
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case 4:
+                json = redisService.get("_registerAllhamlets");
+                if(json == null) {
+                    try {
+                        List<Map<String, String>> map1 = userService.GetAllCities();
+                        data.put("data1",map1);
+                        List<Map<String, String>> map2 = userService.GetAllCounties();
+                        data.put("data2",map2);
+                        List<Map<String, String>> map3 = userService.GetAllVillages();
+                        data.put("data3",map3);
+                        List<Map<String, String>> map4 = userService.GetAllHamlets();
+                        data.put("data4",map4);
+                        json = JSONObject.fromObject(data).toString();
+                        redisService.set("_registerAllhamlets", json);
+                        break;
+                    } catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                break;
+        }
+        return json;
     }
 }
