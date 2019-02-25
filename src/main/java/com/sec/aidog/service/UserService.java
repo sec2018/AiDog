@@ -1,5 +1,6 @@
 package com.sec.aidog.service;
 
+import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.pojo.Managers;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 @Component
 public interface UserService {
-    Managers userLogin(String username, String pwd);
+    Manager userLogin(String username, String pwd);
 
     Map<String, Integer> GetIndexLogoInfo(Managers resultUser) throws Exception;
 
@@ -21,4 +22,7 @@ public interface UserService {
     List<Map<String,String>> GetAllVillages() throws Exception;
 
     List<Map<String,String>> GetAllHamlets() throws Exception;
+
+    String addUser(String addtype, int privilegelevel, String username, String managername, String address, String identity, String area, String officecall, String tel, String password) throws Exception;
+
 }

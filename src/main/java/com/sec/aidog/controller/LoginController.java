@@ -1,6 +1,7 @@
 package com.sec.aidog.controller;
 
 import com.sec.aidog.common.Constant;
+import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
@@ -39,23 +40,23 @@ public class LoginController {
         //判断登录
         try{
             //userService为自己定义的Service类
-            Managers managers = userService.userLogin(username, password);
-            if(managers!=null){
+            Manager manager = userService.userLogin(username, password);
+            if(manager!=null){
                 //PassHandle为自己定义的一个生成Token的类，可以根据自己喜好来改
                 String token = TokenGenerator.generateValue();
-                managers.setPassword("皮一下逗逗你");
+                manager.setPassword("皮一下逗逗你");
                 //将token存到redis缓存中
-                String managerjson = JSONUtil.objectToJson(managers).toString();
+                String managerjson = JSONUtil.objectToJson(manager).toString();
                 redisService.set("token:"+ token, managerjson);
-                String originusername = redisService.get("token:" + managers.getUsername());
+                String originusername = redisService.get("token:" + manager.getUsername());
                 if(originusername!=""&&originusername!=null){
                     //只让一个人登录
-                    redisService.remove("token:"+managers.getUsername());
+                    redisService.remove("token:"+manager.getUsername());
                 }
-                redisService.set("token:"+managers.getUsername(),token);
+                redisService.set("token:"+manager.getUsername(),token);
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("token", token);     //此data为token
-                jsonObject.put("data",managers);
+                jsonObject.put("data",manager);
                 return new JsonResult(Constant.SUCCESS.getCode(), "登录"+Constant.SUCCESS.getMsg(),true, jsonObject);
             } else
                 return new JsonResult(Constant.LOGIN_EXCEPTION.getCode(), Constant.LOGIN_EXCEPTION.getMsg(),false, null);

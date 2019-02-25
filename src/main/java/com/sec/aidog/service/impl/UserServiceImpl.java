@@ -1,29 +1,32 @@
 package com.sec.aidog.service.impl;
 
+import com.sec.aidog.common.DistrictUtil;
 import com.sec.aidog.dao.*;
-import com.sec.aidog.pojo.Districts;
-import com.sec.aidog.pojo.Managers;
-import com.sec.aidog.pojo.Sheepdogs;
+import com.sec.aidog.model.DistrictExample;
+import com.sec.aidog.model.DogExample;
+import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.AESUtil;
+import com.sec.aidog.util.ChangeTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private ManagersMapper managersMapper;
+    private ManagerMapper managerMapper;
 
     @Autowired
-    private SheepdogsDao sheepdogsDao;
+    private DogMapper dogMapper;
 
     @Autowired
     private ExhibitrealtimeDao exhibitrealtimeDao;
@@ -32,16 +35,16 @@ public class UserServiceImpl implements UserService {
     private AppexhibitrealtimeDao appexhibitrealtimeDao;
 
     @Autowired
-    private DistrictsDao districtsDao;
+    private DistrictMapper districtMapper;
 
     @Autowired
-    private ManagersDao managersDao;
+    private DistrictUtil districtUtil;
 
     @Override
-    public Managers userLogin(String username, String pwd) {
+    public Manager userLogin(String username, String pwd) {
         AESUtil util = new AESUtil();
-        Managers manager = null;
-        manager = managersMapper.findUserByName(username);
+        Manager manager = null;
+        manager = managerMapper.findUserByName(username);
         try {
             if(util.encryptData(pwd).equals(manager.getPassword())){
                 return manager;
@@ -57,14 +60,15 @@ public class UserServiceImpl implements UserService {
     public Map<String, Integer> GetIndexLogoInfo(Managers manager) {
         Map<String, Integer> map = new HashMap<String,Integer>();
         if(manager.getPrivilegelevel() == 1) {
-            List<Sheepdogs> sdlist = sheepdogsDao.getIndexInfor();
+            DogExample dogexample = new DogExample();
+            List<Dog> sdlist = dogMapper.selectByExample(dogexample);
             int dognumtotal = 0;
             int feedernumtotal = 0;
-            for(Sheepdogs each:sdlist){
-                if(!each.getNeckletid().equals("-1")) {
+            for(Dog each:sdlist){
+                if(!each.getNecId().equals("-1")) {
                     dognumtotal++;
                 }
-                if(!each.getApparatusid().equals("-1")) {
+                if(!each.getAppId().equals("-1")) {
                     feedernumtotal++;
                 }
             }
@@ -74,12 +78,13 @@ public class UserServiceImpl implements UserService {
             int med2 = appexhibitrealtimeDao.getAppExhiCount();
             int mednumtotal = med1 + med2;
 
-            List<Districts> alllist = new ArrayList<Districts>();
-            List<Districts> dislist = new ArrayList<Districts>();
-            List<Districts> armylist = new ArrayList<Districts>();
+            List<District> alllist = new ArrayList<District>();
+            List<District> dislist = new ArrayList<District>();
+            List<District> armylist = new ArrayList<District>();
 
-            alllist = districtsDao.getDistricts();
-            for(Districts al : alllist)
+            DistrictExample districtExample = new DistrictExample();
+            alllist = districtMapper.selectByExample(districtExample);
+            for(District al : alllist)
             {
                 if (al.getDistrictcode().startsWith("66"))
                 {
@@ -100,7 +105,7 @@ public class UserServiceImpl implements UserService {
             int villageepidemictotal = 0;
             int hamletepidemictotal = 0;
 
-            for(Districts each : dislist) {
+            for(District each : dislist) {
                 if(each.getEpidemic() == 1) {
                     hamletepidemictotal++;
                     if(each.getDistrictcode().substring(2, 12).equals("0000000000")) {
@@ -121,7 +126,7 @@ public class UserServiceImpl implements UserService {
             int divisionepidemictotal=0;
             int regimentalepidemictotal =0;
             int companyepidemictotal = 0;
-            for(Districts each : armylist) {
+            for(District each : armylist) {
                 if(each.getEpidemic() == 1) {
                     companyepidemictotal++;
                     if(each.getDistrictcode().substring(4,8).equals("0000")) {
@@ -140,7 +145,7 @@ public class UserServiceImpl implements UserService {
             int countyadmintotal = 0;
             int villageadmintotal = 0;
             int hamletadmintotal = 0;
-            levellist = managersDao.getManagerLevel();
+            levellist = managerMapper.getManagerLevel();
             for(Integer each:levellist) {
                 switch(each) {
                     case 1:
@@ -185,16 +190,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> GetCountryMap(){
         Map<String, Object> map = new HashMap<String,Object>();
-        List<Districts> provincesandcities = new ArrayList<Districts>();
-        provincesandcities = districtsDao.getProvicesAndCities();
+        List<District> provincesandcities = new ArrayList<District>();
+        provincesandcities = districtMapper.getProvincesAndCities();
         int i = 0;
-        for(Districts each:provincesandcities) {
+        for(District each:provincesandcities) {
             if(each.getDistrictcode().endsWith("0000000000")) {
                 Map<String, Object> maptemp = new HashMap<String,Object>();
-                maptemp.put("provincename", each.getShortname());
+                maptemp.put("provincename", each.getEchartname());
                 String province0to2 = each.getDistrictcode().substring(0, 2);
                 int citynum = 0;
-                for(Districts each2:provincesandcities) {
+                for(District each2:provincesandcities) {
                     if(each2.getDistrictcode().startsWith(province0to2) && each2.getDistrictcode().endsWith("00000000")
                             && !each2.getDistrictcode().equals(province0to2+"0000000000")) {
                         citynum++;
@@ -202,9 +207,9 @@ public class UserServiceImpl implements UserService {
                 }
                 maptemp.put("citynum", citynum);
 
-                int managernum = managersDao.getProvinceManagerLevelAndBelowByDistrictName(each.getDistrictname()).size();
+                int managernum = managerMapper.getProvinceManagerLevelAndBelowByDistrictName(each.getDistrictName()).size();
                 maptemp.put("managernum", managernum);
-                List<String> dognumlist = sheepdogsDao.getAllNeckletIdByDistrictcode(province0to2);
+                List<String> dognumlist = dogMapper.getAllNeckletIdByDistrictcode(province0to2);
                 maptemp.put("dognum", dognumlist.size());
                 int neckletnum = 0;
                 for(String each3:dognumlist) {
@@ -228,13 +233,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Map<String, String>> GetAllCities() throws Exception {
         List<Map<String,String>> citylist = new ArrayList<Map<String,String>>();
-        List<Districts> list = districtsDao.getAllCities();
+        List<District> list = districtMapper.getAllCities();
         Map<String,String> maptemp = null;
         JSONObject object = null;
-        for (Districts districts : list) {
+        for (District district : list) {
             maptemp = new HashMap<String,String>();
-            maptemp.put("districtcode", districts.districtcode);
-            maptemp.put("districtname", districts.districtname);
+            maptemp.put("districtcode", district.getDistrictcode());
+            maptemp.put("districtname", district.getDistrictName());
             citylist.add(maptemp);
         }
         return citylist;
@@ -243,13 +248,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Map<String, String>> GetAllCounties() throws Exception {
         List<Map<String,String>> countylist = new ArrayList<Map<String,String>>();
-        List<Districts> list = districtsDao.getAllCounties();
+        List<District> list = districtMapper.getAllCounties();
         Map<String,String> maptemp = null;
         JSONObject object = null;
-        for (Districts districts : list) {
+        for (District district : list) {
             maptemp = new HashMap<String,String>();
-            maptemp.put("districtcode", districts.districtcode);
-            maptemp.put("districtname", districts.districtname);
+            maptemp.put("districtcode", district.getDistrictcode());
+            maptemp.put("districtname", district.getDistrictName());
             countylist.add(maptemp);
         }
         return countylist;
@@ -258,13 +263,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Map<String, String>> GetAllVillages() throws Exception {
         List<Map<String,String>> villagelist = new ArrayList<Map<String,String>>();
-        List<Districts> list = districtsDao.getAllVillages();
+        List<District> list = districtMapper.getAllVillages();
         Map<String,String> maptemp = null;
         JSONObject object = null;
-        for (Districts districts : list) {
+        for (District district : list) {
             maptemp = new HashMap<String,String>();
-            maptemp.put("districtcode", districts.districtcode);
-            maptemp.put("districtname", districts.districtname);
+            maptemp.put("districtcode", district.getDistrictcode());
+            maptemp.put("districtname", district.getDistrictName());
             villagelist.add(maptemp);
         }
         return villagelist;
@@ -273,15 +278,110 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Map<String, String>> GetAllHamlets() throws Exception {
         List<Map<String,String>> hamletlist = new ArrayList<Map<String,String>>();
-        List<Districts> list = districtsDao.getAllHamlets();
+        List<District> list = districtMapper.getAllHamlets();
         Map<String,String> maptemp = null;
         JSONObject object = null;
-        for (Districts districts : list) {
+        for (District district : list) {
             maptemp = new HashMap<String,String>();
-            maptemp.put("districtcode", districts.districtcode);
-            maptemp.put("districtname", districts.districtname);
+            maptemp.put("districtcode", district.getDistrictcode());
+            maptemp.put("districtname", district.getDistrictName());
             hamletlist.add(maptemp);
         }
         return hamletlist;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
+    public String addUser(String addtype, int privilegelevel, String username, String managername, String address,
+                          String identity, String area, String officecall, String tel, String password) throws Exception {
+        String result = "添加用户失败！";
+        // 如果用户存在，则无法再次创建
+        if (managerMapper.findUserByName(username)!=null) {
+            result = "添加失败，用户已经存在！";
+            return result;
+        }
+        Manager manager = new Manager();
+
+        String province = "";
+        String city = "";
+        String county = "";
+        String village = "";
+        String hamlet = "";
+
+        String[] areaarr = area.split("-");
+        if (areaarr.length ==1)
+        {
+            province = areaarr[0];
+            city = "";
+            county = "";
+            village = "";
+            hamlet = "";
+        }
+        else if (areaarr.length ==2)
+        {
+            province = areaarr[0];
+            city = areaarr[1];
+            county = "";
+            village = "";
+            hamlet = "";
+        }
+        else if (areaarr.length ==3)
+        {
+            province = areaarr[0];
+            city = areaarr[1];
+            county = areaarr[2];
+            village = "";
+            hamlet = "";
+        }
+        else if (areaarr.length ==4)
+        {
+            province = areaarr[0];
+            city = areaarr[1];
+            county = areaarr[2];
+            village = areaarr[3];
+            hamlet = "";
+        }
+        else if (areaarr.length ==5)
+        {
+            province = areaarr[0];
+            city = areaarr[1];
+            county = areaarr[2];
+            village = areaarr[3];
+            hamlet = areaarr[4];
+        }
+        manager.setProvince(province);
+        manager.setCity(city);
+        manager.setCounty(county);
+        manager.setVillage(village);
+        manager.setHamlet(hamlet);
+
+        manager.setUsername(username);
+        manager.setManagerName(managername);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        manager.setRegisterTime(ChangeTimeFormat.changeTimeFormat(df.format(new Date()).toString()));
+        manager.setRegisterTime(new Date());
+        manager.setManagerTel(tel);
+        AESUtil aes = new AESUtil();
+        manager.setPassword(aes.encryptData(password));
+        manager.setPrivilegelevel(privilegelevel);
+
+        if (addtype.equals("self")) {
+            manager.setManagerStatus(0);      //自己注册，待激活
+        } else {
+            manager.setManagerStatus(1);      //管理员代为注册，已激活
+        }
+        manager.setOfficetel(officecall);
+        manager.setManagerAddr(address);
+        manager.setWorkplace("");
+        manager.setManagerIdentity(identity);
+        manager.setManagerEmail("");
+        // 获取地区编码
+        System.out.println(manager.getRegisterTime());
+        System.out.println(manager.getUsername()+"  "+manager.getPassword());
+        manager.setDistrictcode(districtUtil.getDistrictCode(province, city, county, village, hamlet));
+        managerMapper.insert(manager);
+
+        result = "添加用户成功！";
+        return result;
     }
 }

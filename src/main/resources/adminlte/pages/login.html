@@ -84,13 +84,13 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
-                            <label class="col-md-2 control-label">姓名(*)</label>
+                            <label class="col-md-3 control-label">姓名(*)</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_managername">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">管理等级(*)</label>
+                            <label class="col-md-3 control-label">管理等级(*)</label>
                             <div class="col-md-8">
                                 <select id="modalselect_adminlevel">
                                     <option value="2">省级</option>
@@ -104,7 +104,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">所属区域(*)</label>
+                            <label class="col-md-3 control-label">所属区域(*)</label>
                             <div class="col-md-8">
                                 <select id="select_province">
                                     <option value="-1">请选择</option>
@@ -127,31 +127,31 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">身份证号</label>
+                            <label class="col-md-3 control-label">身份证号</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_identity">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">手机号码(*)</label>
+                            <label class="col-md-3 control-label">手机号码(*)</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_tel">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">用户名(*)</label>
+                            <label class="col-md-3 control-label">用户名(*)</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_username">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">密码(*)</label>
+                            <label class="col-md-3 control-label">密码(*)</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_password">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label">确认密码(*)</label>
+                            <label class="col-md-3 control-label">确认密码(*)</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="input_confirmpassword">
                             </div>
@@ -419,13 +419,15 @@
                 return;
             } else {
                 $.ajax({
-                    url: "user/adduser.do",
+                    url: "/aidog/user/register",
                     type: "POST",
                     data: senddata,
                     success: function (data) {
                         alert(data);
                         if (data == "添加用户成功！") {
-                            window.location.reload();
+                            //关闭模态框
+                            $("#registerDiv").modal('hide');
+//                            window.location.reload();
                         }
                     }
                 })

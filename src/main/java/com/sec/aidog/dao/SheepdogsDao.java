@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface SheepdogsDao {
     @Select("select * from sheepdogs")
-    public List<Sheepdogs> getIndexInfor();
+    public List<Sheepdogs> getIndexInfo();
     @Select("select * from sheepdogs where dogid=#{dogId}")
     public Sheepdogs getSheepdogbyDogId(int dogId);
     @Select("select dogid from sheepdogs order by dogid desc limit 1")
