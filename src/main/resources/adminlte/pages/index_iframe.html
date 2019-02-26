@@ -826,6 +826,10 @@
                 success: function (data) {
                     try {
                         data = eval("(" + data.data + ")");
+                        if(data.managerStatus == "0"){
+                            alert("账户未激活");
+                            window.location.href = "login.html";
+                        }
                         $("#manager_name").html(data.managername);
                         $("#manager_info").html(data.workplace+" "+data.managername);
                         var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managertel + " "+ data.managerphone +'</small>';
