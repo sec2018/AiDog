@@ -11,7 +11,7 @@ import java.util.Map;
 public interface UserService {
     Manager userLogin(String username, String pwd);
 
-    Map<String, Integer> GetIndexLogoInfo(Managers resultUser) throws Exception;
+    Map<String, Integer> GetIndexLogoInfo(Manager resultUser) throws Exception;
 
     Map<String, Object> GetCountryMap() throws Exception;
 

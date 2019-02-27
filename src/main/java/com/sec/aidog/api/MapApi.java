@@ -1,5 +1,6 @@
 package com.sec.aidog.api;
 
+import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.ProvinceService;
 import com.sec.aidog.service.RedisService;
@@ -53,7 +54,7 @@ public class MapApi {
         try {
             //取出存在缓存中的已登录用户的信息
             String managerstr = redisService.get("token:"+token);
-            Managers resultUser = ((Managers) JSONUtil.JSONToObj(managerstr, Managers.class));
+            Manager resultUser = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
             JSONObject jsStr = null;
             switch(resultUser.getPrivilegelevel()) {
                 case 1:

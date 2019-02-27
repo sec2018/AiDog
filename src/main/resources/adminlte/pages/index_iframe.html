@@ -830,9 +830,9 @@
                             alert("账户未激活");
                             window.location.href = "login.html";
                         }
-                        $("#manager_name").html(data.managername);
-                        $("#manager_info").html(data.workplace+" "+data.managername);
-                        var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managertel + " "+ data.managerphone +'</small>';
+                        $("#manager_name").html(data.managerName);
+                        $("#manager_info").html(data.workplace+" "+data.managerName);
+                        var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managerTel + " "+ data.officetel +'</small>';
                         $("#manager_info").append(tel);
                         switch (data.privilegelevel){
                             case 1:
@@ -861,7 +861,7 @@
                             id: '10008',
                             title: '主页',
                             close: false,
-                            url: 'index.html',
+                            url: usermap,
                             urlType: "relative"
                         });
                         App.fixIframeCotent();

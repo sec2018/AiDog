@@ -40,6 +40,6 @@ public interface ManagerMapper {
     @Select("select privilegelevel from manager")
     public List<Integer> getManagerLevel();
 
-    @Select("select privilegelevel from managers where province=#{provinceName}")
+    @Select("select privilegelevel from manager where province=#{provinceName}")
     public List<Integer> getProvinceManagerLevelAndBelowByDistrictName(String provinceName);
 }

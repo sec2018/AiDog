@@ -2,8 +2,10 @@ package com.sec.aidog.service.impl;
 
 import com.sec.aidog.common.DistrictUtil;
 import com.sec.aidog.dao.*;
+import com.sec.aidog.model.AppdosingExample;
 import com.sec.aidog.model.DistrictExample;
 import com.sec.aidog.model.DogExample;
+import com.sec.aidog.model.NecdosingExample;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.AESUtil;
@@ -40,6 +42,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private DistrictUtil districtUtil;
 
+    @Autowired
+    private NecdosingMapper necdosingMapper;
+
+    @Autowired
+    private AppdosingMapper appdosingMapper;
+
     @Override
     public Manager userLogin(String username, String pwd) {
         AESUtil util = new AESUtil();
@@ -57,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Integer> GetIndexLogoInfo(Managers manager) {
+    public Map<String, Integer> GetIndexLogoInfo(Manager manager) {
         Map<String, Integer> map = new HashMap<String,Integer>();
         if(manager.getPrivilegelevel() == 1) {
             DogExample dogexample = new DogExample();
@@ -73,9 +81,11 @@ public class UserServiceImpl implements UserService {
                 }
             }
 
-            int med1 = exhibitrealtimeDao.getExhiCount();
+            NecdosingExample necdosingexample = new NecdosingExample();
+            int med1 = necdosingMapper.countByExample(necdosingexample);
 
-            int med2 = appexhibitrealtimeDao.getAppExhiCount();
+            AppdosingExample appdosingexample = new AppdosingExample();
+            int med2 = appdosingMapper.countByExample(appdosingexample);
             int mednumtotal = med1 + med2;
 
             List<District> alllist = new ArrayList<District>();
@@ -218,9 +228,9 @@ public class UserServiceImpl implements UserService {
                     }
                 }
                 maptemp.put("neckletnum", neckletnum);
-                int mednum = exhibitrealtimeDao.getExhiCountByDistrictcode(province0to2);
+                int mednum = necdosingMapper.getExhiCountByDistrictcode(province0to2);
                 maptemp.put("mednum", mednum);
-                int feednum = appexhibitrealtimeDao.getAppExhiCountByDistrictcode(province0to2);
+                int feednum = appdosingMapper.getAppExhiCountByDistrictcode(province0to2);
                 maptemp.put("feedernum", feednum);
 
                 map.put(""+i, maptemp);
