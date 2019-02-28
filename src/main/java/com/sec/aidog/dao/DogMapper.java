@@ -1,11 +1,9 @@
 package com.sec.aidog.dao;
 
-import com.sec.aidog.model.DogExample;
-import com.sec.aidog.pojo.Dog;
-
 import java.util.List;
 
-import com.sec.aidog.pojo.Sheepdogs;
+import com.sec.aidog.model.DogExample;
+import com.sec.aidog.pojo.Dog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

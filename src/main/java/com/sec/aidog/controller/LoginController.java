@@ -2,7 +2,6 @@ package com.sec.aidog.controller;
 
 import com.sec.aidog.common.Constant;
 import com.sec.aidog.pojo.Manager;
-import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.JSONUtil;

@@ -5,10 +5,10 @@ import com.sec.aidog.pojo.Manager;
 
 import java.util.List;
 
-import com.sec.aidog.pojo.Managers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface ManagerMapper {
@@ -42,4 +42,16 @@ public interface ManagerMapper {
 
     @Select("select privilegelevel from manager where province=#{provinceName}")
     public List<Integer> getProvinceManagerLevelAndBelowByDistrictName(String provinceName);
+
+    @Select("select * from manager where privilegelevel > #{privilegelevel} and districtcode like concat(#{districtcode},'%')")
+    List<Manager> getUnderManagers(@Param("privilegelevel") Integer privilegelevel, @Param("districtcode") String districtcode);
+
+    @Update("update manager set manager_status = 1  where manager_id= #{manager_id}")
+    int activeManager(Integer manager_id);
+
+    @Update("update manager set manager_status = 0  where manager_id= #{manager_id}")
+    int freezeManager(Integer manager_id);
+
+    @Update("update manager set password=#{pwd} where manager_id= #{manager_id}")
+    int resetManagerPwd(@Param("manager_id") Integer manager_id, @Param("pwd") String pwd);
 }

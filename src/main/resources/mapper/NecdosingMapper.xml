@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.sec.aidog.pojo.Necdosing" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="realtime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="realtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="nec_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lng" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lat" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -106,7 +106,7 @@
     insert into necdosing (id, realtime, nec_id, 
       lng, lat, districtcode
       )
-    values (#{id,jdbcType=INTEGER}, #{realtime,jdbcType=DATE}, #{necId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{realtime,jdbcType=TIMESTAMP}, #{necId,jdbcType=VARCHAR}, 
       #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{districtcode,jdbcType=VARCHAR}
       )
   </insert>
@@ -137,7 +137,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="realtime != null" >
-        #{realtime,jdbcType=DATE},
+        #{realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="necId != null" >
         #{necId,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.realtime != null" >
-        realtime = #{record.realtime,jdbcType=DATE},
+        realtime = #{record.realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.necId != null" >
         nec_id = #{record.necId,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
   <update id="updateByExample" parameterType="map" >
     update necdosing
     set id = #{record.id,jdbcType=INTEGER},
-      realtime = #{record.realtime,jdbcType=DATE},
+      realtime = #{record.realtime,jdbcType=TIMESTAMP},
       nec_id = #{record.necId,jdbcType=VARCHAR},
       lng = #{record.lng,jdbcType=VARCHAR},
       lat = #{record.lat,jdbcType=VARCHAR},
@@ -201,7 +201,7 @@
     update necdosing
     <set >
       <if test="realtime != null" >
-        realtime = #{realtime,jdbcType=DATE},
+        realtime = #{realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="necId != null" >
         nec_id = #{necId,jdbcType=VARCHAR},
@@ -220,7 +220,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sec.aidog.pojo.Necdosing" >
     update necdosing
-    set realtime = #{realtime,jdbcType=DATE},
+    set realtime = #{realtime,jdbcType=TIMESTAMP},
       nec_id = #{necId,jdbcType=VARCHAR},
       lng = #{lng,jdbcType=VARCHAR},
       lat = #{lat,jdbcType=VARCHAR},

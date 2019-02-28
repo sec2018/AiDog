@@ -9,7 +9,6 @@ import com.sec.aidog.model.NecdosingExample;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.AESUtil;
-import com.sec.aidog.util.ChangeTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AppdosingMapper appdosingMapper;
+
 
     @Override
     public Manager userLogin(String username, String pwd) {
@@ -394,4 +394,31 @@ public class UserServiceImpl implements UserService {
         result = "添加用户成功！";
         return result;
     }
+
+    @Override
+    public List<Manager> getUnderManagers(Integer privilegelevel, String districtcode) {
+        return managerMapper.getUnderManagers(privilegelevel,districtcode);
+    }
+
+    @Override
+    public Manager selectByPrimaryKey(Integer managerId) {
+        return managerMapper.selectByPrimaryKey(managerId);
+    }
+
+    @Override
+    public boolean activeManager(Integer manager_id) {
+        return managerMapper.activeManager(manager_id)==1?true:false;
+    }
+
+    @Override
+    public boolean freezeManager(Integer manager_id) {
+        return managerMapper.freezeManager(manager_id)==1?true:false;
+    }
+
+    @Override
+    public boolean resetManagerPwd(Integer manager_id, String pwd) {
+        return managerMapper.resetManagerPwd(manager_id, pwd)==1?true:false;
+    }
+
+
 }

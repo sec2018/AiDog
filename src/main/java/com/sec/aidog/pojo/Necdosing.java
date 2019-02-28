@@ -1,5 +1,6 @@
 package com.sec.aidog.pojo;
 
+
 import javax.persistence.Entity;
 import java.util.Date;
 

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.sec.aidog.pojo.Appdosing" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="realtime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="realtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="app_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lng" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lat" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -106,7 +106,7 @@
     insert into appdosing (id, realtime, app_id, 
       lng, lat, districtcode
       )
-    values (#{id,jdbcType=INTEGER}, #{realtime,jdbcType=DATE}, #{appId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{realtime,jdbcType=TIMESTAMP}, #{appId,jdbcType=VARCHAR}, 
       #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{districtcode,jdbcType=VARCHAR}
       )
   </insert>
@@ -137,7 +137,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="realtime != null" >
-        #{realtime,jdbcType=DATE},
+        #{realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="appId != null" >
         #{appId,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.realtime != null" >
-        realtime = #{record.realtime,jdbcType=DATE},
+        realtime = #{record.realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.appId != null" >
         app_id = #{record.appId,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
   <update id="updateByExample" parameterType="map" >
     update appdosing
     set id = #{record.id,jdbcType=INTEGER},
-      realtime = #{record.realtime,jdbcType=DATE},
+      realtime = #{record.realtime,jdbcType=TIMESTAMP},
       app_id = #{record.appId,jdbcType=VARCHAR},
       lng = #{record.lng,jdbcType=VARCHAR},
       lat = #{record.lat,jdbcType=VARCHAR},
@@ -201,7 +201,7 @@
     update appdosing
     <set >
       <if test="realtime != null" >
-        realtime = #{realtime,jdbcType=DATE},
+        realtime = #{realtime,jdbcType=TIMESTAMP},
       </if>
       <if test="appId != null" >
         app_id = #{appId,jdbcType=VARCHAR},
@@ -220,7 +220,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sec.aidog.pojo.Appdosing" >
     update appdosing
-    set realtime = #{realtime,jdbcType=DATE},
+    set realtime = #{realtime,jdbcType=TIMESTAMP},
       app_id = #{appId,jdbcType=VARCHAR},
       lng = #{lng,jdbcType=VARCHAR},
       lat = #{lat,jdbcType=VARCHAR},

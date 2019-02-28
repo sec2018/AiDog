@@ -15,7 +15,7 @@
       <arg column="dog_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="dog_info" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="dog_status" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="dog_registertime" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="dog_registertime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="dog_sex" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="dog_govcode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="districtcode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -125,7 +125,7 @@
       #{appId,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, 
       #{dogownerId,jdbcType=INTEGER}, #{dogWeight,jdbcType=VARCHAR}, #{dogColor,jdbcType=VARCHAR}, 
       #{dogAge,jdbcType=INTEGER}, #{dogInfo,jdbcType=VARCHAR}, #{dogStatus,jdbcType=VARCHAR}, 
-      #{dogRegistertime,jdbcType=DATE}, #{dogSex,jdbcType=VARCHAR}, #{dogGovcode,jdbcType=VARCHAR}, 
+      #{dogRegistertime,jdbcType=TIMESTAMP}, #{dogSex,jdbcType=VARCHAR}, #{dogGovcode,jdbcType=VARCHAR}, 
       #{districtcode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sec.aidog.pojo.Dog" >
@@ -218,7 +218,7 @@
         #{dogStatus,jdbcType=VARCHAR},
       </if>
       <if test="dogRegistertime != null" >
-        #{dogRegistertime,jdbcType=DATE},
+        #{dogRegistertime,jdbcType=TIMESTAMP},
       </if>
       <if test="dogSex != null" >
         #{dogSex,jdbcType=VARCHAR},
@@ -277,7 +277,7 @@
         dog_status = #{record.dogStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.dogRegistertime != null" >
-        dog_registertime = #{record.dogRegistertime,jdbcType=DATE},
+        dog_registertime = #{record.dogRegistertime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.dogSex != null" >
         dog_sex = #{record.dogSex,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
       dog_age = #{record.dogAge,jdbcType=INTEGER},
       dog_info = #{record.dogInfo,jdbcType=VARCHAR},
       dog_status = #{record.dogStatus,jdbcType=VARCHAR},
-      dog_registertime = #{record.dogRegistertime,jdbcType=DATE},
+      dog_registertime = #{record.dogRegistertime,jdbcType=TIMESTAMP},
       dog_sex = #{record.dogSex,jdbcType=VARCHAR},
       dog_govcode = #{record.dogGovcode,jdbcType=VARCHAR},
       districtcode = #{record.districtcode,jdbcType=VARCHAR}
@@ -352,7 +352,7 @@
         dog_status = #{dogStatus,jdbcType=VARCHAR},
       </if>
       <if test="dogRegistertime != null" >
-        dog_registertime = #{dogRegistertime,jdbcType=DATE},
+        dog_registertime = #{dogRegistertime,jdbcType=TIMESTAMP},
       </if>
       <if test="dogSex != null" >
         dog_sex = #{dogSex,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
       dog_age = #{dogAge,jdbcType=INTEGER},
       dog_info = #{dogInfo,jdbcType=VARCHAR},
       dog_status = #{dogStatus,jdbcType=VARCHAR},
-      dog_registertime = #{dogRegistertime,jdbcType=DATE},
+      dog_registertime = #{dogRegistertime,jdbcType=TIMESTAMP},
       dog_sex = #{dogSex,jdbcType=VARCHAR},
       dog_govcode = #{dogGovcode,jdbcType=VARCHAR},
       districtcode = #{districtcode,jdbcType=VARCHAR}

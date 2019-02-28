@@ -6,7 +6,7 @@
       <idArg column="manager_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="manager_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="register_time" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="register_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="manager_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="officetel" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -126,7 +126,7 @@
       workplace, manager_identity, manager_email, 
       districtcode)
     values (#{managerId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, 
-      #{registerTime,jdbcType=DATE}, #{managerTel,jdbcType=VARCHAR}, #{officetel,jdbcType=VARCHAR}, 
+      #{registerTime,jdbcType=TIMESTAMP}, #{managerTel,jdbcType=VARCHAR}, #{officetel,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{privilegelevel,jdbcType=INTEGER}, #{managerStatus,jdbcType=INTEGER}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
       #{village,jdbcType=VARCHAR}, #{hamlet,jdbcType=VARCHAR}, #{managerAddr,jdbcType=VARCHAR}, 
@@ -205,7 +205,7 @@
         #{managerName,jdbcType=VARCHAR},
       </if>
       <if test="registerTime != null" >
-        #{registerTime,jdbcType=DATE},
+        #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="managerTel != null" >
         #{managerTel,jdbcType=VARCHAR},
@@ -273,7 +273,7 @@
         manager_name = #{record.managerName,jdbcType=VARCHAR},
       </if>
       <if test="record.registerTime != null" >
-        register_time = #{record.registerTime,jdbcType=DATE},
+        register_time = #{record.registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.managerTel != null" >
         manager_tel = #{record.managerTel,jdbcType=VARCHAR},
@@ -330,7 +330,7 @@
     set manager_id = #{record.managerId,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       manager_name = #{record.managerName,jdbcType=VARCHAR},
-      register_time = #{record.registerTime,jdbcType=DATE},
+      register_time = #{record.registerTime,jdbcType=TIMESTAMP},
       manager_tel = #{record.managerTel,jdbcType=VARCHAR},
       officetel = #{record.officetel,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
@@ -360,7 +360,7 @@
         manager_name = #{managerName,jdbcType=VARCHAR},
       </if>
       <if test="registerTime != null" >
-        register_time = #{registerTime,jdbcType=DATE},
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="managerTel != null" >
         manager_tel = #{managerTel,jdbcType=VARCHAR},
@@ -414,7 +414,7 @@
     update manager
     set username = #{username,jdbcType=VARCHAR},
       manager_name = #{managerName,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=DATE},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
       manager_tel = #{managerTel,jdbcType=VARCHAR},
       officetel = #{officetel,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},

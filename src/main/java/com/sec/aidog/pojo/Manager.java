@@ -1,15 +1,10 @@
 package com.sec.aidog.pojo;
 
-import com.sec.aidog.model.ManagersKey;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
+import javax.persistence.Entity;
 import java.util.Date;
 
-@Mapper
-@Component
-public class Manager  extends ManagersKey implements Serializable {
+@Entity
+public class Manager {
     private Integer managerId;
 
     private String username;

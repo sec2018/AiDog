@@ -35,6 +35,4 @@ public interface NecdosingMapper {
 
     @Select("select count(*) from necdosing where districtcode like concat(#{districtCode},'%')")
     int getExhiCountByDistrictcode(String districtCode);
-
-
 }

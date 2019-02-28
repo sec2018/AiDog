@@ -1,7 +1,9 @@
 package com.sec.aidog.pojo;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 public class Dog {
     private Integer dogId;
 
