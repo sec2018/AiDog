@@ -1,5 +1,6 @@
 package com.sec.aidog.api;
 
+import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
@@ -42,7 +43,8 @@ public class ManagerApi {
         JsonResult r = new JsonResult();
         try {
             //取出存在缓存中的已登录用户的信息
-            String managerstr = redisService.get("token:"+token);
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+//            String managerstr1 = redisService.get("token:"+token);
             r.setCode(200);
             r.setMsg("获取用户信息成功！");
             r.setData(managerstr);
@@ -61,7 +63,7 @@ public class ManagerApi {
     @ResponseBody
     public String register(@PathVariable(value="id")Integer id) {
         Map<String,Object> data = new HashMap<String,Object>();
-        String json = "";
+        String json = null;
         switch(id) {
             case 1:
                 json = redisService.get("_registerAllcities");
@@ -71,6 +73,7 @@ public class ManagerApi {
                         map = userService.GetAllCities();
                         data.put("data1",map);
                         json = JSONObject.fromObject(data).toString();
+                        redisService.remove("_registerAllcities");
                         redisService.set("_registerAllcities", json);
                         break;
                     } catch (Exception e) {
@@ -88,6 +91,7 @@ public class ManagerApi {
                         List<Map<String, String>> map2 = userService.GetAllCounties();
                         data.put("data2",map2);
                         json = JSONObject.fromObject(data).toString();
+                        redisService.remove("_registerAllcounties");
                         redisService.set("_registerAllcounties", json);
                         break;
                     } catch (Exception e) {
@@ -107,6 +111,7 @@ public class ManagerApi {
                         List<Map<String, String>> map3 = userService.GetAllVillages();
                         data.put("data3",map3);
                         json = JSONObject.fromObject(data).toString();
+                        redisService.remove("_registerAllvillages");
                         redisService.set("_registerAllvillages", json);
                         break;
                     } catch (Exception e) {
@@ -128,6 +133,7 @@ public class ManagerApi {
                         List<Map<String, String>> map4 = userService.GetAllHamlets();
                         data.put("data4",map4);
                         json = JSONObject.fromObject(data).toString();
+                        redisService.remove("_registerAllhamlets");
                         redisService.set("_registerAllhamlets", json);
                         break;
                     } catch (Exception e) {
@@ -151,7 +157,8 @@ public class ManagerApi {
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {
-            String managerstr = redisService.get("token:"+token);
+//            String managerstr = redisService.get("token:"+token);
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
             Manager manager = ((Manager) JSONUtil.JSONToObj(managerstr,Manager.class));
             int privilegelevel = manager.getPrivilegelevel();
             String districode = manager.getDistrictcode();
@@ -237,25 +244,25 @@ public class ManagerApi {
             switch (privilegelevel){
                 case 2:
                     districode = districode.substring(0,2);
-                    if(districode_2.substring(0,2)!= districode){
+                    if(!districode_2.substring(0,2).equals(districode)){
                         tempflag = false;
                     }
                     break;
                 case 3:
                     districode = districode.substring(0,4);
-                    if(districode_2.substring(0,4)!= districode){
+                    if(!districode_2.substring(0,4).equals(districode)){
                         tempflag = false;
                     }
                     break;
                 case 4:
                     districode = districode.substring(0,6);
-                    if(districode_2.substring(0,6)!= districode){
+                    if(!districode_2.substring(0,6).equals(districode)){
                         tempflag = false;
                     }
                     break;
                 case 5:
                     districode = districode.substring(0,9);
-                    if(districode_2.substring(0,9)!= districode){
+                    if(!districode_2.substring(0,9).equals(districode)){
                         tempflag = false;
                     }
                     break;

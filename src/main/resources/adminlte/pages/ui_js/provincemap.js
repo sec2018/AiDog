@@ -1,8 +1,14 @@
 $(function () {
-
+    var province = "";
+    if (location.search.length > 0) {
+        province = unescape(location.search.split('?')[1].split('=')[1]);
+    }
+    var senddata = {};
+    senddata.province = province;
     $.ajax({
         url: "/aidog/api/getprovincemap",
         method: "GET",
+        data: senddata,
         beforeSend: function(request) {
             request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
         },

@@ -34,4 +34,7 @@ public interface DogMapper {
 
     @Select("select nec_id from dog where districtcode like concat(#{districtCode},'%')")
     List<String> getAllNeckletIdByDistrictcode(String districtCode);
+
+    @Select("select * from dog where districtcode like concat(#{districtCode},'%') ")//and ((neckletid ='-1' and apparatusid !='-1') or (apparatusid ='-1' and neckletid !='-1'))
+    List<Dog> getIndexInforByDistrictcode(String districtCode);
 }

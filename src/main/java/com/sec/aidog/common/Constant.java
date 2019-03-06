@@ -48,6 +48,7 @@ public class Constant {
     public static Constant LOGIN_EXCEPTION = new Constant(50102, "登录异常");
     public static Constant LOGIN_USERNOTEXIST = new Constant(50103, "用户不存在");
     public static Constant LOGIN_ALREADY = new Constant(50104, "用户已登录");
+    public static Constant Redis_TIMEDOWN = new Constant(500102, "Redis连接超时");
 
 }
 

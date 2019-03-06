@@ -64,11 +64,21 @@ public interface DistrictMapper {
     District getDistrictsByDistrictName(String provinceName);
 
     @Select("select * from district where (district_name=#{districtName} or echartname=#{districtName}) and districtcode like concat(#{higherLevelDistrictCode},'%')")
-    District getCityAndBelowDistrictsByDistrictName(String districtName,String higherLevelDistrictCode);
+    District getCityAndBelowDistrictsByDistrictName(@Param("districtName")String districtName,@Param("higherLevelDistrictCode")String higherLevelDistrictCode);
 
-    @Select("select echartname from district where district_name =#{districtName} or echartname =#{districtName}")
+    @Select("select echartname from district where district_name =#{districtName} or echartname =#{districtName} limit 1")
     String getEchartsareanametempByDistrictName(String districtName);
 
-    @Select("select district_name from district where district_name =#{districtName} or echartname =#{districtName}")
+    @Select("select district_name from district where district_name =#{districtName} or echartname =#{districtName} limit 1")
     String getGovareanametempByDistrictName(String districtName);
+
+    @Select("select * from district where districtcode like concat(#{districtCode},'%')")
+    List<District> getDistrictByDistrictcode(String districtCode);
+
+    @Select("select * from district where districtcode REGEXP concat(#{provinceCode0to2}, '.{4}000000') and districtcode !=concat(#{provinceCode0to2}, '0000000000')and epidemic = 1")
+    List<District> getCitiesAndCountiesByDistrictcode(String provinceCode0to2);
+
+    @Select("select * from district where districtcode REGEXP concat(#{armyCode0to2}, '.{4}00')  and districtcode !=concat(#{armyCode0to2}, '000000') and epidemic = 1")
+    List<District> getDivisionsAndRegimentalByDistrictcode(String armyCode0to2);
+
 }

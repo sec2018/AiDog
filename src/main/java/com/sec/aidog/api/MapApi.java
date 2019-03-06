@@ -1,7 +1,7 @@
 package com.sec.aidog.api;
 
+import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.pojo.Manager;
-import com.sec.aidog.pojo.Managers;
 import com.sec.aidog.service.ProvinceService;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -52,7 +53,8 @@ public class MapApi {
         JsonResult r = new JsonResult();
         try {
             //取出存在缓存中的已登录用户的信息
-            String managerstr = redisService.get("token:"+token);
+//            String managerstr = redisService.get("token:"+token);
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
             Manager resultUser = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
             JSONObject jsStr = null;
             switch(resultUser.getPrivilegelevel()) {
@@ -127,22 +129,31 @@ public class MapApi {
         return ResponseEntity.ok(r);
     }
 
-    @RequestMapping(value="/provincemap",produces="text/plain;charset=UTF-8")
+    @RequestMapping(value="/getprovincemap",produces="text/plain;charset=UTF-8")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "province", value = "省份", required = true, dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "province", value = "省份", required = false, dataType = "String",paramType = "query"),
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
     })
     @ResponseBody
-    public ResponseEntity<JsonResult> GetProvinceMap(@RequestParam(value="province") String province, HttpServletRequest request){
+    public ResponseEntity<JsonResult> GetProvinceMap(@RequestParam(value="province",required = false) String province, HttpServletRequest request){
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {
             //取出存在缓存中的已登录用户的信息
-            String managerstr = redisService.get("token:"+token);
-            Managers resultUser = ((Managers) JSONUtil.JSONToObj(managerstr, Managers.class));
+//            String managerstr = redisService.get("token:"+token);
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            Manager resultUser = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
             JSONObject jsStr = null;
             Map<String,Object> data = new HashMap<String,Object>();
             data.put("data1",resultUser);//data1保存用户信息
+            String provinceres = province;
+            if(provinceres!=""){
+                //上级页面跳转而来，非首页，解码
+//                provinceres = URLDecoder.decode(provinceres, "UTF-8");
+            }else{
+                //当前管理员首页
+                provinceres = resultUser.getProvince();
+            }
             if(province.equals("建设兵团")) {//查看建设兵团的详情
                 Map<String,Integer> armyIndexInfo = provinceService.GetArmyIndexLogo(province);//获得建设兵团的总体数据信息
                 data.put("data2",armyIndexInfo);
