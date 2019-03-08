@@ -13,17 +13,18 @@ import java.util.List;
 @EnableWebMvc
 public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 
-    @Autowired
-    private LoginInterceptor loginInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        //拦截所有的controller
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/*")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/sublogin*");
-        super.addInterceptors(registry);
-    }
+//    @Autowired
+//    private LoginInterceptor loginInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        //拦截所有的controller
+//        registry.addInterceptor(loginInterceptor).addPathPatterns("/*")
+//                .excludePathPatterns("/login")
+//                .excludePathPatterns("/api")
+//                .excludePathPatterns("/sublogin*");
+//        super.addInterceptors(registry);
+//    }
 
 //    @Bean                                   //注入方法2，去掉Component
 //    LoginInterceptor loginInterceptor() {

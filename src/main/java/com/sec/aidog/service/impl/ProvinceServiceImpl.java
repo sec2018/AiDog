@@ -365,7 +365,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     public Map<String, Object> GetDistrictcode(String provinceName) {
         Map<String, Object> map = new HashMap<String,Object>();
         District districtsist = null;
-        districtsist = districtMapper.getDistricstsByDistrictName(provinceName);
+        districtsist = districtMapper.getDistrictsByDistrictName(provinceName);
         String provincCode = districtsist.getDistrictcode();
         //该省或军区的官方名
         map.put("provinceGov",nameConversionUtil.EchartsAreaNameToGov(provinceName));

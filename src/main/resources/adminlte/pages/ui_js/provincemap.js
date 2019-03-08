@@ -15,6 +15,7 @@ $(function () {
         success: function (data) {
             if (data.data != null) {
                 if (data.data.data1.privilegelevel == 1) {
+                    data = data.data;
                     $("#cityepidemictotal").text(data.data2.cityepidemictotal);
                     $("#countyepidemictotal").text(data.data2.countyepidemictotal);
                     $("#villageepidemictotal").text(data.data2.villageepidemictotal);
@@ -33,7 +34,7 @@ $(function () {
                     $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
                     $("#countrymednumtotal").text(data.data2.countrymednumtotal);
                 }
-                GetProvinceEcharts(data.data);
+                GetProvinceEcharts(data);
             }
         }
     })
@@ -90,14 +91,14 @@ function GetProvinceEcharts(data) {
     // 路径配置
     require.config({
         paths: {
-            echarts: '../js'
+            echarts: '../ui_js'
         }
     });
     // 使用
     require(
         [
             'echarts',
-            'echarts/chart/map' // 使用地图就加载map模块，按需加载
+            'ui_js/chart/map' // 使用地图就加载map模块，按需加载
         ],
         function (ec) {
             // 基于准备好的dom，初始化echarts图表

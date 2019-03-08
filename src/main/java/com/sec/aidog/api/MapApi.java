@@ -129,7 +129,7 @@ public class MapApi {
         return ResponseEntity.ok(r);
     }
 
-    @RequestMapping(value="/getprovincemap",produces="text/plain;charset=UTF-8")
+    @RequestMapping(value="/getprovincemap",method = RequestMethod.GET)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "province", value = "省份", required = false, dataType = "String",paramType = "query"),
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")

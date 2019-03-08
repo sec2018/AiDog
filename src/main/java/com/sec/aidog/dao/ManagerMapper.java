@@ -55,7 +55,7 @@ public interface ManagerMapper {
     @Update("update manager set password=#{pwd} where manager_id= #{manager_id}")
     int resetManagerPwd(@Param("manager_id") Integer manager_id, @Param("pwd") String pwd);
 
-    @Select("select privilegelevel from managers where province=#{param1} and city=#{param2}")
+    @Select("select privilegelevel from manager where province=#{param1} and city=#{param2}")
     List<Integer> getCityManagerAndBelowByDistrictName(String provinceName, String cityName);
 
 }
