@@ -35,6 +35,7 @@ public class CustomWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/adminlte/**").addResourceLocations("classpath:/adminlte/");
+//        registry.addResourceHandler("/adminlte/pages/ui_js/chart/**").addResourceLocations("classpath:/adminlte/pages/ui_js/chart/");
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
         registry.addResourceHandler("/layui/**").addResourceLocations("classpath:/layui/");
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/");

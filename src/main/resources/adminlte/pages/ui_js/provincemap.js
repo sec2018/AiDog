@@ -31,7 +31,11 @@ $(function () {
                     $("#neckdognumtotal").text(data.data2.neckdognumtotal);
                     $("#countryalldognumtotal").text(data.data2.alldognumtotal);
                     $("#countrywsqdognumtotal").text(data.data2.feedernumtotal);
-                    $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
+                    if(data.data2.alldognumtotal == 0){
+                        $("#countryratedognumtotal").text(0);
+                    }else{
+                        $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
+                    }
                     $("#countrymednumtotal").text(data.data2.countrymednumtotal);
                 }
                 GetProvinceEcharts(data);
@@ -98,7 +102,7 @@ function GetProvinceEcharts(data) {
     require(
         [
             'echarts',
-            'ui_js/chart/map' // 使用地图就加载map模块，按需加载
+            'echarts/chart/map' // 使用地图就加载map模块，按需加载
         ],
         function (ec) {
             // 基于准备好的dom，初始化echarts图表
@@ -233,9 +237,8 @@ function GetProvinceEcharts(data) {
             myChart.on("click", function (param) {
                 // alert(param.seriesName + 'S'+ (param.name == name_selected));
                 if (param.seriesName != '' && param.name == name_selected) {
-
-                    window.location.href = encodeURI(encodeURI("../city/city.do?city=" + param.name + "&province=" + provinceGov));
-                    //alert(param.name);
+                    window.location.href = "../UI/citymap.html?province=" + escape(provinceGov) + "&city=" + escape(param.name);
+                    // window.location.href = encodeURI(encodeURI("../city/city.do?city=" + param.name + "&province=" + provinceGov));
                 } else {
                     name_selected = param.name;
                 }

@@ -58,4 +58,13 @@ public interface ManagerMapper {
     @Select("select privilegelevel from manager where province=#{param1} and city=#{param2}")
     List<Integer> getCityManagerAndBelowByDistrictName(String provinceName, String cityName);
 
+    @Select("select privilegelevel from manager where province=#{param1} and city=#{param2} and county=#{param3}")
+    List<Integer> getCountyManagerAndBelowByDistrictName(String provinceName,String cityName, String countyName);
+
+    @Select("select privilegelevel from manager where province=#{param1} and city=#{param2} and county=#{param3} and village=#{param4}")
+    List<Integer> getVillageManagerAndBelowByDistrictName(String provinceName,String cityName, String countyName, String villageName);
+
+    @Select("select privilegelevel from manager where province=#{param1} and city=#{param2} and county=#{param3} and village=#{param4} and hamlet=#{param5}")
+    List<Integer> getHamletManagerByDistrictName(String provinceName,String cityName, String countyName, String villageName ,String hamletName);
+
 }

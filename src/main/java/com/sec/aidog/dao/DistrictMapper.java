@@ -81,4 +81,15 @@ public interface DistrictMapper {
     @Select("select * from district where districtcode REGEXP concat(#{armyCode0to2}, '.{4}00')  and districtcode !=concat(#{armyCode0to2}, '000000') and epidemic = 1")
     List<District> getDivisionsAndRegimentalByDistrictcode(String armyCode0to2);
 
+    @Select("select * from district where districtcode REGEXP concat(#{cityCode0to4}, '.{5}000') and districtcode !=concat(#{cityCode0to4}, '00000000')and epidemic = 1")
+    List<District> getCountiesAndVillagesByDistrictcode(String cityCode0to4);
+
+    @Select("select * from district where districtcode REGEXP concat(#{divisionCode0to4}, '.{4}')  and districtcode !=concat(#{divisionCode0to4}, '0000') and epidemic = 1")
+    List<District> getRegimentalAndCompanyByDistrictcode(String divisionCode0to4);
+
+    @Select("select districtcode, district_name,echartname,epidemic,lng,lat from district where districtcode REGEXP concat(#{countyCode0to6}, '.{6}') and districtcode !=concat(#{countyCode0to6}, '000000')and epidemic = 1 ")
+    List<District> getVillagesAndHamletsByDistrictcode(String countyCode0to6);
+
+    @Select("select districtcode, district_name,echartname,epidemic,lng,lat from district where districtcode REGEXP concat(#{villageCode0to9}, '.{3}') and districtcode !=concat(#{villageCode0to9}, '000')and epidemic = 1 ")
+    List<District> getHamletsByDistrictcode(String villageCode0to9);
 }
