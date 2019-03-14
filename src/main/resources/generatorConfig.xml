@@ -64,6 +64,6 @@
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="manager"></table>
+        <table tableName="appconfig"></table>
     </context>
 </generatorConfiguration>

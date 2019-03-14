@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>包虫病防控犬驱虫远程管理系统</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- bootstrap -->
+        <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
+
+        <title>乡级地图</title>
+        <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../ui_js/echarts.js"></script>
+        <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.0&key=39f6a5bd38f3167dc032e09b8e6d2a12&plugin=AMap.MarkerClusterer"></script>
+        <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script src="../ui_js/hamletmap.js"></script>
+        <style>
+            html,body,#statsChart{
+                height:100%;
+                width:100%;
+            }
+        </style>
+    </head>
+</head>
+<body>
+    这是村级地图。。。
+    <a id="back" style="cursor: pointer;color: #00a7d0">返回</a>
+    <div class="content">
+        <div id="pad-wrapper" class="users-list">
+            <div class="row chart">
+                <div class="col-md-12">
+                    <div style="text-align: center;">
+                        <h3 id="h3_logtitle"></h3>
+                    </div>
+                    <div id="statsChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#back").click(function () {
+                history.go(-1);
+            });
+        })
+    </script>
+</body>
+</html>

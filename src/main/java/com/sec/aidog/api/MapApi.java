@@ -6,6 +6,7 @@ import com.sec.aidog.service.*;
 import com.sec.aidog.util.CommonThreadPool;
 import com.sec.aidog.util.JSONUtil;
 import com.sec.aidog.util.JsonResult;
+import com.sec.aidog.util.NameConversionUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +46,12 @@ public class MapApi {
 
     @Autowired
     private VillageService villageService;
+
+    @Autowired
+    private HamletService hamletService;
+
+    @Autowired
+    private NameConversionUtil nameConversionUtil;
 
     @Autowired
     private Gson gson;
@@ -112,7 +119,7 @@ public class MapApi {
                 case 5:
                     return GetVillageMap(resultUser.getProvince(),resultUser.getCity(),resultUser.getCounty(),resultUser.getVillage(),request);
                 case 6:
-
+                    return GetHamletMap(resultUser.getProvince(),resultUser.getCity(),resultUser.getCounty(),resultUser.getVillage(),resultUser.getHamlet(),request);
             }
         } catch (Exception e) {
             r.setCode(500);
@@ -349,7 +356,7 @@ public class MapApi {
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
     })
     @ResponseBody
-    public ResponseEntity<JsonResult> GetVillageMap(@RequestParam(value="province",required = false) String province,@RequestParam(value="city",required = false) String city, @RequestParam(value="county",required = false) String county, @RequestParam(value="village",required = false) String village,@RequestParam(value="hamlet",required = false) String hamlet,HttpServletRequest request) {
+    public ResponseEntity<JsonResult> GetHamletMap(@RequestParam(value="province",required = false) String province,@RequestParam(value="city",required = false) String city, @RequestParam(value="county",required = false) String county, @RequestParam(value="village",required = false) String village,@RequestParam(value="hamlet",required = false) String hamlet,HttpServletRequest request) {
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {
@@ -395,7 +402,7 @@ public class MapApi {
         } catch (Exception e) {
             r.setCode(500);
             r.setData(e.getClass().getName() + ":" + e.getMessage());
-            r.setMsg("获取乡级地图信息失败");
+            r.setMsg("获取村级地图信息失败");
             r.setSuccess(false);
             e.printStackTrace();
         }

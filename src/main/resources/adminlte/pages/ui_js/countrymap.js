@@ -232,7 +232,6 @@ function GetCountryEcharts(data) {
             var name_selected = '';
             myChart.on("click", function (param) {
                 if (param.seriesName != '' && param.name == name_selected) {
-                    alert(param.name);
                     // window.location.href = encodeURI(encodeURI("../UI/provincemap.html?province=" + param.name));
                     window.location.href = "../UI/provincemap.html?province=" + escape(param.name);
                 } else {

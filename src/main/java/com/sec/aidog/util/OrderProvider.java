@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class OrderProvider {
 
-    public String combineNeckletAndFeederDogListStr(Map<String, Object> paramsmap) {
-        SQL sql = new SQL().SELECT("dogid,dogname,neckletid,apparatusid,managername").FROM("sheepdogs");
+    public String combineNeckletAndAppDogListStr(Map<String, Object> paramsmap) {
+        SQL sql = new SQL().SELECT("dog_id,dog_name,nec_id,app_id,manager_name").FROM("dog");
         String hamletCode = paramsmap.get("hamletCode").toString();
         if (StringUtils.hasText(hamletCode)) {
             sql.WHERE("districtcode = #{hamletCode}");
