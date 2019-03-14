@@ -43,7 +43,7 @@ public class LoginController {
             if(manager!=null){
                 //PassHandle为自己定义的一个生成Token的类，可以根据自己喜好来改
                 String token = TokenGenerator.generateValue();
-                manager.setPassword("皮一下逗逗你");
+                manager.setPassword(password);
                 //将token存到redis缓存中
                 String managerjson = JSONUtil.objectToJson(manager).toString();
                 redisService.set("token:"+ token, managerjson);

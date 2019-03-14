@@ -1,15 +1,20 @@
 package com.sec.aidog.service.impl;
 
 import com.sec.aidog.common.DistrictUtil;
+import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.*;
 import com.sec.aidog.model.AppdosingExample;
 import com.sec.aidog.model.DistrictExample;
 import com.sec.aidog.model.DogExample;
 import com.sec.aidog.model.NecdosingExample;
 import com.sec.aidog.pojo.*;
+import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
 import com.sec.aidog.util.AESUtil;
+import com.sec.aidog.util.JSONUtil;
+import com.sec.aidog.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
@@ -47,6 +52,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AppdosingMapper appdosingMapper;
 
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public Manager userLogin(String username, String pwd) {
@@ -420,5 +427,34 @@ public class UserServiceImpl implements UserService {
         return managerMapper.resetManagerPwd(manager_id, pwd)==1?true:false;
     }
 
-
+    @Override
+    public String modifyUser(String username, String manager_name, String workplace, String manager_identity, String officetel, String manager_tel, String manager_addr, String manager_email, String password, String token) throws Exception {
+        String result = null;
+        Manager user = managerMapper.findUserByName(username);
+        try {
+            //给密码加密
+            AESUtil aes = new AESUtil();
+            user.setManagerName(manager_name);
+            user.setWorkplace(workplace);
+            user.setManagerIdentity(manager_identity);
+            user.setOfficetel(officetel);
+            user.setManagerTel(manager_tel);
+            user.setManagerAddr(manager_addr);
+            user.setManagerEmail(manager_email);
+            user.setPassword(aes.encryptData(password));
+            //根据username进行更新
+            result = managerMapper.updateByPrimaryKey(user)==0?"修改失败！":"修改成功！";
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            if(result.equals("修改成功！")){
+                redisService.remove("token:"+token);
+                //将token存到redis缓存中
+                String managerjson = JSONUtil.objectToJson(user).toString();
+                redisService.set("token:"+ token, managerjson);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

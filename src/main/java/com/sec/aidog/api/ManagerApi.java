@@ -34,17 +34,16 @@ public class ManagerApi {
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "username", value = "用户名标识", required = true, dataType = "String",paramType = "query")
+            @ApiImplicitParam(name = "username", value = "用户名标识", required = false, dataType = "String",paramType = "query")
     })
     @RequestMapping(value="getuserinfo",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<JsonResult> GetManagerInfo(@RequestParam(value = "username")String username,HttpServletRequest request){
+    public ResponseEntity<JsonResult> GetManagerInfo(@RequestParam(value = "username",required = false)String username,HttpServletRequest request){
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {
             //取出存在缓存中的已登录用户的信息
             String managerstr = RedisUtil.RedisGetValue("token:"+token);
-//            String managerstr1 = redisService.get("token:"+token);
             r.setCode(200);
             r.setMsg("获取用户信息成功！");
             r.setData(managerstr);
@@ -310,4 +309,31 @@ public class ManagerApi {
         return ResponseEntity.ok(r);
     }
 
+    @RequestMapping(value = "modifypersonalinfo",produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String indexApi(@RequestBody JSONObject senddata, HttpServletRequest request) {
+        String clickType = senddata.getString("clicktype");
+        String username = senddata.getString("username");
+        String jsStr = null;
+        //确认修改
+        if(clickType.equals("modifyself")) {
+            String manager_name = senddata.getString("managername");
+            String workplace = senddata.getString("managerjob");
+            String manager_identity = senddata.getString("manageridentity");
+            String officetel = senddata.getString("officecall");
+            String manager_tel = senddata.getString("managertel");
+            String manager_addr = senddata.getString("manageraddress");
+            String manager_email = senddata.getString("email");
+            String password = senddata.getString("password");
+            String result = "";
+            try {
+                String token = request.getHeader("token");
+                result = userService.modifyUser(username, manager_name, workplace, manager_identity, officetel, manager_tel, manager_addr, manager_email, password,token);
+            } catch (Exception e) {
+                result = "修改失败！";
+            }
+            jsStr =  result;
+        }
+        return jsStr;
+    }
 }

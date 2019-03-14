@@ -845,15 +845,19 @@
                                 break;
                             case 3:
                                 $("#manager_area").html(data.city+"管理员");
+                                usermap = "UI/citymap.html";
                                 break;
                             case 4:
                                 $("#manager_area").html(data.county+"管理员");
+                                usermap = "UI/county.map.html";
                                 break;
                             case 5:
                                 $("#manager_area").html(data.village+"管理员");
+                                usermap = "UI/villagemap.html";
                                 break;
                             case 6:
                                 $("#manager_area").html(data.hamlet+"管理员");
+                                usermap = "UI/hamletmap.html";
                                 break;
                         }
 
@@ -1086,7 +1090,7 @@
                                     {
                                         id: "90052",
                                         text: "个人信息设置",
-                                        url: "UI/baobiaotest.html",
+                                        url: "UI/personalinfo.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
                                         urlType: 'abosulte'

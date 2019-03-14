@@ -38,10 +38,10 @@ public interface ManagerMapper {
     Manager findUserByName(String name);
 
     @Select("select privilegelevel from manager")
-    public List<Integer> getManagerLevel();
+    List<Integer> getManagerLevel();
 
     @Select("select privilegelevel from manager where province=#{provinceName}")
-    public List<Integer> getProvinceManagerLevelAndBelowByDistrictName(String provinceName);
+    List<Integer> getProvinceManagerLevelAndBelowByDistrictName(String provinceName);
 
     @Select("select * from manager where privilegelevel > #{privilegelevel} and districtcode like concat(#{districtcode},'%')")
     List<Manager> getUnderManagers(@Param("privilegelevel") Integer privilegelevel, @Param("districtcode") String districtcode);

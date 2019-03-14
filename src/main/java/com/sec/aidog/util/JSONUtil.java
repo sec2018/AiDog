@@ -4,7 +4,9 @@ package com.sec.aidog.util;
  * Created by WangZJ on 2018/11/19.
  */
 import java.io.IOException;
+import java.util.List;
 
+import com.alibaba.fastjson.JSON;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,5 +52,27 @@ public class JSONUtil {
             throw e;
         }
         return new JSONObject(jsonStr);
+    }
+
+
+    /**
+     * List<T> 转 json
+     * @param ts
+     * @param <T>
+     * @return
+     */
+    public static <T> String listToJson(List<T> ts){
+        return JSON.toJSONString(ts);
+    }
+
+    /**
+     * json 转 List<T>
+     * @param jsonStr
+     * @param tClass
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> jsonToList(String jsonStr, Class<T> tClass) {
+        return com.alibaba.fastjson.JSONArray.parseArray(jsonStr, tClass);
     }
 }
