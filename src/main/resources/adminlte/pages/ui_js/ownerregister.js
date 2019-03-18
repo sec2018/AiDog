@@ -91,82 +91,43 @@ $(function () {
             }
         }
     });
+
     var hamletcode = "";
     $("#select_hamlet").on('change', function () {
         hamletcode = $(this).find('option:selected').val();
         var selectvalue = $(this).find('option:selected').text();
-        $("#input_dogbelonghamlet").val(selectvalue);
-        var senddata = {};
-        senddata.hamletcode = hamletcode;
-        $.ajax({
-            url:  "/aidog/api/gethamletownerlist",
-            type: "POST",
-            data:  senddata,
-            beforeSend: function (request) {
-                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
-            },
-            success: function (data) {
-                var modalselect_dogownername = document.getElementById("select_dogownername");
-                data.data = objToArray(data.data);
-                for (var i = 0; i < data.data.length; i++) {
-                    //遍历后台传回的结果，一项项往select中添加option
-                    modalselect_dogownername.options.add(new Option(data.data[i].ownername, data.data[i].ownerid));
-                }
-            }
-        })
-        $.ajax({
-            url:  "/aidog/api/gethamletmanagerlist",
-            type: "POST",
-            data:  senddata,
-            beforeSend: function (request) {
-                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
-            },
-            success: function (data) {
-                var modalselect_dogmanagername = document.getElementById("select_managername");
-                data.data = objToArray(data.data);
-                for (var i = 0; i < data.data.length; i++) {
-                    //遍历后台传回的结果，一项项往select中添加option
-                    modalselect_dogmanagername.options.add(new Option(data.data[i].managername, data.data[i].managerusername));
-                }
-            }
-        })
+        $("#select_ownerhamlet").val(selectvalue);
     });
 
-
-
-
-    //添加牧犬
-    $("#a_adddog").click(function () {
-        var clicktype = "dogadd";
-        var dogname = $("#input_dogname").val();
-        var dogsex = $("#select_dogsex").find("option:selected").text();
+    $("#a_addowner").click(function () {
+        var clicktype = "owneradd";
+        var ownername = $("#input_ownername").val();
+        var owneridentity = $("#input_owneridentity").val();
+        var ownersex = $("#select_ownersex").find("option:selected").text();
         if(hamletcode == ""){
             alert("请先选择主人所属行政村！");
             return;
         }
-        var dogbelonghamlet = $("#input_dogbelonghamlet").val();
-        var govcode = $("#input_doggovcode").val();
-        var dogownerid = $("#select_dogownername").val();
-        var username = $("#select_managername").val();
-        var dogweight = $("#input_dogweight").val();
-        var dogcolor = $("#input_dogcolor").val();
-        var dogage = $("#input_dogage").val();
+        var ownerhamlet = $("#select_ownerhamlet").val();
+        var ownerage = $("#input_ownerage").val();
+        var ownerjob = $("#input_ownerjob").val();
+        var homeaddress = $("#input_homeaddress").val();
+        var telphone = $("#input_telphone").val();
         var senddata = {};
         senddata.clicktype = clicktype;
-        senddata.username = username;
-        senddata.dogname = dogname;
-        senddata.dogsex = dogsex;
-        senddata.dogbelonghamlet = dogbelonghamlet;
+        senddata.ownername = ownername;
+        senddata.owneridentity = owneridentity;
+        senddata.ownersex = ownersex;
+        senddata.ownerhamlet = ownerhamlet;
         senddata.ownerhamletcode = hamletcode;
-        senddata.dogownerid = dogownerid;
-        senddata.dogweight = dogweight;
-        senddata.dogcolor = dogcolor;
-        senddata.dogage = dogage;
-        senddata.govcode = govcode;
+        senddata.ownerage = ownerage;
+        senddata.ownerjob = ownerjob;
+        senddata.homeaddress = homeaddress;
+        senddata.telphone = telphone;
         $.ajax({
             url: "/aidog/api/bindoraddapi",
             type: "POST",
-            data:  JSON.stringify(senddata),
+            data: JSON.stringify(senddata),
             contentType: "application/json",
             dataType: "text",    // 控制回来的数据类型
             beforeSend: function (request) {
@@ -179,13 +140,5 @@ $(function () {
         })
     });
 
+
 })
-
-
-function objToArray(array) {
-    var arr = []
-    for (var i in array) {
-        arr.push(array[i]);
-    }
-    return arr;
-}

@@ -3,10 +3,7 @@ package com.sec.aidog.service.impl;
 import com.sec.aidog.common.DistrictUtil;
 import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.*;
-import com.sec.aidog.model.AppdosingExample;
-import com.sec.aidog.model.DistrictExample;
-import com.sec.aidog.model.DogExample;
-import com.sec.aidog.model.NecdosingExample;
+import com.sec.aidog.model.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.service.UserService;
@@ -456,5 +453,23 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public Map<String, Object> getHamletManagerList(String hamletcode) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        ManagerExample example = new ManagerExample();
+        example.createCriteria().andDistrictcodeEqualTo(hamletcode);
+        List<Manager> dogmanagerList = managerMapper.selectByExample(example);
+        int i=0;
+        for (Manager item:dogmanagerList)
+        {
+            Map<String, Object> maptemp = new HashMap<String, Object>();
+            maptemp.put("managerusername", item.getUsername());
+            maptemp.put("managername", item.getManagerName());
+            map.put(""+i, maptemp);
+            i++;
+        }
+        return map;
     }
 }

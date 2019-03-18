@@ -24,26 +24,24 @@ $(function() {
         },
         success: function (data) {
             if (data.data != null) {
-                if (data.data.data1.privilegelevel == 1) {
-                    data = data.data;
-                    $("#td_areadognumtotal").html("全乡总数");
-                    $("#td_areamednumtotal").html("全乡总数");
+                data = data.data;
+                $("#td_areadognumtotal").html("全乡总数");
+                $("#td_areamednumtotal").html("全乡总数");
 
-                    $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
+                $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
-                    $("#villageadmintotal").text(data.data2.villageadmintotal);
-                    $("#hamletadmintotal").text(data.data2.hamletadmintotal);
+                $("#villageadmintotal").text(data.data2.villageadmintotal);
+                $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-                    $("#neckdognumtotal").text(data.data2.neckdognumtotal);
-                    $("#countryalldognumtotal").text(data.data2.alldognumtotal);
-                    $("#villagewsqdognumtotal").text(data.data2.feedernumtotal);
-                    if(data.data2.alldognumtotal == 0){
-                        $("#countryratedognumtotal").text(0);
-                    }else{
-                        $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
-                    }
-                    $("#countrymednumtotal").text(data.data2.countrymednumtotal);
+                $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+                $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+                $("#villagewsqdognumtotal").text(data.data2.feedernumtotal);
+                if(data.data2.alldognumtotal == 0){
+                    $("#countryratedognumtotal").text(0);
+                }else{
+                    $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
                 }
+                $("#countrymednumtotal").text(data.data2.countrymednumtotal);
                 GetVillageEcharts(data);
             }
         }

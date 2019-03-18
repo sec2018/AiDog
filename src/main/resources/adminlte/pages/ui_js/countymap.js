@@ -21,29 +21,27 @@ $(function() {
         },
         success: function (data) {
             if (data.data != null) {
-                if (data.data.data1.privilegelevel == 1) {
-                    data = data.data;
-                    $("#td_areadognumtotal").html("全县总数");
-                    $("#td_areaalldognumtotal").html("全县总数");
-                    $("#td_areamednumtotal").html("全县总数");
+                data = data.data;
+                $("#td_areadognumtotal").html("全县总数");
+                $("#td_areaalldognumtotal").html("全县总数");
+                $("#td_areamednumtotal").html("全县总数");
 
-                    $("#villageepidemictotal").text(data.data2.villageepidemictotal);
-                    $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
+                $("#villageepidemictotal").text(data.data2.villageepidemictotal);
+                $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
-                    $("#countyadmintotal").text(data.data2.countyadmintotal);
-                    $("#villageadmintotal").text(data.data2.villageadmintotal);
-                    $("#hamletadmintotal").text(data.data2.hamletadmintotal);
+                $("#countyadmintotal").text(data.data2.countyadmintotal);
+                $("#villageadmintotal").text(data.data2.villageadmintotal);
+                $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-                    $("#neckdognumtotal").text(data.data2.neckdognumtotal);
-                    $("#countryalldognumtotal").text(data.data2.alldognumtotal);
-                    $("#countywsqdognumtotal").text(data.data2.feedernumtotal);
-                    if(data.data2.alldognumtotal == 0){
-                        $("#countryratedognumtotal").text(0);
-                    }else{
-                        $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
-                    }
-                    $("#countrymednumtotal").text(data.data2.countrymednumtotal);
+                $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+                $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+                $("#countywsqdognumtotal").text(data.data2.feedernumtotal);
+                if(data.data2.alldognumtotal == 0){
+                    $("#countryratedognumtotal").text(0);
+                }else{
+                    $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
                 }
+                $("#countrymednumtotal").text(data.data2.countrymednumtotal);
                 GetCountyEcharts(data);
             }
         }

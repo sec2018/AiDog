@@ -154,7 +154,7 @@ public class MapApi {
 //                provinceres = URLDecoder.decode(provinceres, "UTF-8");
             }else{
                 //当前管理员首页
-                provinceres = resultUser.getProvince();
+                province = resultUser.getProvince();
             }
             if(province.equals("建设兵团")) {//查看建设兵团的详情
                 Map<String,Integer> armyIndexInfo = provinceService.GetArmyIndexLogo(province);//获得建设兵团的总体数据信息

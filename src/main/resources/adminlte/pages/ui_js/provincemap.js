@@ -14,30 +14,29 @@ $(function () {
         },
         success: function (data) {
             if (data.data != null) {
-                if (data.data.data1.privilegelevel == 1) {
-                    data = data.data;
-                    $("#cityepidemictotal").text(data.data2.cityepidemictotal);
-                    $("#countyepidemictotal").text(data.data2.countyepidemictotal);
-                    $("#villageepidemictotal").text(data.data2.villageepidemictotal);
-                    $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
+                data = data.data;
+                $("#cityepidemictotal").text(data.data2.cityepidemictotal);
+                $("#countyepidemictotal").text(data.data2.countyepidemictotal);
+                $("#villageepidemictotal").text(data.data2.villageepidemictotal);
+                $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
-                    //$("#tr_admincountry").css("display", "none");
-                    $("#provinceadmintotal").text(data.data2.provinceadmintotal);
-                    $("#cityadmintotal").text(data.data2.cityadmintotal);
-                    $("#countyadmintotal").text(data.data2.countyadmintotal);
-                    $("#villageadmintotal").text(data.data2.villageadmintotal);
-                    $("#hamletadmintotal").text(data.data2.hamletadmintotal);
+                //$("#tr_admincountry").css("display", "none");
+                $("#provinceadmintotal").text(data.data2.provinceadmintotal);
+                $("#cityadmintotal").text(data.data2.cityadmintotal);
+                $("#countyadmintotal").text(data.data2.countyadmintotal);
+                $("#villageadmintotal").text(data.data2.villageadmintotal);
+                $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-                    $("#neckdognumtotal").text(data.data2.neckdognumtotal);
-                    $("#countryalldognumtotal").text(data.data2.alldognumtotal);
-                    $("#countrywsqdognumtotal").text(data.data2.feedernumtotal);
-                    if(data.data2.alldognumtotal == 0){
-                        $("#countryratedognumtotal").text(0);
-                    }else{
-                        $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
-                    }
-                    $("#countrymednumtotal").text(data.data2.countrymednumtotal);
+                $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+                $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+                $("#countrywsqdognumtotal").text(data.data2.feedernumtotal);
+                if(data.data2.alldognumtotal == 0){
+                    $("#countryratedognumtotal").text(0);
+                }else{
+                    $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
                 }
+                $("#countrymednumtotal").text(data.data2.countrymednumtotal);
+
                 GetProvinceEcharts(data);
             }
         }

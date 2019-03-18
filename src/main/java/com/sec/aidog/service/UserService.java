@@ -35,4 +35,6 @@ public interface UserService {
     boolean resetManagerPwd(Integer manager_id, String pwd);
 
     String modifyUser(String username, String manager_name, String workplace, String manager_identity, String officetel, String manager_tel, String manager_addr, String manager_email, String password,String token) throws Exception;
+
+    Map<String, Object> getHamletManagerList(String hamletcode);
 }
