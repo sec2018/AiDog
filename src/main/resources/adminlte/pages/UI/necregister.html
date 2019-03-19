@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="../../bootstrap/js/bootstrap.js">
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
 
-    <title>犬只注册</title>
-    <script src="../ui_js/dogregister.js"></script>
+    <title>防控项圈注册</title>
     <style>
         /*web background*/
         .container{
@@ -58,50 +57,28 @@
                 <form role="form">
                     <!-- text input -->
                     <div class="form-group  has-success">
-                        <label>犬只名称：</label>
-                        <input type="text" class="form-control" placeholder="犬只名称"  id="input_dogname" />
+                        <label>项圈编号：</label>
+                        <input type="text" class="form-control" placeholder="项圈编号"  id="input_neckletid" />
                     </div>
                     <div class="form-group  has-success">
-                        <label>犬只编码：</label>
-                        <input type="text" class="form-control" placeholder="犬只编码" id="input_doggovcode">
-                    </div>
-
-                    <div class="form-group  has-success">
-                        <label>犬只性别：</label>
-                        <select class="form-control select2"  id="select_dogsex" style="width: 100%;">
-                            <option selected="selected">公狗</option>
-                            <option>母狗</option>
-                        </select>
+                        <label>预定驱虫数：</label>
+                        <input type="text" class="form-control" placeholder="预定驱虫数" id="input_medtotal">
                     </div>
                     <div class="form-group  has-success">
-                        <label>所属村：</label>
-                        <input type="text" class="form-control" placeholder="所属村" id="input_dogbelonghamlet" disabled>
+                        <label>生产日期：</label>
+                        <input type="text" class="form-control" placeholder="生产日期" id="input_producetime">
                     </div>
                     <div class="form-group  has-success">
-                        <label>村管理员：</label>
-                        <select class="form-control select2"  id="select_managername" style="width: 100%;">
-                        </select>
+                        <label>更换电池时间：</label>
+                        <input type="text" class="form-control" placeholder="更换电池时间" id="input_changepowertime">
                     </div>
                     <div class="form-group  has-success">
-                        <label>犬只主人：</label>
-                        <select class="form-control select2"  id="select_dogownername" style="width: 100%;">
-                        </select>
-                    </div>
-                    <div class="form-group  has-success">
-                        <label>重量：</label>
-                        <input type="text" class="form-control" placeholder="重量" id="input_dogweight">
-                    </div>
-                    <div class="form-group  has-success">
-                        <label>毛色：</label>
-                        <input type="text" class="form-control" placeholder="毛色" id="input_dogcolor">
-                    </div>
-                    <div class="form-group  has-success">
-                        <label>年龄：</label>
-                        <input type="text" class="form-control" placeholder="年龄" id="input_dogage">
+                        <label>更换药珥时间：</label>
+                        <input type="text" class="form-control" placeholder="更换药珥时间" id="input_changepilltime">
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <button type="button" id="a_adddog" class="btn btn-info btn-flat">添加牧犬</button>
+                            <button type="button" id="a_addnec" class="btn btn-info btn-flat">添加项圈</button>
                         </div>
                     </div>
                 </form>

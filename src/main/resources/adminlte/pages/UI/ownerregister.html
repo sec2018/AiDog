@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>犬只注册</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -23,34 +22,36 @@
 </head>
 <body>
 <div class="container">
-    <div class="row" style="padding-top: 40px;padding-bottom: 20px;">
-        <div class="col-md-8">
-            <!-- Profile Image -->
-            <div class="form-group">
-                <div class="col-md-10">
-                    <label class="col-md-3 control-label">所属区域(*)</label>
-                    <select id="select_province">
-                        <option value="-1">请选择</option>
-                        <option value="150000000000">内蒙古自治区</option>
-                        <option value="510000000000">四川省</option>
-                        <option value="530000000000">云南省</option>
-                        <option value="540000000000">西藏自治区</option>
-                        <option value="610000000000">陕西省</option>
-                        <option value="620000000000">甘肃省</option>
-                        <option value="630000000000">青海省</option>
-                        <option value="640000000000">宁夏回族自治区</option>
-                    </select>
-                    <select id="select_city">
-                        <option value="-1">请选择</option>
-                    </select>
-                    <select id="select_county"><option value="-1">请选择</option></select>
-                    <select id="select_village"><option value="-1">请选择</option></select>
-                    <select id="select_hamlet"><option value="-1">请选择</option></select>
-                </div>
+    <div class="row" style="padding-top: 20px;margin-top: 20px">
+        <div class="col-md-6">
+            <div class="box-body">
+                <form role="form">
+                    <!-- text input -->
+                    <div class="form-group  has-success">
+                        <label style="padding-bottom: 5px">所属区域(*)</label>
+                        <select id="select_province" class="form-control" style="margin-bottom: 5px">
+                            <option value="-1">请选择</option>
+                            <option value="150000000000">内蒙古自治区</option>
+                            <option value="510000000000">四川省</option>
+                            <option value="530000000000">云南省</option>
+                            <option value="540000000000">西藏自治区</option>
+                            <option value="610000000000">陕西省</option>
+                            <option value="620000000000">甘肃省</option>
+                            <option value="630000000000">青海省</option>
+                            <option value="640000000000">宁夏回族自治区</option>
+                        </select>
+                        <select id="select_city" class="form-control" style="margin-bottom: 5px">
+                            <option value="-1">请选择</option>
+                        </select>
+                        <select id="select_county" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                        <select id="select_village" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                        <select id="select_hamlet" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                    </div>
+                </form>
             </div>
-            <!-- /.box -->
         </div>
     </div>
+
     <div class="row" style="padding-top: 10px">
         <div class="col-md-6">
             <div class="box-body">

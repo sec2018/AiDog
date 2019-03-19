@@ -26,3 +26,5 @@
 /src/main/resources/application.yml
 /mybatis-generator.properties
 /src/main/resources/application-dev.yml
+/src/main/resources/mybatis-generator.properties
+/src/main/resources/generatorConfig.xml
