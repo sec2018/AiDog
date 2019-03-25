@@ -21,35 +21,6 @@
 </head>
 <body>
 <div class="container">
-    <div class="row" style="padding-top: 20px;margin-top: 20px">
-        <div class="col-md-6">
-            <div class="box-body">
-                <form role="form">
-                    <!-- text input -->
-                    <div class="form-group  has-success">
-                        <label style="padding-bottom: 5px">所属区域(*)</label>
-                        <select id="select_province" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                            <option value="150000000000">内蒙古自治区</option>
-                            <option value="510000000000">四川省</option>
-                            <option value="530000000000">云南省</option>
-                            <option value="540000000000">西藏自治区</option>
-                            <option value="610000000000">陕西省</option>
-                            <option value="620000000000">甘肃省</option>
-                            <option value="630000000000">青海省</option>
-                            <option value="640000000000">宁夏回族自治区</option>
-                        </select>
-                        <select id="select_city" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                        </select>
-                        <select id="select_county" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_village" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_hamlet" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <div class="row" style="padding-top: 10px">
         <div class="col-md-6">
@@ -61,30 +32,61 @@
                         <input type="text" class="form-control" placeholder="项圈编号"  id="input_neckletid" />
                     </div>
                     <div class="form-group  has-success">
-                        <label>预定驱虫数：</label>
-                        <input type="text" class="form-control" placeholder="预定驱虫数" id="input_medtotal">
-                    </div>
-                    <div class="form-group  has-success">
                         <label>生产日期：</label>
                         <input type="text" class="form-control" placeholder="生产日期" id="input_producetime">
                     </div>
-                    <div class="form-group  has-success">
-                        <label>更换电池时间：</label>
-                        <input type="text" class="form-control" placeholder="更换电池时间" id="input_changepowertime">
-                    </div>
-                    <div class="form-group  has-success">
-                        <label>更换药珥时间：</label>
-                        <input type="text" class="form-control" placeholder="更换药珥时间" id="input_changepilltime">
-                    </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
-                            <button type="button" id="a_addnec" class="btn btn-info btn-flat">添加项圈</button>
+                            <button type="button" id="a_addnec" class="btn btn-info btn-flat">注册单个项圈</button>
                         </div>
                     </div>
+                </form>
+                <form role="form">
+                    <input tabindex="-1" id="select_range" data-input="false" class="font-small" type="file">
+                    <br/><span id="testspan">aaa</span>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#select_range').change(function(evt){
+            var files = evt.target.files;
+
+            if(files.length) {
+                var file = files[0];
+                var reader = new FileReader();
+                if(typeof FileReader == 'undefined') {
+                    layer.alert("你的浏览器不支持FileReader接口！", {title: "提示", skin: "layui-layer-molv"});
+                    return;
+                }
+                reader.readAsText(file,"UTF-8");
+                reader.onload = function(val) {
+                    $("#testspan").html(val.target.result);
+                    //ajax给后台
+                    var senddata = {};
+                    senddata.data = val.target.result;
+                    $.ajax({
+                        url: "/aidog/api/batchnecregister",
+                        type: "POST",
+                        data:  JSON.stringify(senddata),
+                        contentType: "application/json",
+                        dataType: "text",    // 控制回来的数据类型
+                        beforeSend: function (request) {
+                            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                        },
+                        success: function (data) {
+                            alert(data);
+                            window.location.reload();
+                        }
+                    })
+                }
+            };
+        });
+    })
+
+</script>
 </body>
 </html>

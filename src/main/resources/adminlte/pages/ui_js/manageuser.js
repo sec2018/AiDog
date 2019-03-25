@@ -37,7 +37,9 @@ $(function () {
                     'ordering'    : true,
                     "pageLength": 10, //每行显示记录数
                     'info'        : true,
-                    'autoWidth'   : true,
+                    'bAutoWidth'  : false,
+                    "responsive": false,
+                    "scrollX":true,
                     "oLanguage": {
                         buttons: {
                             pageLength: {
@@ -61,7 +63,7 @@ $(function () {
                         }
                     },
                     "scrollY": "450px",
-                    dom: 'Bfrtip',
+                    "dom": 'Bfrtip',
                     "processing": true,
                     "columns": [
                         {
@@ -71,13 +73,13 @@ $(function () {
                             "defaultContent": "",
                             "width": "1px"
                         },
-                        { "data": "id"},
-                        { "data": "username" },
-                        { "data": "manager_name" },
-                        { "data": "register_time","width":"140px"},
-                        { "data": "manager_tel"},
-                        { "data": "manager_status"},
-                        { "data": "action" ,"width":"160px"}
+                        { "data": "id","width":"58px"},
+                        { "data": "username","width":"105px" },
+                        { "data": "manager_name","width":"100px"  },
+                        { "data": "register_time","width":"130px"},
+                        { "data": "manager_tel","width":"130px" },
+                        { "data": "manager_status","width":"58px" },
+                        { "data": "action" ,"width":"150px"}
                     ],
                     buttons: [
                         'pageLength',
