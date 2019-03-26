@@ -1,56 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="../../bootstrap/js/bootstrap.js">
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-
-    <title>犬只列表</title>
-    <script src="../ui_js/doglist.js"></script>
-    <style>
-        /*web background*/
-        .container{
-            display:table;
-            height:100%;
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理下级信息</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../../dist/css/skins/all-skins.css">
+    <!--bootstrap table-->
+    <link rel="stylesheet" type="text/css" href="../../DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../DataTables/Buttons-1.5.4/css/buttons.dataTables.min.css">
+    <script type="text/javascript" src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../../DataTables/DataTables-1.10.18/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../../DataTables/Buttons-1.5.4/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="../../DataTables/JSZip-2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="../../DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="../../DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="../../DataTables/Buttons-1.5.4/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="../../DataTables/Buttons-1.5.4/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="../ui_js/doglist.js"></script>
+    <style type="text/css">
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #cfcfcf !important;
+        }
+        th{
+            font-weight:bold;
+        }
+        /*td{*/
+        /*height:30px;*/
+        /*}*/
+        .table td, .table th {
+            font-style: normal;
+            /*text-align:center;*/
+        }
+        input[type=checkbox]{
+            margin-right: 3px;
+        }
+        /*.bcolor{*/
+        /*background-color: #ecf0f5;*/
+        /*}*/
+        .box{
+            margin-bottom: 3px !important;
+        }
+        td.details-control {
+            background: url('../ui_css/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+        tr.details td.details-control {
+            background: url('../ui_css/details_close.png') no-repeat center center;
         }
     </style>
+    <script src="../../bootstrap/js/bootstrap.js"></script>
 </head>
-<body>
-<div class="container">
-    <div class="row" style="padding-top: 20px;margin-top: 20px">
-        <div class="col-md-12">
-            <div class="box-body">
-                <form role="form">
-                    <!-- text input -->
-                    <div class="form-group  has-success">
-                        <label style="padding-bottom: 5px">所属区域(*)</label>
-                        <select id="select_province" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                            <option value="150000000000">内蒙古自治区</option>
-                            <option value="510000000000">四川省</option>
-                            <option value="530000000000">云南省</option>
-                            <option value="540000000000">西藏自治区</option>
-                            <option value="610000000000">陕西省</option>
-                            <option value="620000000000">甘肃省</option>
-                            <option value="630000000000">青海省</option>
-                            <option value="640000000000">宁夏回族自治区</option>
-                        </select>
-                        <select id="select_city" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                        </select>
-                        <select id="select_county" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_village" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_hamlet" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                    </div>
-                </form>
+<body class="hold-transition skin-blue sidebar-mini">
+    <!-- Content Header (Page header) -->
+    <div class="bcolor" >
+        <div class="row" style="padding-top: 20px;margin-top: 20px">
+            <div class="col-md-12">
+                <div class="box-body">
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group  has-success">
+                            <label style="padding-bottom: 5px">所属区域(*)</label>
+                            <select id="select_province" class="form-control" style="margin-bottom: 5px">
+                                <option value="-1">请选择</option>
+                                <option value="150000000000">内蒙古自治区</option>
+                                <option value="510000000000">四川省</option>
+                                <option value="530000000000">云南省</option>
+                                <option value="540000000000">西藏自治区</option>
+                                <option value="610000000000">陕西省</option>
+                                <option value="620000000000">甘肃省</option>
+                                <option value="630000000000">青海省</option>
+                                <option value="640000000000">宁夏回族自治区</option>
+                            </select>
+                            <select id="select_city" class="form-control" style="margin-bottom: 5px">
+                                <option value="-1">请选择</option>
+                            </select>
+                            <select id="select_county" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                            <select id="select_village" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                            <select id="select_hamlet" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box-body">
+                        <div class="box box-solid">
+                            <table data-toggle="table" class="table  table-bordered" id="datatable" style="table-layout:fixed;">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>顺序编号</th>
+                                    <th>政府编号</th>
+                                    <th>牧犬名称</th>
+                                    <th>项圈编号</th>
+                                    <th>喂食器编号</th>
+                                    <th>管理员名称</th>
+                                    <th>主人名称</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
     </div>
-</div>
 </body>
 </html>

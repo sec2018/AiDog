@@ -2,31 +2,32 @@ package com.sec.aidog.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.sec.aidog.pojo.Manager;
-import com.sec.aidog.service.DogService;
-import com.sec.aidog.service.OwnerService;
+import com.sec.aidog.pojo.Necklet;
+import com.sec.aidog.service.NeckletService;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.util.JSONUtil;
 import com.sec.aidog.util.JsonResult;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @RequestMapping("api")
 @Controller
 public class NecApi {
 
     @Autowired
-    private DogService dogService;
+    private NeckletService neckletService;
 
     @Autowired
     private RedisService redisService;
 
-    @Autowired
-    private OwnerService ownerService;
 
 
 
@@ -42,18 +43,26 @@ public class NecApi {
             Manager manager = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
             //权限控制
 
-            try {
-                JSONArray arr = JSON.parseArray(data);
-
-                for(Object obj:arr){
-
+            JSONArray arr = JSON.parseArray(data);
+            List<Necklet> neclist = new ArrayList<>();
+            Necklet necklet = null;
+            for(Object obj:arr){
+                necklet = new Necklet();
+                necklet.setNecId(((JSONObject)obj).get("nec_id")+"");
+                necklet.setProduceTime(new Date(Long.valueOf(((JSONObject)obj).get("producetime")+"")));
+                necklet.setRegisterTime(new Date());
+                neclist.add(necklet);
+            }
+            if(neclist.size()>0){
+                boolean isSuccess = neckletService.batchNecRegister(neclist);
+                if(isSuccess){
+                    result = "批量注册项圈成功!";
+                }else{
+                    result = "批量注册项圈失败!";
                 }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                result = "添加主人失败!";
             }
         }catch (Exception e) {
-
+            result = "批量注册项圈失败!";
         }
         return result.toString();
     }

@@ -1,6 +1,8 @@
 package com.sec.aidog.api;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sec.aidog.dao.SysLaytimeMapper;
 import com.sec.aidog.mgpojo.MgSysLaytime;
 import com.sec.aidog.model.SysLaytimeExample;
@@ -19,7 +21,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("api")
 @Controller
@@ -28,8 +32,8 @@ public class SysLaytimeApi {
 	@Autowired
 	private SysLaytimeMapper sysLaytimeMapper;
 
-	@Autowired
-    private MgLaytimeService mgLaytimeService;
+//	@Autowired
+//    private MgLaytimeService mgLaytimeService;
 
 	@ApiOperation(value = "通过项圈编号查询项圈反馈信息", notes = "通过项圈编号查询项圈反馈信息")
 	@ApiImplicitParams({
@@ -45,16 +49,22 @@ public class SysLaytimeApi {
     {
         JsonResult r = new JsonResult();
         try {
-            ////通过MySQL
-//        	SysLaytimeExample example = new SysLaytimeExample();
-//        	SysLaytimeExample.Criteria criteria = example.createCriteria();
-//        	criteria.andMidEqualTo(mid);
-//        	List<SysLaytime> layconfiglist  = sysLaytimeMapper.selectByExample(example);
+            Page page = PageHelper.startPage(startitem, pagesize);
+            //通过MySQL
+        	SysLaytimeExample example = new SysLaytimeExample();
+        	SysLaytimeExample.Criteria criteria = example.createCriteria();
+        	criteria.andMidEqualTo(mid);
+        	List<SysLaytime> laytimelist  = sysLaytimeMapper.selectByExample(example);
             ////通过mongodb
-            List<MgSysLaytime> laytimelist = mgLaytimeService.getMidLaytimeList(mid, startitem, pagesize);
+//            List<MgSysLaytime> laytimelist = mgLaytimeService.getMidLaytimeList(mid, startitem, pagesize);
+            Map<String, Object> map = new HashMap<String,Object>();
+            //每页信息
+            map.put("data", laytimelist);
+            //管理员总数
+            map.put("totalNum", page.getTotal());
             r.setCode(200);
             r.setMsg("获取项圈反馈成功！");
-            r.setData(laytimelist);
+            r.setData(map);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
@@ -73,8 +83,8 @@ public class SysLaytimeApi {
     public ResponseEntity<JsonResult> GetDevicePosition(){
         JsonResult r = new JsonResult();
         try {
-//            List<SysLaytime> allDevicePosition  = sysLaytimeMapper.getAllDevicePosition();
-            List<MgSysLaytime> allDevicePosition = mgLaytimeService.getAllDevicePosition();
+            List<SysLaytime> allDevicePosition  = sysLaytimeMapper.getAllDevicePosition();
+//            List<MgSysLaytime> allDevicePosition = mgLaytimeService.getAllDevicePosition();
             r.setCode(200);
             r.setMsg("获取所有项圈位置成功！");
             r.setData(allDevicePosition);
