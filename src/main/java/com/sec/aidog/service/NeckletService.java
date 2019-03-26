@@ -7,4 +7,6 @@ import java.util.List;
 public interface NeckletService {
 
     boolean batchNecRegister(List<Necklet> neclist);
+
+    boolean singleNecRegister(Necklet necklet);
 }

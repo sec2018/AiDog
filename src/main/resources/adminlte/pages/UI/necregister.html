@@ -26,6 +26,10 @@
         <div class="col-md-6">
             <div class="box-body">
                 <form role="form">
+                    <div class="alert alert-info alert-dismissible">
+                        <h4><i class="icon fa fa-info"></i>单项圈注册</h4>
+                        请填写表单进行单项圈注册！
+                    </div>
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>项圈编号：</label>
@@ -33,7 +37,7 @@
                     </div>
                     <div class="form-group  has-success">
                         <label>生产日期：</label>
-                        <input type="text" class="form-control" placeholder="生产日期" id="input_producetime">
+                        <input id="producetime"  class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-8">
@@ -41,9 +45,13 @@
                         </div>
                     </div>
                 </form>
-                <form role="form">
+                <form role="form" style="margin-top: 80px">
+                    <div class="alert alert-info alert-dismissible">
+                        <h4><i class="icon fa fa-info"></i>批量注册</h4>
+                        请选择文件进行批量注册！
+                    </div>
                     <input tabindex="-1" id="select_range" data-input="false" class="font-small" type="file">
-                    <br/><span id="testspan">aaa</span>
+                    <br/><span id="testspan">批量注册文件内容</span>
                 </form>
             </div>
         </div>
@@ -52,6 +60,39 @@
 
 <script type="text/javascript">
     $(function(){
+        //单个注册
+        $("#a_addnec").click(function () {
+            var tempdata = {};
+            var nec_id = $("#input_neckletid").val();
+            var producetime = $("#producetime").val();
+            if(nec_id == ""){
+                alert("请输入项圈编号！");
+                return;
+            }
+            if(producetime == "2017-06-30T00:00"){
+                alert("请输入生产日期！");
+                return;
+            }
+            producetime = $("#producetime").val()+":00";
+            alert(producetime);
+            tempdata.nec_id = nec_id;
+            tempdata.producetime = producetime;
+            $.ajax({
+                url: "/aidog/api/singlenecregister",
+                type: "POST",
+                data:  tempdata,
+                beforeSend: function (request) {
+                    request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                },
+                success: function (data) {
+                    alert(data.msg);
+                    window.location.reload();
+                }
+            })
+        });
+
+
+        //批量注册
         $('#select_range').change(function(evt){
             var files = evt.target.files;
 

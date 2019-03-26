@@ -65,7 +65,7 @@ $(function(){
 			var twelve = "twelve=" +  $("#input_lay12").val()+":00";
 			var senddata = mid+one+two+three+four+five+six+seven+eight+nine+ten+eleven+twelve;
 			$.ajax({
-	        	url: "/sec/api/setlayconfigbynecid.do",
+	        	url: "/sec/api/setlayconfigbynecid",
 	            method: "POST",
 	            data: senddata, 
 	            success: function (data) {

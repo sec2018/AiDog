@@ -337,6 +337,7 @@ public class ManagerApi {
         return jsStr;
     }
 
+
     @ApiOperation(value = "获取某村管理员列表", notes = "获取某村管理员列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),

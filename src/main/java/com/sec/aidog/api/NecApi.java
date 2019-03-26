@@ -9,11 +9,18 @@ import com.sec.aidog.service.NeckletService;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.util.JSONUtil;
 import com.sec.aidog.util.JsonResult;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +72,47 @@ public class NecApi {
             result = "批量注册项圈失败!";
         }
         return result.toString();
+    }
+
+
+    @ApiOperation(value = "单个项圈注册", notes = "单个项圈注册")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "nec_id", value = "项圈标识", required = true, dataType = "String",paramType = "query"),
+        @ApiImplicitParam(name = "producetime", value = "生产日期", required = true, dataType = "String",paramType = "query"),
+        @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="singlenecregister",method = RequestMethod.POST)
+    @Transactional
+    @ResponseBody
+    public ResponseEntity<JsonResult> singleNecRegister(@RequestParam(value = "nec_id")String nec_id, @RequestParam(value = "producetime")String producetime, HttpServletRequest request){
+        JsonResult r = new JsonResult();
+        try {
+            Necklet necklet = new Necklet();
+            necklet.setNecId(nec_id);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+            necklet.setProduceTime(format.parse(producetime));
+            necklet.setRegisterTime(new Date());
+            boolean isSuccess = neckletService.singleNecRegister(necklet);
+            if(isSuccess){
+                r.setCode(200);
+                r.setMsg("注册项圈成功!");
+                r.setData(necklet);
+                r.setSuccess(true);
+            }else{
+                r.setCode(500);
+                r.setData(null);
+                r.setMsg("注册项圈失败！");
+                r.setSuccess(false);
+            }
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("注册项圈失败！");
+            r.setSuccess(false);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
     }
 }
 

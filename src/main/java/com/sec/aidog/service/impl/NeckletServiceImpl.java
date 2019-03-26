@@ -19,4 +19,10 @@ public class NeckletServiceImpl implements NeckletService{
         boolean isSuccess = neckletMapper.insertBatchNecRegister(neclist)>0?true:false;
         return isSuccess;
     }
+
+    @Override
+    public boolean singleNecRegister(Necklet necklet) {
+        boolean isSuccess = neckletMapper.insert(necklet)>0?true:false;
+        return isSuccess;
+    }
 }
