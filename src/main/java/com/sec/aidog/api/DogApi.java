@@ -279,10 +279,10 @@ public class DogApi {
             String managerstr = RedisUtil.RedisGetValue("token:"+token);
             //权限控制
 
-            Map<String, Object> map = dogService.getDogList(districtcode);
+//            Map<String, Object> map = dogService.getDogList(districtcode);
             r.setCode(200);
             r.setMsg("获取牧犬列表信息成功！");
-            r.setData(map);
+//            r.setData(map);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
