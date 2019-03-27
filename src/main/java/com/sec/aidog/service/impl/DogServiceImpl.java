@@ -1,8 +1,9 @@
 package com.sec.aidog.service.impl;
 
-import com.sec.aidog.dao.DogMapper;
-import com.sec.aidog.dao.ManagerMapper;
-import com.sec.aidog.pojo.Dog;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.sec.aidog.dao.*;
+import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.DogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("dogService")
 public class DogServiceImpl implements DogService{
@@ -20,6 +24,18 @@ public class DogServiceImpl implements DogService{
 
     @Autowired
     private ManagerMapper managerMapper;
+
+    @Autowired
+    private LastnecdosingMapper lastnecdosingMapper;
+
+    @Autowired
+    private LastappdosingMapper lastappdosingMapper;
+
+    @Autowired
+    private DogownerMapper dogownerMapper;
+
+    @Autowired
+    private DistrictMapper districtMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
@@ -49,5 +65,42 @@ public class DogServiceImpl implements DogService{
             result = "牧犬添加成功！";
         }
         return result;
+    }
+
+    @Override
+    public Map<String, Object> getDogList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<DogView> doglist = dogMapper.getDogListByDistrictcode(districtcode);
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", doglist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getDogInfo(Integer dogid) {
+        Dog dog  = dogMapper.selectByPrimaryKey(dogid);
+        Map<String, Object> map = new HashMap<String,Object>();
+        map.put("dog",dog);
+        String admintel = managerMapper.findUserByName(dog.getUsername()).getManagerTel();
+        map.put("admintel",admintel);
+        String hamlet = districtMapper.selectByDistrictCode(dog.getDistrictcode()).getDistrictName();
+        map.put("hamlet",hamlet);
+        String nec_id = dog.getNecId();
+        if(!nec_id.equals("-1")){
+            Lastnecdosing lastnecdosing = lastnecdosingMapper.getLastnecdosing(nec_id);
+            map.put("nec",lastnecdosing);
+        }
+        String app_id = dog.getAppId();
+        if(!app_id.equals("-1")){
+            Lastappdosing lastappdosing = lastappdosingMapper.getLastappdosing(app_id);
+            map.put("app",lastappdosing);
+        }
+        Integer ownerid = dog.getDogownerId();
+        Dogowner dogowner = dogownerMapper.selectByPrimaryKey(ownerid);
+        map.put("owner",dogowner);
+        return map;
     }
 }

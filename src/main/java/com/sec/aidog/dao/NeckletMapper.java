@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface NeckletMapper {
@@ -33,4 +34,7 @@ public interface NeckletMapper {
     int updateByPrimaryKey(Necklet record);
 
     int insertBatchNecRegister(List<Necklet> neckletList);
+
+    @Select("select nec_id FROM necklet where bind_time is null")
+    List<String> getUnuseNecList();
 }

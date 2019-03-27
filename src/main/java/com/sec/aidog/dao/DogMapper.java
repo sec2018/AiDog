@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.sec.aidog.model.DogExample;
 import com.sec.aidog.pojo.Dog;
+import com.sec.aidog.pojo.DogView;
 import com.sec.aidog.util.OrderProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -58,4 +59,10 @@ public interface DogMapper {
 
     @Select("SELECT dog_id,dog_name,nec_id,app_id,manager_name FROM dog WHERE nec_id=#{param1} and districtcode=#{param2}")
     List<Dog> getCombineNeckletAndAppDogByNecId(String neckletId, String hamletCode);
+
+    @Select("select a.*,b.owner_name,b.owner_addr from dog a inner join dogowner b on a.dogowner_id = b.owner_id and a.districtcode like concat(#{districtCode},'%')")
+    List<DogView> getDogListByDistrictcode(String districtCode);
+
+    @Select("select dog_govcode FROM dog where nec_id='-1' and app_id='-1' and districtcode=#{districtcode}")
+    List<String> getUnuseDogGovcodeList(String districtcode);
 }

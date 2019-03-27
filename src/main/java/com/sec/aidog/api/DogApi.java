@@ -1,6 +1,8 @@
 package com.sec.aidog.api;
 
 import com.sec.aidog.common.RedisUtil;
+import com.sec.aidog.dao.DogMapper;
+import com.sec.aidog.dao.NeckletMapper;
 import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.service.DogService;
 import com.sec.aidog.service.OwnerService;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import net.sf.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("api")
@@ -33,6 +37,11 @@ public class DogApi {
     @Autowired
     private OwnerService ownerService;
 
+    @Autowired
+    private DogMapper dogMapper;
+
+    @Autowired
+    private NeckletMapper neckletMapper;
 
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
@@ -266,12 +275,15 @@ public class DogApi {
     //获取牧犬列表，根据地区编号
     @ApiOperation(value = "获取牧犬列表", notes = "获取牧犬列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "districtcode", value = "行政编码", required = true , dataType = "String",paramType = "query")
+            @ApiImplicitParam(name = "startitem", value = "startitem", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "pagesize", value = "pagesize", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "level", value = "地区等级", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "districtcode", value = "行政编码", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
     })
     @RequestMapping(value="getdoglist",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<JsonResult> GetDogList(@RequestParam(value = "districtcode",required = true)String districtcode, HttpServletRequest request){
+    public ResponseEntity<JsonResult> GetDogList(@RequestParam(value = "startitem") int startitem,@RequestParam(value = "pagesize") int pagesize,@RequestParam(value = "level",required = true)String level,@RequestParam(value = "districtcode",required = true)String districtcode, HttpServletRequest request){
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {
@@ -279,10 +291,24 @@ public class DogApi {
             String managerstr = RedisUtil.RedisGetValue("token:"+token);
             //权限控制
 
-//            Map<String, Object> map = dogService.getDogList(districtcode);
+            switch (level){
+                case "province":
+                    districtcode = districtcode.substring(0,2);
+                    break;
+                case "city":
+                    districtcode = districtcode.substring(0,4);
+                    break;
+                case "county":
+                    districtcode = districtcode.substring(0,6);
+                    break;
+                case "village":
+                    districtcode = districtcode.substring(0,9);
+                    break;
+            }
+            Map<String, Object> map = dogService.getDogList(districtcode,startitem,pagesize);
             r.setCode(200);
             r.setMsg("获取牧犬列表信息成功！");
-//            r.setData(map);
+            r.setData(map);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
@@ -293,4 +319,70 @@ public class DogApi {
         }
         return ResponseEntity.ok(r);
     }
+
+    //获取牧犬详细信息
+    @ApiOperation(value = "获取牧犬详细信息", notes = "获取牧犬详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dogid", value = "dogid", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="getdoginfo",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetDogInfo(@RequestParam(value = "dogid") int dogid, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+            Map<String, Object> map = dogService.getDogInfo(dogid);
+            r.setCode(200);
+            r.setMsg("获取牧犬信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取牧犬信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
+
+
+    @ApiOperation(value = "获取未绑定牧犬及项圈列表", notes = "获取未绑定牧犬及项圈列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
+            @ApiImplicitParam(name = "hamletcode", value = "村行政编码", required = true , dataType = "String",paramType = "query")
+    })
+    @RequestMapping(value="getunbinddogandnec",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> Getunbinddogandnec(@RequestParam(value = "hamletcode",required = true)String hamletcode, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+
+            Map<String, Object> map = new HashMap<>();
+            List<String> unusedoggovcodelist = dogMapper.getUnuseDogGovcodeList(hamletcode);
+            map.put("govcodelist",unusedoggovcodelist);
+            List<String> unuseneclist = neckletMapper.getUnuseNecList();
+            map.put("neclist",unuseneclist);
+            r.setCode(200);
+            r.setMsg("获取列表信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取列表信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
+
 }

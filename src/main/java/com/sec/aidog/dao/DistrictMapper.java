@@ -33,32 +33,35 @@ public interface DistrictMapper {
 
     int updateByPrimaryKey(District record);
 
+    @Select("select * from district where districtcode = #{districtcode}")
+    District selectByDistrictCode(String districtcode);
+
     @Select("select * from district where districtcode REGEXP '.{4}00000000' and epidemic = 1")
     List<District> getProvincesAndCities();
 
     @Select("select district_level,districtcode,district_name,epidemic from district where districtcode REGEXP concat(#{provinceCode0to2}, '.{2}00000000') and districtcode !=concat(#{provinceCode0to2}, '0000000000')")
-    public List<District> getCities(String provinceCode0to2);
+    List<District> getCities(String provinceCode0to2);
 
     @Select("select district_level,districtcode,district_name,epidemic from district where districtcode REGEXP concat(#{cityCode0to4}, '.{2}000000') and districtcode !=concat(#{cityCode0to4}, '00000000')")
-    public List<District> getCounties(String cityCode0to4);
+    List<District> getCounties(String cityCode0to4);
 
     @Select("select district_level,districtcode,district_name,epidemic from district where districtcode REGEXP concat(#{countyCode0to6}, '.{3}000') and districtcode !=concat(#{countyCode0to6}, '000000') ")
-    public List<District> getVillages(String countyCode0to6);
+    List<District> getVillages(String countyCode0to6);
 
     @Select("select district_level,districtcode,district_name ,epidemic from district where districtcode REGEXP concat(#{villageCode0to9}, '.{3}') and districtcode !=concat(#{villageCode0to9}, '000') ")
-    public List<District> getHamlets(String villageCode0to9);
+    List<District> getHamlets(String villageCode0to9);
 
     @Select("select districtcode,district_name from district where district_level = 1")
     List<District> getAllCities();
 
     @Select("select districtcode,district_name from district where district_level = 2")
-    public List<District> getAllCounties();
+    List<District> getAllCounties();
 
     @Select("select districtcode,district_name from district where district_level = 3")
-    public List<District> getAllVillages();
+    List<District> getAllVillages();
 
     @Select("select districtcode,district_name from district where district_level = 4")
-    public List<District> getAllHamlets();
+    List<District> getAllHamlets();
 
     @Select("select * from district where district_name=#{provinceName} or echartname=#{provinceName}")
     District getDistrictsByDistrictName(String provinceName);

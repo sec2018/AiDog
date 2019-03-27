@@ -15,8 +15,11 @@ $(function () {
             datares = eval("(" + data + ")");
         }
     });
-
+    var districtcode = "";
+    var level = "";
     $("#select_province").on('change', function () {
+        districtcode = $(this).find('option:selected').val();
+        level = "province";
         var selectvalue = $(this).find('option:selected').val();
         selectvalue = selectvalue.substring(0,2);
         $("#select_city").find("option").remove();
@@ -43,6 +46,8 @@ $(function () {
         select_hamlet.options.add(new Option("请选择", "-1"));
     });
     $("#select_city").on('change', function () {
+        districtcode = $(this).find('option:selected').val();
+        level = "city";
         var selectvalue = $(this).find('option:selected').val();
         $("#select_county").find("option").remove();
         selectvalue = selectvalue.substring(0, 4);
@@ -65,6 +70,8 @@ $(function () {
         select_hamlet.options.add(new Option("请选择", "-1"));
     });
     $("#select_county").on('change', function () {
+        districtcode = $(this).find('option:selected').val();
+        level = "county";
         var selectvalue = $(this).find('option:selected').val();
         $("#select_village").find("option").remove();
         selectvalue = selectvalue.substring(0, 6);
@@ -83,6 +90,8 @@ $(function () {
         select_hamlet.options.add(new Option("请选择", "-1"));
     });
     $("#select_village").on('change', function () {
+        districtcode = $(this).find('option:selected').val();
+        level = "village";
         var selectvalue = $(this).find('option:selected').val();
         $("#select_hamlet").find("option").remove();
         selectvalue = selectvalue.substring(0, 9);
@@ -97,33 +106,40 @@ $(function () {
             }
         }
     });
-    var hamletcode = "";
+
     $("#select_hamlet").on('change', function () {
-        hamletcode = $(this).find('option:selected').val();
+        districtcode = $(this).find('option:selected').val();
+        level = "hamlet";
         var selectvalue = $(this).find('option:selected').text();
         $("#input_dogbelonghamlet").val(selectvalue);
+
+    });
+
+    $("#a_getdoglist").click(function () {
         var senddata = {};
-        senddata.hamletcode = hamletcode;
+        senddata.startitem = 1;
+        senddata.pagesize = 10;
+        senddata.districtcode = districtcode;
+        senddata.level = level;
         $.ajax({
             url:  "/aidog/api/getdoglist",
-            type: "GET",
+            type: "POST",
             data:  senddata,
             beforeSend: function (request) {
                 request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
             },
             success: function (data) {
-                if (data.data == null) {
-                    alert(data.msg);
+                if (data.data.data == null) {
+                    alert(data.data.msg);
                     return;
                 }else{
-                    for(var i = 0;i<data.data.length;i++){
-                        data.data[i].register_time = timetrans(data.data[i].register_time).replace('T'," ");
-                        data.data[i].manager_status = data.data[i].manager_status==0?"未激活":"已激活";
-                        data.data[i].action = "<a href='javascript:void(0);'onclick='activeUser(\""+ data.data[i].manager_id + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 激活</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='freezeUser(\""+ data.data[i].manager_id + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 冻结</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='pwdReset(\""+ data.data[i].manager_id + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 密码重置</a>";
+                    for(var i = 0;i<data.data.data.length;i++){
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改犬只</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
+                            "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改主人</a>";
                     }
-                    viewdata = $.extend(true,[],data.data);
+                    viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
-                        data: data.data,
+                        data: data.data.data,
                         "jQueryUI": true,
                         'paging'      : true,
                         lengthMenu: [　//显示几条数据设置
@@ -136,6 +152,8 @@ $(function () {
                         'info'        : true,
                         'bAutoWidth'  : false,
                         "responsive": false,
+                         //允许重建
+                        "destroy": true,
                         "scrollX":true,
                         "oLanguage": {
                             buttons: {
@@ -170,13 +188,14 @@ $(function () {
                                 "defaultContent": "",
                                 "width": "1px"
                             },
-                            { "data": "id","width":"58px"},
-                            { "data": "username","width":"105px" },
-                            { "data": "manager_name","width":"100px"  },
-                            { "data": "register_time","width":"130px"},
-                            { "data": "manager_tel","width":"130px" },
-                            { "data": "manager_status","width":"58px" },
-                            { "data": "action" ,"width":"150px"}
+                            { "data": "dogId","width":"40px"},
+                            { "data": "dogGovcode","width":"70px" },
+                            { "data": "dogName","width":"70px"  },
+                            { "data": "necId","width":"70px"},
+                            { "data": "appId","width":"70px" },
+                            { "data": "managerName","width":"70px" },
+                            { "data": "ownerName" ,"width":"70px"},
+                            { "data": "action" ,"width":"250px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -242,10 +261,8 @@ $(function () {
         })
     });
 
-
-
     function format ( index ) {
-        return '所属地址: '+viewdata[index].addr+'';
+        return '主人姓名: '+viewdata[index].ownerName+'';
     }
 
     function timetrans(date){
@@ -262,22 +279,95 @@ $(function () {
 })
 
 
-function freezeUser(id) {
-    var tempdata = {};
-    tempdata.managerid = id;
-    tempdata.flag = 0;
+function detailInfo(id) {
+    // $("#dogInfoDiv").modal({
+    //     remote: "dog.html?dogid="+id
+    // });
+    $("#dogInfoDiv").modal('show');
+    var dogsenddata = {};
+    dogsenddata.dogid = id;
     $.ajax({
-        url: '/aidog/api/activeorfreezeuser',
+        url: "/aidog/api/getdoginfo",
         method: "POST",
-        data: tempdata,
-        beforeSend: function(request) {
+        data: dogsenddata,
+        beforeSend: function (request) {
             request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
         },
-        success:function(data){
-            alert(data.msg);
-            window.location.reload();
+        success: function (data) {
+            if (data.data != null) {
+                //牧犬信息
+                $("#input_dogname").val(data.data.dog.dogName);
+                $("#input_dogsex").val(data.data.dog.dogSex);
+                $("#input_dogbelonghamlet").val(data.data.hamlet);
+                $("#input_dogweight").val(data.data.dog.dogWeight);
+                $("#input_dogcolor").val(data.data.dog.dogColor);
+                $("#input_dogage").val(data.data.dog.dogAge);
+                $("#input_adminname").val(data.data.dog.managerName);
+                $("#input_adminphone").html("<a href=\"tel:" + data.data.admintel + "\">" + data.data.admintel + "</a>");
+
+                //设备信息
+                if(data.data.nec!=null && data.data.app==null){
+                    $("#input_neckletid").val(data.data.nec.necId);
+                    $("#input_appid").val("---");
+                    $("#input_power").val(((data.data.nec.powerleft)/6).toFixed(2)*100+"%");
+                    $("#input_medleft").val(data.data.nec.leftNum);
+                    $("#input_endmedtime").val(ChangeTimeFormat(data.data.nec.enddosingTime));
+                    $("#input_areacycle").val(data.data.nec.positioncycle);
+                    $("#input_dosingcycle").val(data.data.nec.dosingcycle);
+                    $("#input_firstmedtime").val(ChangeTimeFormat(data.data.nec.firstdosingTime));
+                    $("#input_lastmedtime").val(ChangeTimeFormat(data.data.nec.lastdosingTime));
+                    $("#input_nextmedtime").val(ChangeTimeFormat(data.data.nec.nextdosingTime));
+                }else if(data.data.nec==null && data.data.app!=null){
+                    $("#input_neckletid").val("---");
+                    $("#input_appid").val(data.data.app.appId);
+                    $("#input_power").val(((data.data.app.powerleft)/6).toFixed(2)*100+"%");
+                    $("#input_medleft").val(data.data.app.leftNum);
+                    $("#input_endmedtime").val(ChangeTimeFormat(data.data.app.enddosingTime));
+                    $("#input_areacycle").val(data.data.app.positioncycle);
+                    $("#input_dosingcycle").val(data.data.app.dosingcycle);
+                    $("#input_firstmedtime").val(ChangeTimeFormat(data.data.app.firstdosingTime));
+                    $("#input_lastmedtime").val(ChangeTimeFormat(data.data.app.lastdosingTime));
+                    $("#input_nextmedtime").val(ChangeTimeFormat(data.data.app.nextdosingTime));
+                }else{
+                    $("#input_neckletid").val("---");
+                    $("#input_appid").val("---");
+                    $("#input_power").val("未绑定设备！");
+                    $("#input_medleft").val("未绑定设备！");
+                    $("#input_endmedtime").val("未绑定设备！");
+                    $("#input_areacycle").val("未绑定设备！");
+                    $("#input_dosingcycle").val("未绑定设备！");
+                    $("#input_firstmedtime").val("未绑定设备！");
+                    $("#input_lastmedtime").val("未绑定设备！");
+                    $("#input_nextmedtime").val("未绑定设备！");
+                }
+                //主人信息
+                $("#input_ownername").val(data.data.owner.ownerName);
+                $("#input_owneridentity").val(data.data.owner.ownerIdentity);
+                $("#input_ownersex").val(data.data.owner.ownerSex);
+                $("#input_ownerage").val(data.data.owner.ownerAge);
+                $("#input_ownerjob").val(data.data.owner.ownerJob);
+                $("#input_homeaddress").val(data.data.owner.ownerAddr);
+                $("#input_ownertel").html("<a href=\"tel:" + data.data.owner.ownerTel + "\">" + data.data.owner.ownerTel + "</a>");
+
+            }
         }
-    });
+    })
+}
+
+function modifyDog(id) {
+    alert(id);
+}
+
+function modifyNec(id) {
+    alert(id);
+}
+
+function modifyApp(id) {
+    alert(id);
+}
+
+function modifyOwner(id) {
+    alert(id);
 }
 
 function objToArray(array) {

@@ -1,9 +1,13 @@
 package com.sec.aidog.service;
 
+import java.util.Map;
+
 public interface DogService {
 
     String addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, String dogownerid,
                          String dogweight, String dogcolor, int dogage, String govcode)  throws Exception;
 
+    Map<String, Object> getDogList(String districtcode, int startPage, int pageSize);
 
+    Map<String, Object> getDogInfo(Integer dogid);
 }
