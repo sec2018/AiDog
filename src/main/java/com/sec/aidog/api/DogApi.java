@@ -3,6 +3,7 @@ package com.sec.aidog.api;
 import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.NeckletMapper;
+import com.sec.aidog.pojo.DogView;
 import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.service.DogService;
 import com.sec.aidog.service.OwnerService;
@@ -367,7 +368,7 @@ public class DogApi {
             //权限控制
 
             Map<String, Object> map = new HashMap<>();
-            List<String> unusedoggovcodelist = dogMapper.getUnuseDogGovcodeList(hamletcode);
+            List<DogView> unusedoggovcodelist = dogMapper.getUnuseDogGovcodeList(hamletcode);
             map.put("govcodelist",unusedoggovcodelist);
             List<String> unuseneclist = neckletMapper.getUnuseNecList();
             map.put("neclist",unuseneclist);

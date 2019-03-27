@@ -6,12 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--bootstrap table-->
-    <script type="text/javascript" src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- bootstrap -->
-    <script src="../../bootstrap/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.css">
-
     <title>犬只信息</title>
     <style>
         /*web background*/
@@ -188,6 +182,9 @@
 </div>
     <script type="text/javascript">
         $(function () {
+            $("#dogInfoDiv .modal-content").prepend('<div class="modal-header">'+
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                '<h4 class="modal-title">信息详情</h4></div>');
             var senddata = {};
             var dogid = $('#dogid').html();
             if (dogid != 0) {

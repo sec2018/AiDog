@@ -110,7 +110,7 @@ $(function () {
                 // data.data = objToArray(data.data);
                 for (var i = 0; i < data.data.govcodelist.length; i++) {
                     //遍历后台传回的结果，一项项往select中添加option
-                    select_doggovcode.options.add(new Option(data.data.govcodelist[i], data.data.govcodelist[i]));
+                    select_doggovcode.options.add(new Option(data.data.govcodelist[i].dogGovcode, data.data.govcodelist[i].dogId));
                 }
 
 
@@ -120,6 +120,13 @@ $(function () {
                     //遍历后台传回的结果，一项项往select中添加option
                     select_dognecid.options.add(new Option(data.data.neclist[i], data.data.neclist[i]));
                 }
+
+                $("#input_dogownername").val(data.data.govcodelist[0].ownerName);
+                $("#select_doggovcode").on('change', function () {
+                    var selectvalue = $(this).find('option:selected').val();
+                    var index = $(this).find('option:selected').index();
+                    $("#input_dogownername").val(data.data.govcodelist[index].ownerName);
+                });
             }
         })
     });
