@@ -114,5 +114,42 @@ public class NecApi {
         }
         return ResponseEntity.ok(r);
     }
+
+
+    @ApiOperation(value = "项圈配对激活", notes = "项圈配对激活")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "necid", value = "项圈标识", required = true, dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "dogid", value = "犬只编号", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="bindnecklet",method = RequestMethod.POST)
+    @Transactional
+    @ResponseBody
+    public ResponseEntity<JsonResult> bindNecklet(@RequestParam(value = "necid")String necid, @RequestParam(value = "dogid")Integer dogid, HttpServletRequest request){
+        JsonResult r = new JsonResult();
+        try {
+
+            boolean isSuccess = neckletService.bindNecklet(necid,dogid);
+            if(isSuccess){
+                r.setCode(200);
+                r.setMsg("绑定项圈成功!");
+                r.setData(null);
+                r.setSuccess(true);
+            }else{
+                r.setCode(500);
+                r.setData(null);
+                r.setMsg("绑定项圈失败！");
+                r.setSuccess(false);
+            }
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("绑定项圈失败！");
+            r.setSuccess(false);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
 }
 

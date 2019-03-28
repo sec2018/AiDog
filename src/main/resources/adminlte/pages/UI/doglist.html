@@ -280,5 +280,153 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div class="modal fade" id="dogModifyDiv" tabindex="-1" role="dialog">
+        <div class="modal-dialog model80" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">信息详情</h4>
+            </div>
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="alert alert-info alert-dismissible">
+                            <h4><i class="icon fa fa-info"></i>犬只基本信息</h4>
+                        </div>
+                        <!-- text input -->
+                        <div class="form-group  has-success">
+                            <label>犬只名称：</label>
+                            <input type="text" class="form-control" placeholder="犬只名称"  id="modalinput_dogname"/>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>犬只性别：</label>
+                            <select class="form-control select2"  id="modalselect_dogsex" style="width: 100%;">
+                                <option>公狗</option>
+                                <option>母狗</option>
+                            </select>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>所属村：</label>
+                            <input type="text" class="form-control" placeholder="所属村" id="modalinput_dogbelonghamlet" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>重量：</label>
+                            <input type="text" class="form-control" placeholder="重量" id="modalinput_dogweight" />
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>毛色：</label>
+                            <input type="text" class="form-control" placeholder="毛色" id="modalinput_dogcolor" />
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>年龄：</label>
+                            <input type="text" class="form-control" placeholder="年龄" id="modalinput_dogage" />
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-8">
+                                <button type="button" id="a_dogmodify" class="btn btn-info btn-flat">修改牧犬信息</button>
+                            </div>
+                        </div>
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="col-md-offset-2 col-md-8">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" id="a_dogmodify" data-toggle="modal" href="#dogDiv" class="btn btn-info btn-flat">修改牧犬信息</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</form>-->
+                    <!--<form role="form">-->
+                    <!--<div class="alert alert-info alert-dismissible">-->
+                    <!--<h4><i class="icon fa fa-info"></i>设备基本信息</h4>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; text input &ndash;&gt;-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>项圈编号：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="项圈编号" id="input_neckletid" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>喂饲器编号：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="喂饲器编号" id="input_appid" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>电量信息：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="电量信息" id="input_power" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>剩余驱虫次数：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="剩余驱虫次数" id="input_medleft" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>最后驱虫时间：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="最后驱虫时间" id="input_endmedtime" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>位置反馈周期(天)：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="位置反馈周期(天)" id="input_areacycle" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>投药反馈周期(天)：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="投药反馈周期(天)" id="input_dosingcycle" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>初次投药时间：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="初次投药时间" id="input_firstmedtime" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>上次投药时间：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="上次投药时间" id="input_lastmedtime" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>下次投药时间：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="下次投药时间" id="input_nextmedtime" disabled>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="col-md-offset-2 col-md-8">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" id="a_devicemodify" class="btn btn-info btn-flat">修改设备信息</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<button type="button" id="a_neckletmodify" data-toggle="modal" href="#collarDiv" class="btn btn-info btn-flat" style="float: left">修改项圈信息</button>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<button type="button" id="a_feedermodify" data-toggle="modal" href="#feederDiv" class="btn btn-info btn-flat" style="float: right">修改喂饲器信息</button>&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</form>-->
+                    <!--<form role="form">-->
+                    <!--<div class="alert alert-info alert-dismissible">-->
+                    <!--<h4><i class="icon fa fa-info"></i>主人基本信息</h4>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; text input &ndash;&gt;-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>姓名：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="姓名" id="input_ownername" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>主人身份证（选）：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="主人身份证（选）" id="input_owneridentity" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>性别：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="性别" id="input_ownersex" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>年龄：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="年龄" id="input_ownerage" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>职业：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="职业" id="input_ownerjob" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>家庭住址(村)：</label>-->
+                    <!--<input type="text" class="form-control" placeholder="家庭住址(村)" id="input_homeaddress" disabled>-->
+                    <!--</div>-->
+                    <!--<div class="form-group  has-success">-->
+                    <!--<label>联系方式：</label>-->
+                    <!--<div class="has-success" id="input_ownertel" style="padding-top:7px;"></div>-->
+                    <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="col-md-offset-2 col-md-8">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button type="button" id="a_ownermodify" data-toggle="modal" href="#dogownerDiv" class="btn btn-info btn-flat">修改主人信息</button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>

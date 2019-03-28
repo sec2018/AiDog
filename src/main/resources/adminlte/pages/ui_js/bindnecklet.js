@@ -122,10 +122,12 @@ $(function () {
                 }
 
                 $("#input_dogownername").val(data.data.govcodelist[0].ownerName);
+                $("#input_dogname").val(data.data.govcodelist[0].dogName);
                 $("#select_doggovcode").on('change', function () {
                     var selectvalue = $(this).find('option:selected').val();
                     var index = $(this).find('option:selected').index();
                     $("#input_dogownername").val(data.data.govcodelist[index].ownerName);
+                    $("#input_dogname").val(data.data.govcodelist[index].dogName);
                 });
             }
         })
@@ -134,45 +136,26 @@ $(function () {
 
 
 
-    //添加牧犬
-    $("#a_adddog").click(function () {
-        var clicktype = "dogadd";
-        var dogname = $("#input_dogname").val();
-        var dogsex = $("#select_dogsex").find("option:selected").text();
+    //项圈配对激活
+    $("#a_bindnec").click(function () {
         if(hamletcode == ""){
             alert("请先选择主人所属行政村！");
             return;
         }
-        var dogbelonghamlet = $("#input_dogbelonghamlet").val();
-        var govcode = $("#input_doggovcode").val();
-        var dogownerid = $("#select_dogownername").val();
-        var username = $("#select_managername").val();
-        var dogweight = $("#input_dogweight").val();
-        var dogcolor = $("#input_dogcolor").val();
-        var dogage = $("#input_dogage").val();
+        var dogid = $("#select_doggovcode").find('option:selected').val();
+        var necid = $("#select_dognecid").find('option:selected').text();
         var senddata = {};
-        senddata.clicktype = clicktype;
-        senddata.username = username;
-        senddata.dogname = dogname;
-        senddata.dogsex = dogsex;
-        senddata.dogbelonghamlet = dogbelonghamlet;
-        senddata.ownerhamletcode = hamletcode;
-        senddata.dogownerid = dogownerid;
-        senddata.dogweight = dogweight;
-        senddata.dogcolor = dogcolor;
-        senddata.dogage = dogage;
-        senddata.govcode = govcode;
+        senddata.dogid = dogid;
+        senddata.necid = necid;
         $.ajax({
-            url: "/aidog/api/bindoraddapi",
+            url: "/aidog/api/bindnecklet",
             type: "POST",
-            data:  JSON.stringify(senddata),
-            contentType: "application/json",
-            dataType: "text",    // 控制回来的数据类型
+            data:  senddata,
             beforeSend: function (request) {
                 request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
             },
             success: function (data) {
-                alert(data);
+                alert(data.msg);
                 window.location.reload();
             }
         })

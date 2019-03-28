@@ -275,6 +275,40 @@ $(function () {
         var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
         return Y+M+D+h+m+s;
     }
+
+    $("#a_dogmodify").click(function () {
+        var dogid = $('#dogid').html();
+        //修改牧犬
+        var clicktype = "dogmodify";
+        var dogid = dogid;
+        var dogname = $("#modalinput_dogname").val();
+        var dogsex = $("#modalselect_dogsex").find("option:selected").text();
+        var dogweight = $("#modalinput_dogweight").val();
+        var dogcolor = $("#modalinput_dogcolor").val();
+        var dogage = $("#modalinput_dogage").val();
+        var senddata = {};
+        senddata.clicktype = clicktype;
+        senddata.dogid = dogid;
+        senddata.dogname = dogname;
+        senddata.dogsex = dogsex;
+        senddata.dogweight = dogweight;
+        senddata.dogcolor = dogcolor;
+        senddata.dogage = dogage;
+        $.ajax({
+            url: "/aidog/api/bindoraddapi",
+            type: "POST",
+            data:  JSON.stringify(senddata),
+            contentType: "application/json",
+            dataType: "text",    // 控制回来的数据类型
+            beforeSend: function (request) {
+                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+            },
+            success: function (data) {
+                alert(data);
+                window.location.reload();
+            }
+        })
+    });
 })
 
 
@@ -285,8 +319,10 @@ function detailInfo(id) {
 
     });
     $("#dogInfoDiv").modal('show');
-
-
+    //Bootstrap v3
+    $("#dogInfoDiv").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
 
     // var dogsenddata = {};
     // dogsenddata.dogid = id;
@@ -359,7 +395,30 @@ function detailInfo(id) {
 }
 
 function modifyDog(id) {
-    alert(id);
+    $("#dogid").html(id);
+    var modifydogsenddata = {};
+    modifydogsenddata.dogid = id;
+    $.ajax({
+        url: "/aidog/api/getdoginfo",
+        method: "POST",
+        data: modifydogsenddata,
+        beforeSend: function (request) {
+            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+        },
+        success: function (data) {
+            if (data.data != null) {
+                //牧犬信息
+                $("#modalinput_dogname").val(data.data.dog.dogName);
+                $("#modalselect_dogsex").find("option[text='"+data.data.dog.dogSex+"']").attr("selected",true);
+                alert($("#modalselect_dogsex").find("option:selected").text());
+                $("#modalinput_dogbelonghamlet").val(data.data.hamlet);
+                $("#modalinput_dogweight").val(data.data.dog.dogWeight);
+                $("#modalinput_dogcolor").val(data.data.dog.dogColor);
+                $("#modalinput_dogage").val(data.data.dog.dogAge);
+            }
+        }
+    })
+    $("#dogModifyDiv").modal('show');
 }
 
 function modifyNec(id) {

@@ -9,4 +9,6 @@ public interface NeckletService {
     boolean batchNecRegister(List<Necklet> neclist);
 
     boolean singleNecRegister(Necklet necklet);
+
+    boolean bindNecklet(String necid, Integer dogid);
 }

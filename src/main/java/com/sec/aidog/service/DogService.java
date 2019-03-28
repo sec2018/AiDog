@@ -10,4 +10,6 @@ public interface DogService {
     Map<String, Object> getDogList(String districtcode, int startPage, int pageSize);
 
     Map<String, Object> getDogInfo(Integer dogid);
+
+    String modifyDog(Integer dogid, String dogname, String dogsex, String dogweight, String dogcolor, Integer dogage);
 }

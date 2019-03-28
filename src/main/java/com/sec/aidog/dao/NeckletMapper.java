@@ -37,4 +37,7 @@ public interface NeckletMapper {
 
     @Select("select nec_id FROM necklet where bind_time is null")
     List<String> getUnuseNecList();
+
+    @Select("select * FROM necklet where nec_id = #{necid}")
+    Necklet selectByNecId(String necid);
 }

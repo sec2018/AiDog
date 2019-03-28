@@ -216,30 +216,23 @@ public class DogApi {
 //                }
             }else if(clicktype.equals("dogmodify")) {
 
-//                String username = json.getString("username");
-//                String dogid = json.getString("dogid");
-//                String dogname = json.getString("dogname");
-//                String dogsex = json.getString("dogsex");
-//                String dogbelonghamlet = json.getString("dogbelonghamlet");
-//                String districtcode = json.getString("districtcode");
-//                String dogownerid = json.getString("dogownerid");
-//                String dogweight = json.getString("dogweight");
-//                String dogcolor = json.getString("dogcolor");
-//                String dogage = json.getString("dogage");
-//                String dogneckletid = json.getString("dogneckletid");
-//                String dogfeederid = json.getString("dogfeederid");
-//                try {
-//                    result = manageService.modifyDog(username, dogid, dogname, dogsex, dogbelonghamlet, districtcode, dogownerid, dogweight, dogcolor, dogage, dogneckletid, dogfeederid);
-//                } catch (Exception e) {
-//                    // TODO Auto-generated catch block
-//                    logger.error("【系统错误】",e);
-//                    result = "修改牧犬信息失败!";
-//                }
+                Integer dogid = Integer.parseInt(json.getString("dogid"));
+                String dogname = json.getString("dogname");
+                String dogweight = json.getString("dogweight");
+                String dogsex = json.getString("dogsex");
+                String dogcolor = json.getString("dogcolor");
+                Integer dogage = Integer.parseInt(json.getString("dogage"));
+                try {
+                    result = dogService.modifyDog(dogid, dogname, dogsex, dogweight, dogcolor, dogage);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    result = "修改牧犬信息失败!";
+                }
             }
         }catch (Exception e) {
 
         }
-        return result.toString();
+        return result;
     }
 
 

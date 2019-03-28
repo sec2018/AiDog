@@ -103,4 +103,16 @@ public class DogServiceImpl implements DogService{
         map.put("owner",dogowner);
         return map;
     }
+
+    @Override
+    public String modifyDog(Integer dogid, String dogname, String dogsex, String dogweight, String dogcolor, Integer dogage) {
+        Dog dog = dogMapper.selectByPrimaryKey(dogid);
+        dog.setDogName(dogname);
+        dog.setDogSex(dogsex);
+        dog.setDogWeight(dogweight);
+        dog.setDogColor(dogcolor);
+        dog.setDogAge(dogage);
+        String res = dogMapper.updateByPrimaryKey(dog)>0?"修改成功！":"修改失败";
+        return res;
+    }
 }

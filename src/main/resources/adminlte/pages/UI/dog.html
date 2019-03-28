@@ -29,7 +29,7 @@
             <div class="input-group input-group-sm">
                 <input type="text" id="dogid" class="form-control" placeholder="输入犬只编号">
                 <span class="input-group-btn">
-                  <button type="button" id="aaa" class="btn btn-info btn-flat">搜索</button>
+                  <button type="button" id="a_search" class="btn btn-info btn-flat">搜索</button>
                 </span>
             </div>
             <!-- /.box -->
@@ -196,7 +196,7 @@
                 getDogInfo();
             }
 
-            $("#aaa").click(function () {
+            $("#a_search").click(function () {
                 senddata.dogid = $("#dogid").val();
                 getDogInfo();
             });
@@ -225,25 +225,89 @@
                             if(data.data.nec!=null && data.data.app==null){
                                 $("#input_neckletid").val(data.data.nec.necId);
                                 $("#input_appid").val("---");
-                                $("#input_power").val(((data.data.nec.powerleft)/6).toFixed(2)*100+"%");
-                                $("#input_medleft").val(data.data.nec.leftNum);
-                                $("#input_endmedtime").val(ChangeTimeFormat(data.data.nec.enddosingTime));
-                                $("#input_areacycle").val(data.data.nec.positioncycle);
-                                $("#input_dosingcycle").val(data.data.nec.dosingcycle);
-                                $("#input_firstmedtime").val(ChangeTimeFormat(data.data.nec.firstdosingTime));
-                                $("#input_lastmedtime").val(ChangeTimeFormat(data.data.nec.lastdosingTime));
-                                $("#input_nextmedtime").val(ChangeTimeFormat(data.data.nec.nextdosingTime));
+                                if(data.data.nec.powerleft == null){
+                                    $("#input_power").val("未设置参数！");
+                                }else{
+                                    $("#input_power").val(((data.data.nec.powerleft)/6).toFixed(2)*100+"%");
+                                }
+                                if(data.data.nec.leftNum == null){
+                                    $("#input_medleft").val("未设置参数！");
+                                }else{
+                                    $("#input_medleft").val(data.data.nec.leftNum);
+                                }
+                                if(data.data.nec.enddosingTime == null){
+                                    $("#input_endmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_endmedtime").val(ChangeTimeFormat(data.data.nec.enddosingTime));
+                                }
+                                if(data.data.nec.positioncycle == null){
+                                    $("#input_areacycle").val("未设置参数！");
+                                }else{
+                                    $("#input_areacycle").val(data.data.nec.positioncycle);
+                                }
+                                if(data.data.nec.dosingcycle == null){
+                                    $("#input_dosingcycle").val("未设置参数！");
+                                }else{
+                                    $("#input_dosingcycle").val(data.data.nec.dosingcycle);
+                                }
+                                if(data.data.nec.firstdosingTime == null){
+                                    $("#input_firstmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_firstmedtime").val(ChangeTimeFormat(data.data.nec.firstdosingTime));
+                                }
+                                if(data.data.nec.lastdosingTime == null){
+                                    $("#input_lastmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_lastmedtime").val(ChangeTimeFormat(data.data.nec.lastdosingTime));
+                                }
+                                if(data.data.nec.nextdosingTime == null){
+                                    $("#input_nextmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_nextmedtime").val(ChangeTimeFormat(data.data.nec.nextdosingTime));
+                                }
                             }else if(data.data.nec==null && data.data.app!=null){
                                 $("#input_neckletid").val("---");
                                 $("#input_appid").val(data.data.app.appId);
-                                $("#input_power").val(((data.data.app.powerleft)/6).toFixed(2)*100+"%");
-                                $("#input_medleft").val(data.data.app.leftNum);
-                                $("#input_endmedtime").val(ChangeTimeFormat(data.data.app.enddosingTime));
-                                $("#input_areacycle").val(data.data.app.positioncycle);
-                                $("#input_dosingcycle").val(data.data.app.dosingcycle);
-                                $("#input_firstmedtime").val(ChangeTimeFormat(data.data.app.firstdosingTime));
-                                $("#input_lastmedtime").val(ChangeTimeFormat(data.data.app.lastdosingTime));
-                                $("#input_nextmedtime").val(ChangeTimeFormat(data.data.app.nextdosingTime));
+                                if(data.data.app.powerleft == null){
+                                    $("#input_power").val("未设置参数！");
+                                }else{
+                                    $("#input_power").val(((data.data.app.powerleft)/6).toFixed(2)*100+"%");
+                                }
+                                if(data.data.app.leftNum == null){
+                                    $("#input_medleft").val("未设置参数！");
+                                }else{
+                                    $("#input_medleft").val(data.data.app.leftNum);
+                                }
+                                if(data.data.app.enddosingTime == null){
+                                    $("#input_endmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_endmedtime").val(ChangeTimeFormat(data.data.app.enddosingTime));
+                                }
+                                if(data.data.app.positioncycle == null){
+                                    $("#input_areacycle").val("未设置参数！");
+                                }else{
+                                    $("#input_areacycle").val(data.data.app.positioncycle);
+                                }
+                                if(data.data.app.dosingcycle == null){
+                                    $("#input_dosingcycle").val("未设置参数！");
+                                }else{
+                                    $("#input_dosingcycle").val(data.data.app.dosingcycle);
+                                }
+                                if(data.data.app.firstdosingTime == null){
+                                    $("#input_firstmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_firstmedtime").val(ChangeTimeFormat(data.data.app.firstdosingTime));
+                                }
+                                if(data.data.app.lastdosingTime == null){
+                                    $("#input_lastmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_lastmedtime").val(ChangeTimeFormat(data.data.app.lastdosingTime));
+                                }
+                                if(data.data.app.nextdosingTime == null){
+                                    $("#input_nextmedtime").val("未设置参数！");
+                                }else{
+                                    $("#input_nextmedtime").val(ChangeTimeFormat(data.data.app.nextdosingTime));
+                                }
                             }else{
                                 $("#input_neckletid").val("---");
                                 $("#input_appid").val("---");

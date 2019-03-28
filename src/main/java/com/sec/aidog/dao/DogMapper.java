@@ -63,6 +63,6 @@ public interface DogMapper {
     @Select("select a.*,b.owner_name,b.owner_addr from dog a inner join dogowner b on a.dogowner_id = b.owner_id and a.districtcode like concat(#{districtCode},'%')")
     List<DogView> getDogListByDistrictcode(String districtCode);
 
-    @Select("select a.dog_id,a.dog_govcode,b.owner_name FROM dog a inner join dogowner b on a.nec_id='-1' and a.app_id='-1' and a.dogowner_id=b.owner_id and a.districtcode=#{districtcode}")
+    @Select("select a.dog_id,a.dog_govcode,a.dog_name,b.owner_name FROM dog a inner join dogowner b on a.nec_id='-1' and a.app_id='-1' and a.dogowner_id=b.owner_id and a.districtcode=#{districtcode}")
     List<DogView> getUnuseDogGovcodeList(String districtcode);
 }
