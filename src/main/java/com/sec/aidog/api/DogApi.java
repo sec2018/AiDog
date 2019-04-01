@@ -3,8 +3,10 @@ package com.sec.aidog.api;
 import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.NeckletMapper;
+import com.sec.aidog.dao.PillMapper;
 import com.sec.aidog.pojo.DogView;
 import com.sec.aidog.pojo.Manager;
+import com.sec.aidog.pojo.Pill;
 import com.sec.aidog.service.DogService;
 import com.sec.aidog.service.OwnerService;
 import com.sec.aidog.service.RedisService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import net.sf.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +46,9 @@ public class DogApi {
 
     @Autowired
     private NeckletMapper neckletMapper;
+
+    @Autowired
+    private PillMapper pillMapper;
 
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
@@ -75,6 +81,38 @@ public class DogApi {
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     result = "添加主人失败!";
+                }
+            }
+
+            else if (clicktype.equals("pilladd"))
+            {
+                String pillcode = json.getString("pillcode");
+                String pillname = json.getString("pillname");
+                String pillfactory = json.getString("pillfactory");
+                String pillspec = json.getString("pillspec");
+                String batchnum = json.getString("batchnum");
+                String expdate = json.getString("expdate");
+                String buydate = json.getString("buydate");
+                String pillbuyer = json.getString("pillbuyer");
+                String pillbuyertel = json.getString("pillbuyertel");
+                String districtcode = json.getString("districtcode");
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                    Pill pill = new Pill();
+                    pill.setPillCode(pillcode);
+                    pill.setPillName(pillname);
+                    pill.setPillFactory(pillfactory);
+                    pill.setPillSpec(pillspec);
+                    pill.setPillBatchnum(batchnum);
+                    pill.setPillExpdate(format.parse(expdate));
+                    pill.setPillBuydate(format.parse(buydate));
+                    pill.setPillBuyer(pillbuyer);
+                    pill.setPillBuyertel(pillbuyertel);
+                    pill.setDistrictcode(districtcode);
+                    result = pillMapper.insert(pill)>0?"添加药珥成功！":"添加药珥失败!";
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    result = "添加药珥失败!";
                 }
             }
 
