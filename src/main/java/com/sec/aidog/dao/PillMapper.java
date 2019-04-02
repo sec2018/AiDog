@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface PillMapper {
@@ -31,4 +32,7 @@ public interface PillMapper {
     int updateByPrimaryKeySelective(Pill record);
 
     int updateByPrimaryKey(Pill record);
+
+    @Select("select * from pill where districtcode like concat(#{districtCode},'%')")
+    List<Pill> getPillListByDistrictcode(String districtCode);
 }
