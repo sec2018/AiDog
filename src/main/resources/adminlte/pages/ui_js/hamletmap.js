@@ -27,7 +27,8 @@ $(function() {
         },
         success: function (data) {
             if (data.data != null) {
-                GetHamletEcharts(data.data);
+                data = eval("("+ data.data +")");
+                GetHamletEcharts(data);
             }
         }
     })
@@ -42,6 +43,20 @@ function objToArray(array) {
     }
     console.log(arr);
     return arr;
+}
+
+function ChangeTimeFormat(logintime) {
+    //	20170926084552 ---> 2017.09.26 08:45:52
+    if(logintime == "--"){
+        return logintime;
+    }
+    var year = logintime.substring(0, 4);
+    var month = logintime.substring(4, 6);
+    var day = logintime.substring(6, 8);
+    var hour = logintime.substring(8, 10);
+    var min = logintime.substring(10, 12);
+    var sec = logintime.substring(12);
+    return year + "." + month + "." + day + " " + hour + ":" + min + ":" + sec;
 }
 
 var district, map = null;
@@ -221,7 +236,7 @@ function GetHamletEcharts(data) {
         p_necklet_dognames[i] = n["dogname"];
         //p_figs[i] = n["fig"];
         p_necklet_mangers[i] = n["manager"];
-        p_necklet_nextmedtimes[i] = n["nextmedtime"];
+        p_necklet_nextmedtimes[i] = n["nextmedtime"]==null?"--":n["nextmedtime"];
         //var one_title = p_titles[i];
 
         var one_title = "设备编号：<a onclick=\"GetDogPage(" + n["dogid"] + ")\">" + p_necklet_ids[i] + "</a>"
@@ -251,7 +266,7 @@ function GetHamletEcharts(data) {
         p_feeder_dognames[i] = n["dogname"];
         //p_figs[i] = n["fig"];
         p_feeder_mangers[i] = n["manager"];
-        p_feeder_nextmedtimes[i] = n["nextmedtime"];
+        p_feeder_nextmedtimes[i] = n["nextmedtime"]==null?"--":n["nextmedtime"];
 
 
         //var one_title = p_titles[i];

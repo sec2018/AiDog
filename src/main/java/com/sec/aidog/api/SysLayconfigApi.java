@@ -6,14 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sec.aidog.dao.LastnecdosingMapper;
 import com.sec.aidog.dao.NecconfigMapper;
 import com.sec.aidog.dao.SysDeviceconfMapper;
 import com.sec.aidog.dao.SysLayconfigMapper;
 import com.sec.aidog.model.SysLayconfigExample;
-import com.sec.aidog.pojo.Necconfig;
-import com.sec.aidog.pojo.Necklet;
-import com.sec.aidog.pojo.SysDeviceconf;
-import com.sec.aidog.pojo.SysLayconfig;
+import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.RedisService;
 import com.sec.aidog.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +45,9 @@ public class SysLayconfigApi {
 
 	@Autowired
 	private NecconfigMapper necconfigMapper;
+
+	@Autowired
+	private LastnecdosingMapper lastnecdosingMapper;
 	
 	@ApiOperation(value = "查询所有项圈配置列表", notes = "查询所有项圈配置列表")
 	@RequestMapping(value="getlayconfiglist",method = RequestMethod.GET)
@@ -252,30 +253,51 @@ public class SysLayconfigApi {
 																 @RequestParam(value = "seven")String seven,@RequestParam(value = "eight")String eight,
 																 @RequestParam(value = "nine")String nine,@RequestParam(value = "ten")String ten,
 																 @RequestParam(value = "eleven")String eleven,@RequestParam(value = "twelve")String twelve,
+																 @RequestParam(value = "areacycle")Integer areacycle,
 																 HttpServletRequest request){
 		JsonResult r = new JsonResult();
 		try {
-			SysLayconfig layconfig = new SysLayconfig();
-			layconfig.setId(0);
-			layconfig.setMid(necid);
+			SysLayconfig layconfig = sysLayconfigMapper.selectLayConfigByMid(necid);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
-			layconfig.setOne(format.parse(one));
-			layconfig.setTwo(format.parse(two));
-			layconfig.setThree(format.parse(three));
-			layconfig.setFour(format.parse(four));
-			layconfig.setFive(format.parse(five));
-			layconfig.setSix(format.parse(six));
-			layconfig.setSeven(format.parse(seven));
-			layconfig.setEight(format.parse(eight));
-			layconfig.setNine(format.parse(nine));
-			layconfig.setTen(format.parse(ten));
-			layconfig.setEleven(format.parse(eleven));
-			layconfig.setTwelve(format.parse(twelve));
-			layconfig.setUimodifyflag(Byte.valueOf("1"));
-			layconfig.setHardmodifyflag(Byte.valueOf("0"));
-			layconfig.setUpdatetime(new Date());
-			sysLayconfigMapper.updateOtherLayConfigflag(necid);
-			boolean flag  = sysLayconfigMapper.insert(layconfig)==1?true:false;
+			boolean flag = false;
+			if(layconfig==null){
+				layconfig = new SysLayconfig();
+				layconfig.setId(0);
+				layconfig.setMid(necid);
+				layconfig.setOne(format.parse(one));
+				layconfig.setTwo(format.parse(two));
+				layconfig.setThree(format.parse(three));
+				layconfig.setFour(format.parse(four));
+				layconfig.setFive(format.parse(five));
+				layconfig.setSix(format.parse(six));
+				layconfig.setSeven(format.parse(seven));
+				layconfig.setEight(format.parse(eight));
+				layconfig.setNine(format.parse(nine));
+				layconfig.setTen(format.parse(ten));
+				layconfig.setEleven(format.parse(eleven));
+				layconfig.setTwelve(format.parse(twelve));
+				layconfig.setUimodifyflag(Byte.valueOf("1"));
+				layconfig.setHardmodifyflag(Byte.valueOf("0"));
+				layconfig.setUpdatetime(new Date());
+				flag = sysLayconfigMapper.insert(layconfig)==1?true:false;
+			}else{
+				layconfig.setOne(format.parse(one));
+				layconfig.setTwo(format.parse(two));
+				layconfig.setThree(format.parse(three));
+				layconfig.setFour(format.parse(four));
+				layconfig.setFive(format.parse(five));
+				layconfig.setSix(format.parse(six));
+				layconfig.setSeven(format.parse(seven));
+				layconfig.setEight(format.parse(eight));
+				layconfig.setNine(format.parse(nine));
+				layconfig.setTen(format.parse(ten));
+				layconfig.setEleven(format.parse(eleven));
+				layconfig.setTwelve(format.parse(twelve));
+				layconfig.setUimodifyflag(Byte.valueOf("1"));
+				layconfig.setHardmodifyflag(Byte.valueOf("0"));
+				layconfig.setUpdatetime(new Date());
+				flag = sysLayconfigMapper.updateByPrimaryKey(layconfig)==1?true:false;
+			}
 			boolean flag2  = false;
 			if(flag) {
 				String command02 = Analyse.Command_02_Send(layconfig);
@@ -290,15 +312,54 @@ public class SysLayconfigApi {
 				if(num == 4) {
 					sysLayconfigMapper.deleteOldestLayConfigByMid(necid);
 				}
-				r.setCode(200);
-				r.setMsg("配置项圈时间成功！");
-				r.setData(layconfig);
-				r.setSuccess(true);
+				SysDeviceconf sysDeviceconf = sysDeviceconfMapper.selectDeviceConfigByMid(necid);
+				boolean flag3 = false;
+				if(sysDeviceconf!=null){
+					sysDeviceconf.setInfoupdatecycle(areacycle);
+					sysDeviceconf.setUimodifyflag(Byte.valueOf("1"));
+					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));
+					sysDeviceconf.setUpdatetime(new Date());
+					flag3 = sysDeviceconfMapper.updateByPrimaryKey(sysDeviceconf)==1?true:false;
+				}else{
+					sysDeviceconf = new SysDeviceconf();
+					sysDeviceconf.setMid(necid);
+					sysDeviceconf.setInfoupdatecycle(areacycle);
+					sysDeviceconf.setUimodifyflag(Byte.valueOf("1"));
+					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));
+					sysDeviceconf.setUpdatetime(new Date());
+					flag3 = sysDeviceconfMapper.insert(sysDeviceconf)==1?true:false;
+				}
+				boolean flag4 = false;
+				Necconfig necconfig = necconfigMapper.getNecconfig(necid);
+				necconfig.setAreacycle(areacycle);
+				necconfig.setUpdatetime(new Date());
+				necconfig.setFirstdosingTime(format.parse(one));
+				necconfig.setEnddosingTime(format.parse(twelve));
+				flag4 = necconfigMapper.updateByPrimaryKey(necconfig)==1?true:false;
+				boolean flag5 = false;
+				Lastnecdosing lastnecdosing = lastnecdosingMapper.getLastnecdosing(necid);
+				lastnecdosing.setFirstdosingTime(format.parse(one));
+				lastnecdosing.setEnddosingTime(format.parse(twelve));
+				lastnecdosing.setPositioncycle(areacycle);
+				flag5 = lastnecdosingMapper.updateByPrimaryKey(lastnecdosing)==1?true:false;
+				if(flag3 && flag4 && flag5){
+					r.setCode(200);
+					r.setMsg("配置项圈时间成功！");
+					r.setData(layconfig);
+					r.setSuccess(true);
+				}else{
+					r.setCode(500);
+					r.setData(null);
+					r.setMsg("配置项圈时间失败");
+					r.setSuccess(false);
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
 			}else {
 				r.setCode(500);
 				r.setData(null);
 				r.setMsg("配置项圈时间失败");
 				r.setSuccess(false);
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
 		} catch (Exception e) {
 			r.setCode(500);

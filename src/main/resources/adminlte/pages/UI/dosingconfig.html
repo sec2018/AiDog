@@ -45,27 +45,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第1次投药时间：</label>
-                        <input id="input_lay1" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第2次投药时间：</label>
-                        <input id="input_lay2" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第3次投药时间：</label>
-                        <input id="input_lay3" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第4次投药时间：</label>
-                        <input id="input_lay4" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第5次投药时间：</label>
-                        <input id="input_lay5" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第6次投药时间：</label>
-                        <input id="input_lay6" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00"/>
                     </div>
                 </form>
             </div>
@@ -79,27 +79,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第7次投药时间：</label>
-                        <input id="input_lay7" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第8次投药时间：</label>
-                        <input id="input_lay8" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第9次投药时间：</label>
-                        <input id="input_lay9" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第10次投药时间：</label>
-                        <input id="input_lay10" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第11次投药时间：</label>
-                        <input id="input_lay11" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第12次投药时间：</label>
-                        <input id="input_lay12" class="form-control" type="datetime-local" value="2017-06-30T00:00"/>
+                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00"/>
                     </div>
                 </form>
             </div>
@@ -179,13 +179,70 @@
                             if(data.data.areacycle == null){
                                 alert("反馈周期尚未配置，请进行配置，单位（分钟）！");
                             }else{
-                                $("#input_areacycle").val(data.data.areacycle );
+                                $("#input_areacycle").val(data.data.areacycle);
                             }
                         }
                     }
                 })
             });
 
+
+            $("#a_dosingconfig").click(function () {
+                necid = $("#input_neckletid").val();
+                if(necid == ""){
+                    alert("请先查询获取项圈投药时间配置！");
+                    return;
+                }
+                var necid = "necid="+necid+"&";
+                var one1 = new Date($("#input_lay1").val()).valueOf();
+                var two2 = new Date($("#input_lay2").val()).valueOf();
+                var three3 = new Date($("#input_lay3").val()).valueOf();
+                var four4 = new Date($("#input_lay4").val()).valueOf();
+                var five5 = new Date($("#input_lay5").val()).valueOf();
+                var six6 = new Date($("#input_lay6").val()).valueOf();
+                var seven7 = new Date($("#input_lay7").val()).valueOf();
+                var eight8 = new Date($("#input_lay8").val()).valueOf();
+                var nine9 = new Date($("#input_lay9").val()).valueOf();
+                var ten10 = new Date($("#input_lay10").val()).valueOf();
+                var eleven11 = new Date($("#input_lay11").val()).valueOf();
+                var twelve12 = new Date($("#input_lay12").val()).valueOf();
+                var areacycle = $("#input_areacycle").val() ==""?60:$("#input_areacycle").val();
+                areacycle = "areacycle="+areacycle;
+                if(twelve12>=eleven11 && eleven11>ten10 && ten10>=nine9 && nine9>=eight8 && eight8>=seven7
+                    && seven7>=six6 && six6>=five5 && five5>=four4 && four4>= three3 && three3>=two2 && two2>=one1){
+                    var one = "one=" + $("#input_lay1").val()+":00&";
+                    var two = "two=" + $("#input_lay2").val()+":00&";
+                    var three = "three=" + $("#input_lay3").val()+":00&";
+                    var four = "four=" +  $("#input_lay4").val()+":00&";
+                    var five = "five=" +  $("#input_lay5").val()+":00&";
+                    var six = "six=" + $("#input_lay6").val()+":00&";
+                    var seven = "seven=" + $("#input_lay7").val()+":00&";
+                    var eight = "eight=" + $("#input_lay8").val()+":00&";
+                    var nine = "nine=" +  $("#input_lay9").val()+":00&";
+                    var ten = "ten=" +  $("#input_lay10").val()+":00&";
+                    var eleven = "eleven=" +  $("#input_lay11").val()+":00&";
+                    var twelve = "twelve=" +  $("#input_lay12").val()+":00&";
+                    var senddata = necid+one+two+three+four+five+six+seven+eight+nine+ten+eleven+twelve+areacycle;
+                    $.ajax({
+                        url: "/aidog/api/dosingtimeconfig",
+                        method: "POST",
+                        data: senddata,
+                        beforeSend: function (request) {
+                            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                        },
+                        success: function (data) {
+                            if (data.data == null) {
+                                alert("配置失败，该项圈不存在！");
+                                return;
+                            }else{
+                                alert(data.msg);
+                            }
+                        }
+                    })
+                }else{
+                    alert("时间设置有误！后投药时间应在前一次投药时间之后！");
+                }
+            });
 
             function getDogInfo() {
                 $.ajax({

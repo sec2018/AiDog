@@ -59,6 +59,17 @@ function objToArray(array) {
     return arr;
 }
 
+function ChangeTimeFormat(logintime) {
+    //	20170926084552 ---> 2017.09.26 08:45:52
+    var year = logintime.substring(0, 4);
+    var month = logintime.substring(4, 6);
+    var day = logintime.substring(6, 8);
+    var hour = logintime.substring(8, 10);
+    var min = logintime.substring(10, 12);
+    var sec = logintime.substring(12);
+    return year + "." + month + "." + day + " " + hour + ":" + min + ":" + sec;
+}
+
 var district, map = null;
 function GetVillageEcharts(data) {
     var villageGov = "" + data.data4.villageGov;

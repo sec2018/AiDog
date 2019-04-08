@@ -381,7 +381,9 @@ public class MapApi {
             }
             Map<String,Object> gethamletmap = new HashMap<String,Object>();
             gethamletmap = hamletService.GetHamletMap(province,city,county,village,hamlet,request);
-            data.put("data3", gethamletmap);
+            if(gethamletmap.size() != 0){
+                data.put("data3", gethamletmap);
+            }
             Map<String,String> data4 = new HashMap<String,String>();
 
             data4.put("provincename", nameConversionUtil.GovToEchartsAreaName(province));
@@ -392,12 +394,13 @@ public class MapApi {
             data.put("data4", data4);
             Map<String,Object> getHamletFeederMap = new HashMap<String,Object>();
             getHamletFeederMap = hamletService.GetHamletFeederMap(province,city,county,village,hamlet);
-            data.put("data6", getHamletFeederMap);
-
+            if(getHamletFeederMap.size() != 0){
+                data.put("data6", getHamletFeederMap);
+            }
             jsStr = JSONObject.fromObject(data);//数据转为json格式
             r.setCode(200);
-            r.setMsg("获取用户信息成功！");
-            r.setData(jsStr);
+            r.setMsg("获取村级地图信息成功！");
+            r.setData(jsStr.toString());
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
