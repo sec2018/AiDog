@@ -409,7 +409,7 @@ function modifyDog(id) {
             if (data.data != null) {
                 //牧犬信息
                 $("#modalinput_dogname").val(data.data.dog.dogName);
-                $("#modalselect_dogsex").find("option[text='"+data.data.dog.dogSex+"']").attr("selected",true);
+                $("#modalselect_dogsex").find("option[value='"+data.data.dog.dogSex+"']").prop("selected",true);
                 alert($("#modalselect_dogsex").find("option:selected").text());
                 $("#modalinput_dogbelonghamlet").val(data.data.hamlet);
                 $("#modalinput_dogweight").val(data.data.dog.dogWeight);
