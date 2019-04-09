@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NeckletServiceImpl implements NeckletService{
@@ -55,6 +57,7 @@ public class NeckletServiceImpl implements NeckletService{
                 dog.setNecId(necid);
                 boolean flag1 = dogMapper.updateByPrimaryKey(dog)!=0?true:false;
                 necklet.setBindTime(new Date());
+                necklet.setDistrictcode(dog.getDistrictcode());
                 boolean flag2 = neckletMapper.updateByPrimaryKey(necklet)!=0?true:false;
                 Necconfig necconfig = new Necconfig();
                 necconfig.setNecId(necid);
@@ -81,5 +84,22 @@ public class NeckletServiceImpl implements NeckletService{
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return false;
         }
+    }
+
+
+    @Override
+    public Map<String, Object> getHamletOwnerNecList(String hamletcode,Integer ownerid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Dog> neckletList = dogMapper.getUseNecListByHamletcode(hamletcode,ownerid);
+        int i=0;
+        for (Dog item:neckletList)
+        {
+            Map<String, Object> maptemp = new HashMap<String, Object>();
+            maptemp.put("nec", item.getNecId());
+            maptemp.put("id", item.getDogId());
+            map.put(""+i, maptemp);
+            i++;
+        }
+        return map;
     }
 }

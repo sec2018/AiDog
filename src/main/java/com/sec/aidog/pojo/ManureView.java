@@ -2,7 +2,7 @@ package com.sec.aidog.pojo;
 
 import java.util.Date;
 
-public class Manure {
+public class ManureView {
     private Integer id;
 
     private String dogmanureCode;
@@ -25,7 +25,7 @@ public class Manure {
 
     private String testingPerson;
 
-    public Manure(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson) {
+    public ManureView(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson) {
         this.id = id;
         this.dogmanureCode = dogmanureCode;
         this.dogownerId = dogownerId;
@@ -39,7 +39,7 @@ public class Manure {
         this.testingPerson = testingPerson;
     }
 
-    public Manure() {
+    public ManureView() {
         super();
     }
 
@@ -129,5 +129,36 @@ public class Manure {
 
     public void setTestingPerson(String testingPerson) {
         this.testingPerson = testingPerson == null ? null : testingPerson.trim();
+    }
+
+
+    private String dogName;
+
+    private String dogGovcode;
+
+    private String ownerName;
+
+    public String getDogName() {
+        return dogName;
+    }
+
+    public void setDogName(String dogName) {
+        this.dogName = dogName;
+    }
+
+    public String getDogGovcode() {
+        return dogGovcode;
+    }
+
+    public void setDogGovcode(String dogGovcode) {
+        this.dogGovcode = dogGovcode;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

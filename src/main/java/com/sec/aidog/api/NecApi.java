@@ -3,6 +3,7 @@ package com.sec.aidog.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.pojo.Necklet;
 import com.sec.aidog.service.NeckletService;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("api")
 @Controller
@@ -128,7 +130,6 @@ public class NecApi {
     public ResponseEntity<JsonResult> bindNecklet(@RequestParam(value = "necid")String necid, @RequestParam(value = "dogid")Integer dogid, HttpServletRequest request){
         JsonResult r = new JsonResult();
         try {
-
             boolean isSuccess = neckletService.bindNecklet(necid,dogid);
             if(isSuccess){
                 r.setCode(200);
@@ -147,6 +148,38 @@ public class NecApi {
             r.setMsg("绑定项圈失败！");
             r.setSuccess(false);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
+
+
+    @ApiOperation(value = "获取某村主人名下绑定项圈列表", notes = "获取某村主人名下绑定项圈列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
+            @ApiImplicitParam(name = "hamletcode", value = "村行政编码", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "ownerid", value = "主人标识", required = true , dataType = "String",paramType = "query"),
+    })
+    @RequestMapping(value="gethamletneclist",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetHamletOwnerList(@RequestParam(value = "hamletcode",required = true)String hamletcode,@RequestParam(value = "ownerid",required = true)Integer ownerid, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+
+            Map<String, Object> map = neckletService.getHamletOwnerNecList(hamletcode,ownerid);
+            r.setCode(200);
+            r.setMsg("获取某村绑定项圈列表信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取某村绑定项圈列表信息失败");
+            r.setSuccess(false);
             e.printStackTrace();
         }
         return ResponseEntity.ok(r);

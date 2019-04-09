@@ -7,10 +7,7 @@ import com.sec.aidog.dao.PillMapper;
 import com.sec.aidog.pojo.DogView;
 import com.sec.aidog.pojo.Manager;
 import com.sec.aidog.pojo.Pill;
-import com.sec.aidog.service.DogService;
-import com.sec.aidog.service.OwnerService;
-import com.sec.aidog.service.RedisService;
-import com.sec.aidog.service.UserService;
+import com.sec.aidog.service.*;
 import com.sec.aidog.util.JSONUtil;
 import com.sec.aidog.util.JsonResult;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import net.sf.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +47,9 @@ public class DogApi {
 
     @Autowired
     private PillMapper pillMapper;
+
+    @Autowired
+    private ManureService manureService;
 
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
@@ -113,6 +114,23 @@ public class DogApi {
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     result = "添加药珥失败!";
+                }
+            }
+
+            else if (clicktype.equals("manureadd"))
+            {
+                String dogmanure_code = json.getString("dogmanure_code");
+                Integer dogowner_id = json.getInt("dogowner_id");
+                Integer dog_id = json.getInt("dog_id");
+                String collection_person = json.getString("collection_person");
+                String districtcode = json.getString("districtcode");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                Date date = format.parse(json.getString("manure_getdate"));
+                try {
+                    result = manureService.addManure(dogmanure_code, dogowner_id, dog_id, collection_person,districtcode,date)==true?"采集犬粪成功!":"采集犬粪失败!";
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    result = "采集犬粪失败!";
                 }
             }
 
@@ -268,7 +286,7 @@ public class DogApi {
                 }
             }
         }catch (Exception e) {
-
+            e.printStackTrace();
         }
         return result;
     }

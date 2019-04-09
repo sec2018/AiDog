@@ -245,62 +245,52 @@ public class ManureExample {
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdEqualTo(String value) {
+        public Criteria andDogownerIdEqualTo(Integer value) {
             addCriterion("dogowner_id =", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdNotEqualTo(String value) {
+        public Criteria andDogownerIdNotEqualTo(Integer value) {
             addCriterion("dogowner_id <>", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdGreaterThan(String value) {
+        public Criteria andDogownerIdGreaterThan(Integer value) {
             addCriterion("dogowner_id >", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdGreaterThanOrEqualTo(String value) {
+        public Criteria andDogownerIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("dogowner_id >=", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdLessThan(String value) {
+        public Criteria andDogownerIdLessThan(Integer value) {
             addCriterion("dogowner_id <", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdLessThanOrEqualTo(String value) {
+        public Criteria andDogownerIdLessThanOrEqualTo(Integer value) {
             addCriterion("dogowner_id <=", value, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdLike(String value) {
-            addCriterion("dogowner_id like", value, "dogownerId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDogownerIdNotLike(String value) {
-            addCriterion("dogowner_id not like", value, "dogownerId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDogownerIdIn(List<String> values) {
+        public Criteria andDogownerIdIn(List<Integer> values) {
             addCriterion("dogowner_id in", values, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdNotIn(List<String> values) {
+        public Criteria andDogownerIdNotIn(List<Integer> values) {
             addCriterion("dogowner_id not in", values, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdBetween(String value1, String value2) {
+        public Criteria andDogownerIdBetween(Integer value1, Integer value2) {
             addCriterion("dogowner_id between", value1, value2, "dogownerId");
             return (Criteria) this;
         }
 
-        public Criteria andDogownerIdNotBetween(String value1, String value2) {
+        public Criteria andDogownerIdNotBetween(Integer value1, Integer value2) {
             addCriterion("dogowner_id not between", value1, value2, "dogownerId");
             return (Criteria) this;
         }
@@ -315,62 +305,52 @@ public class ManureExample {
             return (Criteria) this;
         }
 
-        public Criteria andDogIdEqualTo(String value) {
+        public Criteria andDogIdEqualTo(Integer value) {
             addCriterion("dog_id =", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdNotEqualTo(String value) {
+        public Criteria andDogIdNotEqualTo(Integer value) {
             addCriterion("dog_id <>", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdGreaterThan(String value) {
+        public Criteria andDogIdGreaterThan(Integer value) {
             addCriterion("dog_id >", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdGreaterThanOrEqualTo(String value) {
+        public Criteria andDogIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("dog_id >=", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdLessThan(String value) {
+        public Criteria andDogIdLessThan(Integer value) {
             addCriterion("dog_id <", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdLessThanOrEqualTo(String value) {
+        public Criteria andDogIdLessThanOrEqualTo(Integer value) {
             addCriterion("dog_id <=", value, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdLike(String value) {
-            addCriterion("dog_id like", value, "dogId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDogIdNotLike(String value) {
-            addCriterion("dog_id not like", value, "dogId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDogIdIn(List<String> values) {
+        public Criteria andDogIdIn(List<Integer> values) {
             addCriterion("dog_id in", values, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdNotIn(List<String> values) {
+        public Criteria andDogIdNotIn(List<Integer> values) {
             addCriterion("dog_id not in", values, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdBetween(String value1, String value2) {
+        public Criteria andDogIdBetween(Integer value1, Integer value2) {
             addCriterion("dog_id between", value1, value2, "dogId");
             return (Criteria) this;
         }
 
-        public Criteria andDogIdNotBetween(String value1, String value2) {
+        public Criteria andDogIdNotBetween(Integer value1, Integer value2) {
             addCriterion("dog_id not between", value1, value2, "dogId");
             return (Criteria) this;
         }
