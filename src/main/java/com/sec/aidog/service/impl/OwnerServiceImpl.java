@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +25,16 @@ public class OwnerServiceImpl implements OwnerService{
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-    public String addOwner(String ownername, String owneridentity, String ownersex, String ownerhamletcode, int ownerage,
+    public Dogowner addOwner(String ownername, String owneridentity, String ownersex, String ownerhamletcode, int ownerage,
                           String ownerjob, String homeaddress, String telphone) throws Exception {
         String result = "添加失败";
         // 如果主人存在，则无法再次创建
-        if (dogownerMapper.getOwnerByTelAndDistricode(telphone,ownerhamletcode)!=null) {
-            result = "添加失败，主人已经存在！";
+        Dogowner owner = null;
+        owner = dogownerMapper.getOwnerByTelAndDistricode(telphone,ownerhamletcode);
+        if (owner!=null) {
+            return owner;
         }
-        Dogowner owner = new Dogowner();
+        owner = new Dogowner();
         owner.setOwnerName(ownername);
         owner.setOwnerTel(telphone);
         owner.setOwnerAddr(homeaddress);
@@ -43,9 +46,9 @@ public class OwnerServiceImpl implements OwnerService{
         owner.setDistrictcode(ownerhamletcode);
         boolean flag = dogownerMapper.insert(owner)==0?false:true;
         if(flag){
-            result = "主人添加成功！";
+            return owner;
         }
-        return result;
+        return owner;
     }
 
     @Override
@@ -64,6 +67,40 @@ public class OwnerServiceImpl implements OwnerService{
             i++;
         }
         return map;
+    }
+
+    @Override
+    public Dogowner checkOwner(String ownername, String owneridentity, String ownerhamletcode, String telphone) {
+        DogownerExample example = new DogownerExample();
+        example.createCriteria().andDistrictcodeEqualTo(ownerhamletcode);
+        List<Dogowner> ownerlist = dogownerMapper.selectByExample(example);
+        List<Dogowner> finallist = new ArrayList<>();
+        if(owneridentity!=""){
+            for(Dogowner ow: ownerlist){
+                if(ow.getOwnerIdentity().contains(owneridentity)){
+                    finallist.add(ow);
+                }
+            }
+        }
+        if(telphone!=""){
+            for(Dogowner ow: ownerlist){
+                if(ow.getOwnerTel().contains(telphone)){
+                    finallist.add(ow);
+                }
+            }
+        }
+        if(ownername!=""){
+            for(Dogowner ow: ownerlist){
+                if(ow.getOwnerName().contains(ownername)){
+                    finallist.add(ow);
+                }
+            }
+        }
+        if(finallist.size()!=1){
+            return null;
+        }else{
+            return finallist.get(0);
+        }
     }
 
 }

@@ -863,7 +863,7 @@
 
                         addTabs({
                             id: '10008',
-                            title: '主页',
+                            title: '辖区总览',
                             close: false,
                             url: usermap,
                             urlType: "relative"
@@ -879,17 +879,7 @@
                             {
                                 id: "9001",
                                 text: "辖区总览",
-                                icon: "fa fa-edit",
-                                children: [
-                                    {
-                                        id: "90011",
-                                        text: "地图模块化",
-                                        url: "UI/modularizemap.html",
-                                        targetType: "iframe-tab",
-                                        icon: "fa fa-circle-o",
-                                        urlType: 'abosulte'
-                                    }
-                                ]
+                                icon: "fa fa-edit"
                             },
                             {
                                 id: "9002",
@@ -898,30 +888,14 @@
                                 children: [
                                     {
                                         id: "90021",
-                                        text: "牧犬主人注册",
-                                        url: "UI/ownerregister.html",
+                                        text: "犬主及犬注册",
+                                        url: "UI/owneranddogreg.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
                                         urlType: 'abosulte'
                                     },
                                     {
                                         id: "90022",
-                                        text: "犬只注册",
-                                        url: "UI/dogregister.html",
-                                        targetType: "iframe-tab",
-                                        icon: "fa fa-circle-o",
-                                        urlType: 'abosulte'
-                                    },
-                                    {
-                                        id: "90023",
-                                        text: "犬只列表信息",
-                                        url: "UI/doglist.html",
-                                        targetType: "iframe-tab",
-                                        icon: "fa fa-circle-o",
-                                        urlType: 'abosulte'
-                                    },
-                                    {
-                                        id: "90024",
                                         text: "药珥信息注册",
                                         url: "UI/pillregister.html",
                                         targetType: "iframe-tab",
@@ -929,25 +903,49 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90025",
-                                        text: "药珥信息列表",
-                                        url: "UI/pilllist.html",
-                                        targetType: "iframe-tab",
-                                        icon: "fa fa-circle-o",
-                                        urlType: 'abosulte'
-                                    },
-                                    {
-                                        id: "90026",
-                                        text: "采集犬粪信息",
+                                        id: "90023",
+                                        text: "犬粪采集信息",
                                         url: "UI/manureregister.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90027",
-                                        text: "犬粪信息列表",
+                                        id: "90024",
+                                        text: "犬粪检测结果",
                                         url: "UI/manurelist.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90025",
+                                        text: "牧犬主人注册",
+                                        url: "UI/ownerregister.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90026",
+                                        text: "犬只注册",
+                                        url: "UI/dogregister.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90027",
+                                        text: "犬只列表信息",
+                                        url: "UI/doglist.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90028",
+                                        text: "药珥信息列表",
+                                        url: "UI/pilllist.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
                                         urlType: 'abosulte'
@@ -956,13 +954,12 @@
                             },
                             {
                                 id: "9003",
-                                text: "智能硬件",
+                                text: "智能防控",
                                 icon: "fa fa-edit",
                                 children: [
                                     {
                                         id: "90031",
                                         text: "智能防控项圈",
-                                        url: "https://www.baidu.com",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
                                         children: [
@@ -977,32 +974,32 @@
                                             {
                                                 id: "900312",
                                                 text: "投药周期设置",
-                                                url: "UI/dosingconfig.html",
                                                 targetType: "iframe-tab",
                                                 icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
-                                            },
-                                            {
-                                                id: "900313",
-                                                text: "基本配置信息",
-                                                url: "https://www.baidu.com",
-                                                targetType: "iframe-tab",
-                                                icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
-                                            },
-                                            {
-                                                id: "900314",
-                                                text: "设备故障报警",
-                                                url: "https://www.baidu.com",
-                                                targetType: "iframe-tab",
-                                                icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
+                                                children: [
+                                                    {
+                                                        id: "9003121",
+                                                        text: "单只配置",
+                                                        url: "UI/dosingconfig.html",
+                                                        targetType: "iframe-tab",
+                                                        icon: "fa fa-circle-o",
+                                                        urlType: 'abosulte'
+                                                    },
+                                                    {
+                                                        id: "9003122",
+                                                        text: "批量配置",
+                                                        url: "UI/dosingconfig.html",
+                                                        targetType: "iframe-tab",
+                                                        icon: "fa fa-circle-o",
+                                                        urlType: 'abosulte'
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
                                     {
                                         id: "90032",
-                                        text: "智能喂饲器",
+                                        text: "智能防控喂饲器",
                                         url: "https://www.baidu.com",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o",
@@ -1018,26 +1015,26 @@
                                             {
                                                 id: "900322",
                                                 text: "投药周期设置",
-                                                url: "https://www.baidu.com",
                                                 targetType: "iframe-tab",
                                                 icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
-                                            },
-                                            {
-                                                id: "900323",
-                                                text: "基本配置信息",
-                                                url: "https://www.baidu.com",
-                                                targetType: "iframe-tab",
-                                                icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
-                                            },
-                                            {
-                                                id: "900324",
-                                                text: "设备故障报警",
-                                                url: "https://www.baidu.com",
-                                                targetType: "iframe-tab",
-                                                icon: "fa fa-circle-o",
-                                                urlType: 'abosulte'
+                                                children: [
+                                                    {
+                                                        id: "9003221",
+                                                        text: "单只配置",
+                                                        url: "UI/dosingconfig.html",
+                                                        targetType: "iframe-tab",
+                                                        icon: "fa fa-circle-o",
+                                                        urlType: 'abosulte'
+                                                    },
+                                                    {
+                                                        id: "9003222",
+                                                        text: "批量配置",
+                                                        url: "UI/dosingconfig.html",
+                                                        targetType: "iframe-tab",
+                                                        icon: "fa fa-circle-o",
+                                                        urlType: 'abosulte'
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -1045,11 +1042,50 @@
                             },
                             {
                                 id: "9004",
-                                text: "数据统计",
+                                text: "信息列表",
                                 icon: "fa fa-edit",
                                 children: [
                                     {
                                         id: "90041",
+                                        text: "犬只统计列表",
+                                        url: "UI/baobiaotest.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90042",
+                                        text: "犬只信息列表",
+                                        url: "UI/necregister.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90043",
+                                        text: "项圈信息列表",
+                                        url: "UI/dog.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    },
+                                    {
+                                        id: "90044",
+                                        text: "药珥信息列表",
+                                        url: "UI/dog.html",
+                                        targetType: "iframe-tab",
+                                        icon: "fa fa-circle-o",
+                                        urlType: 'abosulte'
+                                    }
+                                ]
+                            },
+                            {
+                                id: "9005",
+                                text: "数据分析",
+                                icon: "fa fa-edit",
+                                children: [
+                                    {
+                                        id: "90051",
                                         text: "硬件基本信息分析",
                                         url: "https://www.baidu.com",
                                         targetType: "iframe-tab",
@@ -1057,7 +1093,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90042",
+                                        id: "90052",
                                         text: "硬件投药提醒率",
                                         url: "https://www.baidu.com",
                                         targetType: "iframe-tab",
@@ -1065,7 +1101,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90043",
+                                        id: "90053",
                                         text: "视频录制上传率",
                                         url: usermap,
                                         targetType: "iframe-tab",
@@ -1073,7 +1109,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90044",
+                                        id: "90054",
                                         text: "犬运动轨迹统计图",
                                         url: "UI/maptest01.html",
                                         targetType: "iframe-tab",
@@ -1081,7 +1117,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90045",
+                                        id: "90055",
                                         text: "本级及以下硬件驱虫比",
                                         url: "https://www.baidu.com",
                                         targetType: "iframe-tab",
@@ -1089,7 +1125,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90046",
+                                        id: "90056",
                                         text: "本级及以下犬粪阳性率",
                                         url: usermap,
                                         targetType: "iframe-tab",
@@ -1099,12 +1135,12 @@
                                 ]
                             },
                             {
-                                id: "9005",
+                                id: "9006",
                                 text: "人员管理",
                                 icon: "fa fa-edit",
                                 children: [
                                     {
-                                        id: "90051",
+                                        id: "90061",
                                         text: "管理下级信息",
                                         url: "UI/manageuser.html",
                                         targetType: "iframe-tab",
@@ -1112,7 +1148,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90052",
+                                        id: "90062",
                                         text: "个人信息设置",
                                         url: "UI/personalinfo.html",
                                         targetType: "iframe-tab",
@@ -1122,54 +1158,47 @@
                                 ]
                             },
                             {
-                                id: "9006",
+                                id: "9007",
                                 text: "设置",
                                 icon: "fa fa-laptop",
                                 children: [
                                     {
-                                        id: "90061",
+                                        id: "90071",
                                         text: "设置投药时间",
                                         icon: "fa fa-circle-o",
                                         url: "UI/setlayconfig.html",
                                         targetType: "iframe-tab"
                                     },
                                     {
-                                        id: "90062",
+                                        id: "90072",
                                         text: "设置硬件基本信息",
                                         url: "UI/setdeviceconfig.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o"
                                     },
                                     {
-                                        id: "90063",
+                                        id: "90073",
                                         text: "硬件反馈信息",
                                         url: "UI/getlaytime.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o"
                                     },
                                     {
-                                        id: "90064",
+                                        id: "90074",
                                         text: "添加设备（项圈）",
                                         url: "UI/adddevice.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o"
                                     },
                                     {
-                                        id: "90065",
+                                        id: "90075",
                                         text: "设备地图",
                                         url: "UI/gaodemap.html",
                                         targetType: "iframe-tab",
                                         icon: "fa fa-circle-o"
-                                    }
-                                ]
-                            },
-                            {
-                                id: "9007",
-                                text: "系统设置",
-                                icon: "fa fa-edit",
-                                children: [
+                                    },
                                     {
-                                        id: "90071",
+                                        id: "90076",
                                         text: "报表测试",
                                         url: "UI/baobiaotest.html",
                                         targetType: "iframe-tab",
@@ -1177,7 +1206,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90072",
+                                        id: "90077",
                                         text: "项圈注册",
                                         url: "UI/necregister.html",
                                         targetType: "iframe-tab",
@@ -1185,7 +1214,7 @@
                                         urlType: 'abosulte'
                                     },
                                     {
-                                        id: "90073",
+                                        id: "90078",
                                         text: "犬只信息",
                                         url: "UI/dog.html",
                                         targetType: "iframe-tab",
@@ -1195,6 +1224,26 @@
                                 ]
                             }
                         ];
+
+                        switch (data.privilegelevel){
+                            case 1:
+//                                var newData = menus.foreach(function(item) {
+//                                    return !(item.children!=null && item.children[0].id == "90021");
+//                                });
+//                                menus = newData;
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                menus.pop();
+                                break;
+                        }
                         $('.sidebar-menu').sidebarMenu({data: menus});
 
                     }catch (Exception){

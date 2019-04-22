@@ -18,7 +18,7 @@ public class RedisUtil {
         String tokenvalue = "";
         JsonResult r = new JsonResult();
         int retry = 1;
-        while (retry<=3){
+        while (retry<=5){
             try
             {
                 //业务代码
@@ -33,7 +33,7 @@ public class RedisUtil {
             {
                 //重试
                 retry++;
-                if(retry == 4){
+                if(retry == 6){
                     //记录错误
                     r.setCode(Constant.Redis_TIMEDOWN.getCode());
                     r.setData("");

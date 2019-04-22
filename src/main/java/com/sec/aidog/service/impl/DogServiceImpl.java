@@ -3,6 +3,7 @@ package com.sec.aidog.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sec.aidog.dao.*;
+import com.sec.aidog.model.DogExample;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.DogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,19 @@ public class DogServiceImpl implements DogService{
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-    public String addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, String dogownerid,
+    public Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, String dogownerid,
                          String dogweight, String dogcolor, int dogage,String govcode) throws Exception {
         String result = "添加失败";
-
-        Dog sheepdog = new Dog();
+        Dog sheepdog = null;
+        DogExample example = new DogExample();
+        example.createCriteria().andDogownerIdEqualTo(Integer.parseInt(dogownerid)).andDogGovcodeEqualTo(govcode);
+        List<Dog> dogList = dogMapper.selectByExample(example);
+        if (dogList!=null && dogList.size()==1) {
+            return dogList.get(0);
+        }else if(dogList.size()>1){
+            return null;
+        }
+        sheepdog = new Dog();
         sheepdog.setDogName(dogname);
         sheepdog.setNecId("-1");
         sheepdog.setAppId("-1");
@@ -59,12 +68,11 @@ public class DogServiceImpl implements DogService{
         sheepdog.setDogSex(dogsex);
         sheepdog.setDistrictcode(ownerhamletcode);
         sheepdog.setDogGovcode(govcode);
-
         boolean flag = dogMapper.insert(sheepdog)==0?false:true;
         if(flag){
-            result = "牧犬添加成功！";
+            return sheepdog;
         }
-        return result;
+        return sheepdog;
     }
 
     @Override

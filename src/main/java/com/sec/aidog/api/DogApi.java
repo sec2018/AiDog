@@ -4,9 +4,7 @@ import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.NeckletMapper;
 import com.sec.aidog.dao.PillMapper;
-import com.sec.aidog.pojo.DogView;
-import com.sec.aidog.pojo.Manager;
-import com.sec.aidog.pojo.Pill;
+import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.*;
 import com.sec.aidog.util.JSONUtil;
 import com.sec.aidog.util.JsonResult;
@@ -65,27 +63,7 @@ public class DogApi {
             Manager manager = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
             //权限控制
 
-            if (clicktype.equals("owneradd"))
-            {
-                String ownername = json.getString("ownername");
-                String owneridentity = json.getString("owneridentity");
-                String ownersex = json.getString("ownersex");
-                String ownerhamlet = json.getString("ownerhamlet");
-                String ownerhamletcode = json.getString("ownerhamletcode");
-                int ownerage = json.getInt("ownerage");
-                String ownerjob = json.getString("ownerjob");
-                String homeaddress = json.getString("homeaddress");
-                String telphone = json.getString("telphone");
-
-                try {
-                    result = ownerService.addOwner(ownername, owneridentity, ownersex, ownerhamletcode, ownerage, ownerjob, homeaddress, telphone);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    result = "添加主人失败!";
-                }
-            }
-
-            else if (clicktype.equals("pilladd"))
+            if (clicktype.equals("pilladd"))
             {
                 String pillcode = json.getString("pillcode");
                 String pillname = json.getString("pillname");
@@ -201,24 +179,6 @@ public class DogApi {
 //                    logger.error("【系统错误】",e);
 //                    result = "绑定项圈失败!";
 //                }
-            }else if(clicktype.equals("dogadd")) {
-
-                String username = json.getString("username");
-                String dogname = json.getString("dogname");
-                String dogsex = json.getString("dogsex");
-                String dogbelonghamlet = json.getString("dogbelonghamlet");
-                String ownerhamletcode = json.getString("ownerhamletcode");
-                String dogownerid = json.getString("dogownerid");
-                String dogweight = json.getString("dogweight");
-                String dogcolor = json.getString("dogcolor");
-                int dogage = Integer.parseInt(json.getString("dogage"));
-                String govcode = json.getString("govcode");
-                try {
-                    result = dogService.addDog(username, dogname, dogsex, dogbelonghamlet, ownerhamletcode, dogownerid, dogweight, dogcolor, dogage,govcode);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    result = "添加牧犬失败!";
-                }
             }else if(clicktype.equals("neckletmodify")) {
 
 //                String neckletid = json.getString("neckletid");
@@ -289,6 +249,116 @@ public class DogApi {
             e.printStackTrace();
         }
         return result;
+    }
+
+
+    @RequestMapping(value = "operateapi",produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public ResponseEntity<JsonResult> OperateApi(@RequestBody JSONObject json, HttpServletRequest request) {
+        String clicktype = json.getString("clicktype");
+        String result = "";
+
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            String managerstr = redisService.get("token:" + token);
+            Manager manager = ((Manager) JSONUtil.JSONToObj(managerstr, Manager.class));
+            //权限控制
+            if (clicktype.equals("ownercheck"))
+            {
+                String ownername = json.getString("ownername");
+                String owneridentity = json.getString("owneridentity");
+                String ownerhamletcode = json.getString("ownerhamletcode");
+                String telphone = json.getString("telphone");
+
+                try {
+                    Dogowner owner = ownerService.checkOwner(ownername, owneridentity, ownerhamletcode, telphone);
+                    r.setCode(200);
+                    r.setMsg("获取村主人信息成功！");
+                    r.setData(owner);
+                    r.setSuccess(true);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("获取村主人信息失败");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }else if (clicktype.equals("owneradd"))
+            {
+                String ownername = json.getString("ownername");
+                String owneridentity = json.getString("owneridentity");
+                String ownersex = json.getString("ownersex");
+                String ownerhamlet = json.getString("ownerhamlet");
+                String ownerhamletcode = json.getString("ownerhamletcode");
+                int ownerage = json.getInt("ownerage");
+                String ownerjob = json.getString("ownerjob");
+                String homeaddress = json.getString("homeaddress");
+                String telphone = json.getString("telphone");
+
+                try {
+                    Dogowner owner = ownerService.addOwner(ownername, owneridentity, ownersex, ownerhamletcode, ownerage, ownerjob, homeaddress, telphone);
+                    if(owner!=null){
+                        r.setCode(200);
+                        r.setMsg("添加成功或已存在该主人!");
+                        r.setData(owner);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("主人添加失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("添加主人失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }else if(clicktype.equals("dogadd")) {
+
+                String username = json.getString("username");
+                String dogname = json.getString("dogname");
+                String dogsex = json.getString("dogsex");
+                String dogbelonghamlet = json.getString("dogbelonghamlet");
+                String ownerhamletcode = json.getString("ownerhamletcode");
+                String dogownerid = json.getString("dogownerid");
+                String dogweight = json.getString("dogweight");
+                String dogcolor = json.getString("dogcolor");
+                int dogage = Integer.parseInt(json.getString("dogage"));
+                String govcode = json.getString("govcode");
+                try {
+                    Dog dog = dogService.addDog(username, dogname, dogsex, dogbelonghamlet, ownerhamletcode, dogownerid, dogweight, dogcolor, dogage,govcode);
+                    if(dog!=null){
+                        r.setCode(200);
+                        r.setMsg("添加成功或已存在该犬只!");
+                        r.setData(dog);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("犬只添加失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("添加犬只失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("处理信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
     }
 
 
