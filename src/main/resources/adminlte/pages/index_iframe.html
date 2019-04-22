@@ -862,11 +862,11 @@
                         }
 
                         addTabs({
-                            id: '10008',
+                            id: '9001',
                             title: '辖区总览',
                             close: false,
                             url: usermap,
-                            urlType: "relative"
+//                            urlType: "relative"
                         });
                         App.fixIframeCotent();
                         var menus = [
@@ -879,7 +879,10 @@
                             {
                                 id: "9001",
                                 text: "辖区总览",
-                                icon: "fa fa-edit"
+                                close: false,
+                                icon: "fa fa-edit",
+                                url: usermap,
+                                targetType: "iframe-tab"
                             },
                             {
                                 id: "9002",
@@ -1227,10 +1230,23 @@
 
                         switch (data.privilegelevel){
                             case 1:
-//                                var newData = menus.foreach(function(item) {
-//                                    return !(item.children!=null && item.children[0].id == "90021");
+//                                var newData = [];
+////                                var aSlice = Array.prototype.slice;
+////                                var menusNew = aSlice.call(menus)
+//                                console.log(menus instanceof Array, menus.map)
+//                                menus.map(function(faitem) {
+//                                    console.log(faitem)
+//                                    var newfaitem = faitem;
+//                                    if(faitem.children){
+//                                        var newfaitemChild = faitem.children.filter(function(item) {
+//                                            return item.id !== "90021";
+//                                        });
+//                                    }
+//                                    newfaitem.children = newfaitemChild;
+//                                    newData.push(newfaitem);
 //                                });
 //                                menus = newData;
+//                                console.log(menus,newData)
                                 break;
                             case 2:
                                 break;

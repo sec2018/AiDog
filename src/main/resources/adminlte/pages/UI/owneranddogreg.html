@@ -23,29 +23,40 @@
 <body>
 <div class="container">
     <div class="row" style="padding-top: 20px;margin-top: 20px">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="box-body">
                 <form role="form">
                     <!-- text input -->
-                    <div class="form-group  has-success">
+                    <div class="form-group  has-success select-5">
+                        <style>
+                            @media (min-width: 992px){
+                                .select-5 .form-control{
+                                    width:18%;
+                                    margin-left:15px;
+                                }
+                            }
+
+                        </style>
                         <label style="padding-bottom: 5px">所属区域(*)</label>
-                        <select id="select_province" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                            <option value="150000000000">内蒙古自治区</option>
-                            <option value="510000000000">四川省</option>
-                            <option value="530000000000">云南省</option>
-                            <option value="540000000000">西藏自治区</option>
-                            <option value="610000000000">陕西省</option>
-                            <option value="620000000000">甘肃省</option>
-                            <option value="630000000000">青海省</option>
-                            <option value="640000000000">宁夏回族自治区</option>
-                        </select>
-                        <select id="select_city" class="form-control" style="margin-bottom: 5px">
-                            <option value="-1">请选择</option>
-                        </select>
-                        <select id="select_county" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_village" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
-                        <select id="select_hamlet" class="form-control" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                        <div class="row">
+                            <select id="select_province" class="form-control col-md-2" style="margin-bottom: 5px">
+                                <option value="-1">请选择</option>
+                                <option value="150000000000">内蒙古自治区</option>
+                                <option value="510000000000">四川省</option>
+                                <option value="530000000000">云南省</option>
+                                <option value="540000000000">西藏自治区</option>
+                                <option value="610000000000">陕西省</option>
+                                <option value="620000000000">甘肃省</option>
+                                <option value="630000000000">青海省</option>
+                                <option value="640000000000">宁夏回族自治区</option>
+                            </select>
+                            <select id="select_city" class="form-control col-md-2" style="margin-bottom: 5px">
+                                <option value="-1">请选择</option>
+                            </select>
+                            <select id="select_county" class="form-control col-md-2" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                            <select id="select_village" class="form-control col-md-2" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                            <select id="select_hamlet" class="form-control col-md-2" style="margin-bottom: 5px"><option value="-1">请选择</option></select>
+                        </div>
                     </div>
                 </form>
             </div>
