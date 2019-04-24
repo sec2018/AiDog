@@ -315,6 +315,7 @@
 //                var str1 = str.replace(/-/g,'/'); //'2018/01/01 00:00:00'
 //                var date = new Date(Date.parse(str1)); //date格式的时间类型
                 var nowDate = addMonth(addnum);
+
                 function addMonth(addMonth) {
                     var y = date.getFullYear();
                     var m = date.getMonth();
@@ -332,7 +333,10 @@
                     if (day > daysInNextMonth) {
                         day = daysInNextMonth;
                     }
-                    return new Date(nextY, nextM, day);
+                    var dayh = date.getHours()
+                    var daym = date.getMinutes()
+                    var days = date.getSeconds()
+                    return new Date(nextY, nextM, day,dayh,daym,days);
                 };
                 function daysInMonth(year, month) {
                     if (month == 1) {
@@ -369,6 +373,7 @@
 //                    return format;
 //                };
 //                return nowStr;
+                console.log(date,nowDate)
                 return nowDate;
             }
 
