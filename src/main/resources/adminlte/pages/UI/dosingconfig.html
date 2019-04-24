@@ -40,32 +40,61 @@
             <div class="box-body">
                 <form role="form">
                     <div class="alert alert-info alert-dismissible" style="padding: 2px">
+                        <h5><i class="icon fa fa-info"></i>信息配置</h5>
+                    </div>
+                    <!-- text input -->
+                    <div class="form-group  has-success">
+                        <label>项圈编号：</label>
+                        <input type="text" class="form-control" placeholder="项圈编号" id="input_neckletid" disabled>
+                    </div>
+                    <div class="form-group  has-success">
+                        <label>反馈周期(分钟)：</label>
+                        <input type="text" class="form-control" placeholder="反馈周期" id="input_areacycle" />
+                    </div>
+                    <div class="form-group  has-success">
+                        <label>配置时间格式：</label>
+                        <input id="input_lay" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
+                    </div>
+                    <div class="form-group  has-success">
+                        <label>周期设置：</label>
+                        <!--<div class="col-md-offset-2 col-md-8">-->
+                            <button type="button" id="a_thirtyday" class="btn btn-info btn-flat">按30天</button>
+                            <button type="button" id="a_setday" class="btn btn-info btn-flat">每月定期</button>
+                        <!--</div>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box-body">
+                <form role="form">
+                    <div class="alert alert-info alert-dismissible" style="padding: 2px">
                         <h5><i class="icon fa fa-info"></i>项圈时间信息配置</h5>
                     </div>
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第1次投药时间：</label>
-                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
+                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第2次投药时间：</label>
-                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00"/>
+                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第3次投药时间：</label>
-                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00"/>
+                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第4次投药时间：</label>
-                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00"/>
+                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第5次投药时间：</label>
-                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00"/>
+                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第6次投药时间：</label>
-                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00"/>
+                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00" readonly="readonly"/>
                     </div>
                 </form>
             </div>
@@ -79,62 +108,43 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第7次投药时间：</label>
-                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00"/>
+                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第8次投药时间：</label>
-                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00"/>
+                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第9次投药时间：</label>
-                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00"/>
+                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第10次投药时间：</label>
-                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00"/>
+                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第11次投药时间：</label>
-                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00"/>
+                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00" readonly="readonly"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第12次投药时间：</label>
-                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="box-body">
-                <form role="form">
-                    <div class="alert alert-info alert-dismissible" style="padding: 2px">
-                        <h5><i class="icon fa fa-info"></i>其他信息配置</h5>
-                    </div>
-                    <!-- text input -->
-                    <div class="form-group  has-success">
-                        <label>项圈编号：</label>
-                        <input type="text" class="form-control" placeholder="项圈编号" id="input_neckletid" disabled>
-                    </div>
-                    <div class="form-group  has-success">
-                        <label>反馈周期(分钟)：</label>
-                        <input type="text" class="form-control" placeholder="反馈周期" id="input_areacycle" />
+                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00" readonly="readonly"/>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-        <div class="row" style="padding-top: 30px;padding-bottom: 20px;">
-            <div class="col-md-5">
+    <div class="row" style="padding-top: 30px;padding-bottom: 20px;text-align: center">
+            <div class="col-md-12">
                 <!-- Profile Image -->
-                <div class="input-group input-group-sm">
-                    <span class="input-group-btn">
-                        <button type="button" id="a_dosingconfig" class="btn btn-info btn-flat">确认保存配置</button>
-                    </span>
+                <div class="col-md-offset-2 col-md-8">
+                    <button type="button" id="a_dosingconfig" class="btn btn-info btn-flat">确认保存配置</button>
                 </div>
+            </div>
                 <!-- /.box -->
             </div>
         </div>
-</div>
+    </div>
     <script type="text/javascript">
         var necid = "";
         $(function () {
@@ -241,6 +251,65 @@
                     })
                 }else{
                     alert("时间设置有误！后投药时间应在前一次投药时间之后！");
+                }
+            });
+
+
+            $("#a_thirtyday").click(function () {
+                var date = new Date($("#input_lay").val());
+                var date1 = new Date(date);
+                var date2 = new Date(date);
+                var date3 = new Date(date);
+                var date4 = new Date(date);
+                var date5 = new Date(date);
+                var date6 = new Date(date);
+                var date7 = new Date(date);
+                var date8 = new Date(date);
+                var date9 = new Date(date);
+                var date10 = new Date(date);
+                var date11 = new Date(date);
+                var date12 = new Date(date);
+                date1.setDate(date.getDate());
+                date2.setDate(date.getDate() + 30);
+                date3.setDate(date.getDate() + 60);
+                date4.setDate(date.getDate() + 90);
+                date5.setDate(date.getDate() + 120);
+                date6.setDate(date.getDate() + 150);
+                date7.setDate(date.getDate() + 180);
+                date8.setDate(date.getDate() + 210);
+                date9.setDate(date.getDate() + 240);
+                date10.setDate(date.getDate() + 270);
+                date11.setDate(date.getDate() + 300);
+                date12.setDate(date.getDate() + 330);
+                $("#input_lay1").val((timetrans(date1)));
+                $("#input_lay2").val((timetrans(date2)));
+                $("#input_lay3").val((timetrans(date3)));
+                $("#input_lay4").val((timetrans(date4)));
+                $("#input_lay5").val((timetrans(date5)));
+                $("#input_lay6").val((timetrans(date6)));
+                $("#input_lay7").val((timetrans(date7)));
+                $("#input_lay8").val((timetrans(date8)));
+                $("#input_lay9").val((timetrans(date9)));
+                $("#input_lay10").val((timetrans(date10)));
+                $("#input_lay11").val((timetrans(date11)));
+                $("#input_lay12").val((timetrans(date12)));
+            });
+
+            $("#a_setday").click(function () {
+                var date = new Date($("#input_lay").val());
+                var year = date.getYear();
+                var month = date.getMonth();
+                var date1 = new Date(date);
+                date1.setDate(date.getDate());
+                $("#input_lay1").val((timetrans(date1)));
+                for(var i=1;i<12;i++){
+                    if(date1.getMonth()==11){
+                        year = year+1;
+                        date1.setMonth(0);
+                    }
+                    date1.setYear(year);
+                    date1.setMonth(date1.getMonth()+i+1);
+                    $("#input_lay+"+i+1+"").val((timetrans(date1)));
                 }
             });
 
