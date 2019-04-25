@@ -71,9 +71,14 @@
                         <h4><i class="icon fa fa-info"></i>项圈绑定</h4>
                         请先选择地区，然后选择犬只政府编号和项圈编号进行绑定！
                     </div>
+                    <!-- text input -->
+                    <div class="form-group  has-success" style="display: none">
+                        <label>id：</label>
+                        <input type="text" class="form-control" placeholder="主人id"  id="input_ownerid" />
+                    </div>
                     <div class="form-group  has-success">
                         <label>主人名称：</label>
-                        <input type="text" class="form-control" placeholder="主人名称" id="input_dogownername" disabled>
+                        <input type="text" class="form-control" placeholder="主人名称" id="input_ownername">
                     </div>
                     <div class="form-group  has-success">
                         <label>身份证号：</label>
@@ -83,7 +88,12 @@
                         <label>联系方式：</label>
                         <input type="text" class="form-control" placeholder="联系方式" id="input_telphone">
                     </div>
-
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="button" id="a_checkowner" class="btn btn-info btn-flat">主人校验</button>
+                            <button type="button" id="a_reset" class="btn btn-info btn-flat">重置</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
