@@ -9,6 +9,10 @@ public class ManureView {
 
     private Integer dogownerId;
 
+    private String ownerIndentity;
+
+    private String managemethod;
+
     private Integer dogId;
 
     private Date collectionDate;
@@ -25,18 +29,20 @@ public class ManureView {
 
     private String testingPerson;
 
-    public ManureView(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson) {
-        this.id = id;
-        this.dogmanureCode = dogmanureCode;
-        this.dogownerId = dogownerId;
-        this.dogId = dogId;
-        this.collectionDate = collectionDate;
-        this.collectionPerson = collectionPerson;
-        this.districtcode = districtcode;
-        this.testingDate = testingDate;
-        this.testingMethod = testingMethod;
-        this.testingResult = testingResult;
-        this.testingPerson = testingPerson;
+    public String getOwnerIndentity() {
+        return ownerIndentity;
+    }
+
+    public void setOwnerIndentity(String ownerIndentity) {
+        this.ownerIndentity = ownerIndentity;
+    }
+
+    public String getManagemethod() {
+        return managemethod;
+    }
+
+    public void setManagemethod(String managemethod) {
+        this.managemethod = managemethod;
     }
 
     public ManureView() {

@@ -137,7 +137,7 @@ $(function () {
                         if(data.data.data[i].testingDate != null){
                             data.data.data[i].testingDate = timetrans(data.data.data[i].testingDate).replace('T'," ");
                         }
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='TestThisRow("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 采集</a>";
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='ThisRowDetail("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='TestThisRow("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -191,15 +191,16 @@ $(function () {
                                 "width": "1px"
                             },
                             { "data": "dogmanureCode","width":"60px" },
-                            { "data": "dogName","width":"60px"  },
-                            { "data": "dogGovcode","width":"90px"},
+                            { "data": "ownerName","width":"60px" },
+                            { "data": "ownerIndentity","width":"120px" },
+                            { "data": "dogGovcode","width":"80px"},
+                            { "data": "managemethod","width":"60px"  },
                             { "data": "collectionDate","width":"120px" },
-                            { "data": "collectionPerson","width":"45px" },
                             { "data": "testingDate" ,"width":"120px"},
                             { "data": "testingMethod" ,"width":"60px"},
-                            { "data": "testingResult" ,"width":"80px"},
+                            { "data": "testingResult" ,"width":"60px"},
                             { "data": "testingPerson" ,"width":"50px"},
-                            { "data": "action" ,"width":"60px"}
+                            { "data": "action" ,"width":"140px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -318,6 +319,10 @@ $(function () {
 
 
 function TestThisRow(id) {
+    alert(id);
+}
+
+function ThisRowDetail(id) {
     alert(id);
 }
 

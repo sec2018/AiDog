@@ -7,6 +7,7 @@ import com.sec.aidog.dao.DogownerMapper;
 import com.sec.aidog.dao.ManureMapper;
 import com.sec.aidog.model.ManureExample;
 import com.sec.aidog.pojo.Dog;
+import com.sec.aidog.pojo.Dogowner;
 import com.sec.aidog.pojo.Manure;
 import com.sec.aidog.pojo.ManureView;
 import com.sec.aidog.service.ManureService;
@@ -48,12 +49,24 @@ public class ManureServiceImpl implements ManureService{
             manureView.setTestingMethod(manure.getTestingMethod());
             manureView.setTestingPerson(manure.getTestingPerson());
             manureView.setTestingResult(manure.getTestingResult());
-            String ownername = dogownerMapper.selectByPrimaryKey(manure.getDogownerId()).getOwnerName();
-            String dogname = dogMapper.selectByPrimaryKey(manure.getDogId()).getDogName();
-            String govcode = dogMapper.selectByPrimaryKey(manure.getDogId()).getDogGovcode();
+            Dogowner dogowner = dogownerMapper.selectByPrimaryKey(manure.getDogownerId());
+            String ownername = dogowner.getOwnerName();
+            String owneridentity = dogowner.getOwnerIdentity();
+            Dog dog = dogMapper.selectByPrimaryKey(manure.getDogId());
+            String dogname = dog.getDogName();
+            String govcode = dog.getDogGovcode();
             manureView.setOwnerName(ownername);
+            manureView.setOwnerIndentity(owneridentity);
             manureView.setDogName(dogname);
             manureView.setDogGovcode(govcode);
+            if(!dog.getNecId().equals("-1" )&& dog.getAppId().equals("-1")){
+                manureView.setManagemethod("项圈管理");
+            }else if(!dog.getAppId().equals("-1" ) && dog.getNecId().equals("-1")){
+                manureView.setManagemethod("喂饲器管理");
+            }else if(dog.getNecId().equals("-1") && dog.getAppId().equals("-1")){
+                manureView.setManagemethod("人工管理");
+            }
+
             manureviewlist.add(manureView);
         }
         Map<String, Object> map = new HashMap<String,Object>();

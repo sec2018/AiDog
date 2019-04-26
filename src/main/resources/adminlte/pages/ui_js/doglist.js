@@ -195,13 +195,13 @@ $(function () {
                                 "width": "1px"
                             },
                             { "data": "ownerName","width":"60px" },
-                            { "data": "ownerIdentity","width":"110px"  },
+                            { "data": "ownerIdentity","width":"120px"  },
                             { "data": "dogName","width":"60px"  },
                             { "data": "dogGovcode","width":"70px"  },
                             { "data": "necId","width":"70px"},
                             { "data": "appId","width":"70px" },
                             { "data": "managerName","width":"70px" },
-                            { "data": "action" ,"width":"280px"}
+                            { "data": "action" ,"width":"320px"}
                         ],
                         buttons: [
                             'pageLength',

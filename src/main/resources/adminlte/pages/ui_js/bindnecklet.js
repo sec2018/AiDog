@@ -124,6 +124,10 @@ $(function () {
                 request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
             },
             success: function (data) {
+                if(data.data == null){
+                    alert("信息填写有误或无此人！");
+                    return;
+                }
                 alert(data.msg);
                 if(data.success == true){
                     $("#input_ownerid").val(data.data.ownerId);
