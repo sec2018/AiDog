@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Service("dogService")
 public class DogServiceImpl implements DogService{
@@ -122,5 +120,222 @@ public class DogServiceImpl implements DogService{
         dog.setDogAge(dogage);
         String res = dogMapper.updateByPrimaryKey(dog)>0?"修改成功！":"修改失败";
         return res;
+    }
+
+    @Override
+    public Map<String, Object> getDogStaList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+//        List<DogView> doglist = dogMapper.getDogListByDistrictcode(districtcode);
+        List<DogSta> dogstalist = new ArrayList<>();
+        DogSta dogSta = null;
+        int count = 1;
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                List<District> districtList = districtMapper.getProvinces();
+                for(int i=0;i<districtList.size();i++){
+                    dogSta = new DogSta();
+                    dogSta.setCountnum(count);
+                    count++;
+                    dogSta.setDistrictname(districtList.get(i).getDistrictName());
+                    String provinceCode0to2 = districtList.get(i).getDistrictcode().substring(0,2);
+                    //获得该省所有的狗
+                    List<Dog> sdlist = dogMapper.getIndexInforByDistrictcode(provinceCode0to2);
+                    dogSta.setDognum(sdlist.size());
+                    //佩戴项圈牧犬数量和喂食器数量
+                    int neckdognumtotal = 0;
+                    int feedernumtotal = 0;
+                    for(Dog each:sdlist){
+                        //"-1"表示未佩戴项圈
+                        if(!each.getNecId().equals("-1")) {
+                            neckdognumtotal++;
+                        }
+                        //"-1"表示无喂食器
+                        if(!each.getAppId().equals("-1")) {
+                            feedernumtotal++;
+                        }
+                    }
+                    dogSta.setNecdognum(neckdognumtotal);
+                    dogSta.setAppdognum(feedernumtotal);
+                    dogSta.setManagedognum(sdlist.size());
+                    if(sdlist.size() == 0){
+                        dogSta.setNecdognumper("0");
+                        dogSta.setAppdognumper("0");
+                    }else{
+//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+//                        String s = df.format(num);
+                        dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
+                        dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                    }
+                    dogstalist.add(dogSta);
+                }
+                break;
+             case 2:
+                 //省级管理员
+                 List<District> districtList2 = districtMapper.getCities(districtcode);
+                 for(int i=0;i<districtList2.size();i++){
+                     dogSta = new DogSta();
+                     dogSta.setCountnum(count);
+                     count++;
+                     dogSta.setDistrictname(districtList2.get(i).getDistrictName());
+                     String cityCode0to4 = districtList2.get(i).getDistrictcode().substring(0,4);
+                     //获得该省所有的狗
+                     List<Dog> sdlist = dogMapper.getIndexInforByDistrictcode(cityCode0to4);
+                     dogSta.setDognum(sdlist.size());
+                     //佩戴项圈牧犬数量和喂食器数量
+                     int neckdognumtotal = 0;
+                     int feedernumtotal = 0;
+                     for(Dog each:sdlist){
+                         //"-1"表示未佩戴项圈
+                         if(!each.getNecId().equals("-1")) {
+                             neckdognumtotal++;
+                         }
+                         //"-1"表示无喂食器
+                         if(!each.getAppId().equals("-1")) {
+                             feedernumtotal++;
+                         }
+                     }
+                     dogSta.setNecdognum(neckdognumtotal);
+                     dogSta.setAppdognum(feedernumtotal);
+                     dogSta.setManagedognum(sdlist.size());
+                     if(sdlist.size() == 0){
+                         dogSta.setNecdognumper("0");
+                         dogSta.setAppdognumper("0");
+                     }else{
+//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+//                        String s = df.format(num);
+                         dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
+                         dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                     }
+                     dogstalist.add(dogSta);
+                 }
+                 break;
+            case 4:
+                //市级管理员
+                List<District> districtList3 = districtMapper.getCounties(districtcode);
+                for(int i=0;i<districtList3.size();i++){
+                    dogSta = new DogSta();
+                    dogSta.setCountnum(count);
+                    count++;
+                    dogSta.setDistrictname(districtList3.get(i).getDistrictName());
+                    String countyCode0to6 = districtList3.get(i).getDistrictcode().substring(0,6);
+                    //获得该市所有的狗
+                    List<Dog> sdlist = dogMapper.getIndexInforByDistrictcode(countyCode0to6);
+                    dogSta.setDognum(sdlist.size());
+                    //佩戴项圈牧犬数量和喂食器数量
+                    int neckdognumtotal = 0;
+                    int feedernumtotal = 0;
+                    for(Dog each:sdlist){
+                        //"-1"表示未佩戴项圈
+                        if(!each.getNecId().equals("-1")) {
+                            neckdognumtotal++;
+                        }
+                        //"-1"表示无喂食器
+                        if(!each.getAppId().equals("-1")) {
+                            feedernumtotal++;
+                        }
+                    }
+                    dogSta.setNecdognum(neckdognumtotal);
+                    dogSta.setAppdognum(feedernumtotal);
+                    dogSta.setManagedognum(sdlist.size());
+                    if(sdlist.size() == 0){
+                        dogSta.setNecdognumper("0");
+                        dogSta.setAppdognumper("0");
+                    }else{
+//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+//                        String s = df.format(num);
+                        dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
+                        dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                    }
+                    dogstalist.add(dogSta);
+                }
+                break;
+            case 6:
+                //县级管理员
+                List<District> districtList4 = districtMapper.getVillages(districtcode);
+                for(int i=0;i<districtList4.size();i++){
+                    dogSta = new DogSta();
+                    dogSta.setCountnum(count);
+                    count++;
+                    dogSta.setDistrictname(districtList4.get(i).getDistrictName());
+                    String villageCode0to9 = districtList4.get(i).getDistrictcode().substring(0,9);
+                    //获得该县所有的狗
+                    List<Dog> sdlist = dogMapper.getIndexInforByDistrictcode(villageCode0to9);
+                    dogSta.setDognum(sdlist.size());
+                    //佩戴项圈牧犬数量和喂食器数量
+                    int neckdognumtotal = 0;
+                    int feedernumtotal = 0;
+                    for(Dog each:sdlist){
+                        //"-1"表示未佩戴项圈
+                        if(!each.getNecId().equals("-1")) {
+                            neckdognumtotal++;
+                        }
+                        //"-1"表示无喂食器
+                        if(!each.getAppId().equals("-1")) {
+                            feedernumtotal++;
+                        }
+                    }
+                    dogSta.setNecdognum(neckdognumtotal);
+                    dogSta.setAppdognum(feedernumtotal);
+                    dogSta.setManagedognum(sdlist.size());
+                    if(sdlist.size() == 0){
+                        dogSta.setNecdognumper("0");
+                        dogSta.setAppdognumper("0");
+                    }else{
+//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+//                        String s = df.format(num);
+                        dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
+                        dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                    }
+                    dogstalist.add(dogSta);
+                }
+                break;
+            case 9:
+                //乡级管理员
+                List<District> districtList5 = districtMapper.getHamlets(districtcode);
+                for(int i=0;i<districtList5.size();i++){
+                    dogSta = new DogSta();
+                    dogSta.setCountnum(count);
+                    count++;
+                    dogSta.setDistrictname(districtList5.get(i).getDistrictName());
+                    String hamletCode = districtList5.get(i).getDistrictcode();
+                    //获得该乡所有的狗
+                    List<Dog> sdlist = dogMapper.getIndexInforByDistrictcode(hamletCode);
+                    dogSta.setDognum(sdlist.size());
+                    //佩戴项圈牧犬数量和喂食器数量
+                    int neckdognumtotal = 0;
+                    int feedernumtotal = 0;
+                    for(Dog each:sdlist){
+                        //"-1"表示未佩戴项圈
+                        if(!each.getNecId().equals("-1")) {
+                            neckdognumtotal++;
+                        }
+                        //"-1"表示无喂食器
+                        if(!each.getAppId().equals("-1")) {
+                            feedernumtotal++;
+                        }
+                    }
+                    dogSta.setNecdognum(neckdognumtotal);
+                    dogSta.setAppdognum(feedernumtotal);
+                    dogSta.setManagedognum(sdlist.size());
+                    if(sdlist.size() == 0){
+                        dogSta.setNecdognumper("0");
+                        dogSta.setAppdognumper("0");
+                    }else{
+//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+//                        String s = df.format(num);
+                        dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
+                        dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                    }
+                    dogstalist.add(dogSta);
+                }
+                break;
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", dogstalist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
     }
 }

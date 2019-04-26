@@ -39,6 +39,9 @@ public interface DistrictMapper {
     @Select("select * from district where districtcode REGEXP '.{4}00000000' and epidemic = 1")
     List<District> getProvincesAndCities();
 
+    @Select("select district_level,districtcode,district_name,epidemic from district where districtcode REGEXP '.{2}0000000000'  and epidemic = 1")
+    List<District> getProvinces();
+
     @Select("select district_level,districtcode,district_name,epidemic from district where districtcode REGEXP concat(#{provinceCode0to2}, '.{2}00000000') and districtcode !=concat(#{provinceCode0to2}, '0000000000')")
     List<District> getCities(String provinceCode0to2);
 
