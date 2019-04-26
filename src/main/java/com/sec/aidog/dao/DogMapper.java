@@ -60,7 +60,7 @@ public interface DogMapper {
     @Select("SELECT dog_id,dog_name,nec_id,app_id,manager_name FROM dog WHERE nec_id=#{param1} and districtcode=#{param2}")
     List<Dog> getCombineNeckletAndAppDogByNecId(String neckletId, String hamletCode);
 
-    @Select("select a.*,b.owner_name,b.owner_addr from dog a inner join dogowner b on a.dogowner_id = b.owner_id and a.districtcode like concat(#{districtCode},'%')")
+    @Select("select a.*,b.owner_name,b.owner_identity,b.owner_addr from dog a inner join dogowner b on a.dogowner_id = b.owner_id and a.districtcode like concat(#{districtCode},'%')")
     List<DogView> getDogListByDistrictcode(String districtCode);
 
     @Select("select a.dog_id,a.dog_govcode,a.dog_name,b.owner_name FROM dog a inner join dogowner b on a.nec_id='-1' and a.app_id='-1' and a.dogowner_id=b.owner_id and a.districtcode=#{districtcode}")

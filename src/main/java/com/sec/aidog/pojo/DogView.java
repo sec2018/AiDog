@@ -40,6 +40,16 @@ public class DogView {
 
     private String ownerAddr;
 
+    private String ownerIdentity;
+
+    public String getOwnerIdentity() {
+        return ownerIdentity;
+    }
+
+    public void setOwnerIdentity(String ownerIdentity) {
+        this.ownerIdentity = ownerIdentity;
+    }
+
     public Integer getDogId() {
         return dogId;
     }
