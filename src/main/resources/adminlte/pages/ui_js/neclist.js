@@ -143,6 +143,7 @@ $(function () {
                         data.data.data[i].leftnum = 11;
                         data.data.data[i].power = "3.6v";
                         data.data.data[i].temp = "21度"
+                        data.data.data[i].pillcode = "gov-23124";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -196,6 +197,7 @@ $(function () {
                                 "width": "1px"
                             },
                             { "data": "necId","width":"70px" },
+                            { "data": "pillcode","width":"70px"  },
                             { "data": "status","width":"70px"  },
                             { "data": "firstdosingtime","width":"70px"  },
                             { "data": "nextdosingtime","width":"70px"  },

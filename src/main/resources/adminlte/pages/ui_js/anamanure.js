@@ -119,6 +119,8 @@ $(function () {
         senddata.pagesize = 10;
         senddata.districtcode = districtcode;
         senddata.level = level;
+        var managemethod = $("#select_managemethod").find("option:selected").text();
+        senddata.managemethod = managemethod;
         $.ajax({
             url:  "/aidog/api/getdogstalist",
             type: "POST",
@@ -136,6 +138,7 @@ $(function () {
                         data.data.data[i].manuretestnum = 10;
                         data.data.data[i].manurebadnum = 8;
                         data.data.data[i].manurebadper = "80%";
+                        data.data.data[i].managemethod = managemethod;
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -190,6 +193,7 @@ $(function () {
                             },
                             { "data": "countnum","width":"50px" },
                             { "data": "districtname","width":"130px"  },
+                            { "data": "managemethod","width":"70px"  },
                             { "data": "manurenum"},
                             { "data": "manuretestnum"},
                             { "data": "manurebadnum"},

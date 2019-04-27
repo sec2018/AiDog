@@ -71,7 +71,7 @@
 
         
         <div><button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button></div>
-        <div class="text-center mt10"><a href="#registerDiv" data-toggle="modal"  style="cursor:pointer">注册新会员&nbsp;&gt;&gt;</a></div>
+        <div class="text-center mt10"><a href="#registerDiv" data-toggle="modal" id="btn_register"  style="cursor:pointer">注册新会员&nbsp;&gt;&gt;</a></div>
 
     </div>
     <!-- /.login-box-body -->
@@ -235,14 +235,17 @@
 
         //注册相关
         var datares = {};
-        $.ajax({
-            url: "/aidog/api/register/4",
-            async:false,
-            type: "GET",
-            success: function (data) {
-                datares = eval("(" + data + ")");
-            }
+        $("#btn_register").click(function () {
+            $.ajax({
+                url: "/aidog/api/register/4",
+                async:false,
+                type: "GET",
+                success: function (data) {
+                    datares = eval("(" + data + ")");
+                }
+            });
         });
+
 
         $('#modalselect_adminlevel').on('change', function () {
             var selectText = $(this).find('option:selected').text();
