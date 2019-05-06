@@ -40,10 +40,10 @@
 
 /* Stats chart */
 #statsChart {
-    height: 500px;
+    height: 350px;
     margin-top: 15px; }
 #barChart {
-    height: 500px;
+    height: 350px;
     margin-top: 15px; }
 
 /* specific chart styles */
@@ -164,7 +164,7 @@
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th {
-    font-size: 18px;
+    font-size: 13px;
     padding: 0px 15px 0px 0px ;
     text-align:center;
 
