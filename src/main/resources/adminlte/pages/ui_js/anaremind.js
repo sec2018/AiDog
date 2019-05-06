@@ -7,13 +7,17 @@ $(function () {
 
     //注册相关
     var datares = {};
-    $.ajax({
-        url: "/aidog/api/register/4",
-        async:false,
-        type: "GET",
-        success: function (data) {
-            datares = eval("(" + data + ")");
-        }
+    // $.ajax({
+    //     url: "/aidog/api/register/4",
+    //     async:false,
+    //     type: "GET",
+    //     success: function (data) {
+    //         datares = eval("(" + data + ")");
+    //     }
+    // });
+    $.getJSON ("/aidog/adminlte/pages/ui_js/district.json", function (data)
+    {
+        datares = data;
     });
     var districtcode = "";
     var level = "";

@@ -10,5 +10,5 @@ public interface OwnerService {
 
     Map<String, Object> getHamletOwnersList(String hamletcode);
 
-    Dogowner checkOwner(String ownername, String owneridentity,String ownerhamletcode, String telphone);
+    Map<String,Object> checkOwner(String ownername, String owneridentity,String ownerhamletcode, String telphone);
 }

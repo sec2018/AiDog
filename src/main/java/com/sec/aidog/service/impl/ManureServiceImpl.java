@@ -36,6 +36,7 @@ public class ManureServiceImpl implements ManureService{
         List<Manure> manurelist = manureMapper.selectByExample(example);
         List<ManureView> manureviewlist = new ArrayList<>();
         ManureView manureView = null;
+        Integer num = 0;
         for(Manure manure: manurelist){
             manureView = new ManureView();
             manureView.setId(manure.getId());
@@ -66,7 +67,8 @@ public class ManureServiceImpl implements ManureService{
             }else if(dog.getNecId().equals("-1") && dog.getAppId().equals("-1")){
                 manureView.setManagemethod("人工管理");
             }
-
+            manureView.setNum(num);
+            num++;
             manureviewlist.add(manureView);
         }
         Map<String, Object> map = new HashMap<String,Object>();

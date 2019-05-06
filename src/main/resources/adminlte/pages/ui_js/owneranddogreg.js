@@ -1,13 +1,17 @@
 $(function () {
     //注册相关
     var datares = {};
-    $.ajax({
-        url: "/aidog/api/register/4",
-        async:false,
-        type: "GET",
-        success: function (data) {
-            datares = eval("(" + data + ")");
-        }
+    // $.ajax({
+    //     url: "/aidog/api/register/4",
+    //     async:false,
+    //     type: "GET",
+    //     success: function (data) {
+    //         datares = eval("(" + data + ")");
+    //     }
+    // });
+    $.getJSON ("/aidog/adminlte/pages/ui_js/district.json", function (data)
+    {
+        datares = data;
     });
 
     $("#select_province").on('change', function () {
@@ -144,21 +148,27 @@ $(function () {
             success: function (data) {
                 alert(data.msg);
                 if(data.success == true){
-                    $("#input_ownerid").val(data.data.ownerId);
-                    $("#input_ownername").val(data.data.ownerName);
+                    $("#input_ownerid").val(data.data.dogowner.ownerId);
+                    $("#input_ownername").val(data.data.dogowner.ownerName);
                     document.getElementById("input_ownername").readOnly = true;
-                    $("#input_owneridentity").val(data.data.ownerIdentity);
+                    $("#input_owneridentity").val(data.data.dogowner.ownerIdentity);
                     document.getElementById("input_owneridentity").readOnly = true;
-                    $("#select_ownersex").find("option[value='"+data.data.ownerSex+"']").prop("selected",true);
+                    $("#select_ownersex").find("option[value='"+data.data.dogowner.ownerSex+"']").prop("selected",true);
                     $("#select_ownersex").attr("disabled","disabled");
-                    $("#input_ownerage").val(data.data.ownerAge);
+                    $("#input_ownerage").val(data.data.dogowner.ownerAge);
                     document.getElementById("input_ownerage").readOnly = true;
-                    $("#input_ownerjob").val(data.data.ownerJob);
+                    $("#input_ownerjob").val(data.data.dogowner.ownerJob);
                     document.getElementById("input_ownerjob").readOnly = true;
-                    $("#input_homeaddress").val(data.data.ownerAddr);
+                    $("#input_homeaddress").val(data.data.dogowner.ownerAddr);
                     document.getElementById("input_homeaddress").readOnly = true;
-                    $("#input_telphone").val(data.data.ownerTel);
+                    $("#input_telphone").val(data.data.dogowner.ownerTel);
                     document.getElementById("input_telphone").readOnly = true;
+                    var select_dogname = document.getElementById("select_dogname");
+                    data.data = objToArray(data.data.doglist);
+                    for (var i = 0; i < data.data.length; i++) {
+                        //遍历后台传回的结果，一项项往select中添加option
+                        select_dogname.options.add(new Option(data.data[i].dogName, data.data[i].dogId));
+                    }
                 }else{
                     return;
                 }
@@ -182,6 +192,10 @@ $(function () {
         document.getElementById("input_homeaddress").readOnly = false;
         $("#input_telphone").val("");
         document.getElementById("input_telphone").readOnly = false;
+        // var select_dogname = document.getElementById("select_dogname");
+        // select_dogname.options.length = 0;
+        $("#select_dogname").empty();
+
     });
 
     $("#a_addowner").click(function () {
@@ -292,6 +306,8 @@ $(function () {
                     $("#input_dogweight").val("");
                     $("#input_dogcolor").val("");
                     $("#input_dogage").val("");
+                    var select_dogname = document.getElementById("select_dogname");
+                    select_dogname.options.add(new Option(data.data.dogName, data.data.dogId));
                 }else{
                     return;
                 }

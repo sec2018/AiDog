@@ -1,7 +1,10 @@
 package com.sec.aidog.service.impl;
 
+import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.DogownerMapper;
+import com.sec.aidog.model.DogExample;
 import com.sec.aidog.model.DogownerExample;
+import com.sec.aidog.pojo.Dog;
 import com.sec.aidog.pojo.Dogowner;
 import com.sec.aidog.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,10 @@ public class OwnerServiceImpl implements OwnerService{
 
     @Autowired
     private DogownerMapper dogownerMapper;
+
+    @Autowired
+    private DogMapper dogMapper;
+
     /**
      * 添加主人
      */
@@ -70,7 +77,8 @@ public class OwnerServiceImpl implements OwnerService{
     }
 
     @Override
-    public Dogowner checkOwner(String ownername, String owneridentity, String ownerhamletcode, String telphone) {
+    public Map<String,Object> checkOwner(String ownername, String owneridentity, String ownerhamletcode, String telphone) {
+        Map<String,Object> map = new HashMap<String,Object>();
         DogownerExample example = new DogownerExample();
         example.createCriteria().andDistrictcodeEqualTo(ownerhamletcode);
         List<Dogowner> ownerlist = dogownerMapper.selectByExample(example);
@@ -99,7 +107,13 @@ public class OwnerServiceImpl implements OwnerService{
         if(finallist.size()!=1){
             return null;
         }else{
-            return finallist.get(0);
+            Dogowner dogowner = finallist.get(0);
+            map.put("dogowner",dogowner);
+            DogExample dogexample = new DogExample();
+            dogexample.createCriteria().andDogownerIdEqualTo(dogowner.getOwnerId());
+            List<Dog> doglist = dogMapper.selectByExample(dogexample);
+            map.put("doglist",doglist);
+            return map;
         }
     }
 

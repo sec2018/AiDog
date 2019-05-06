@@ -5,6 +5,16 @@ import java.util.Date;
 public class ManureView {
     private Integer id;
 
+    private Integer num;
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
     private String dogmanureCode;
 
     private Integer dogownerId;

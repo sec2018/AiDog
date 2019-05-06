@@ -7,13 +7,17 @@ $(function () {
 
     //注册相关
     var datares = {};
-    $.ajax({
-        url: "/aidog/api/register/4",
-        async:false,
-        type: "GET",
-        success: function (data) {
-            datares = eval("(" + data + ")");
-        }
+    // $.ajax({
+    //     url: "/aidog/api/register/4",
+    //     async:false,
+    //     type: "GET",
+    //     success: function (data) {
+    //         datares = eval("(" + data + ")");
+    //     }
+    // });
+    $.getJSON ("/aidog/adminlte/pages/ui_js/district.json", function (data)
+    {
+        datares = data;
     });
     var districtcode = "";
     var level = "";
@@ -137,7 +141,7 @@ $(function () {
                         if(data.data.data[i].testingDate != null){
                             data.data.data[i].testingDate = timetrans(data.data.data[i].testingDate).replace('T'," ");
                         }
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='ThisRowDetail("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='TestThisRow("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>";
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='ThisRowDetail("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='TestThisRow("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -183,23 +187,24 @@ $(function () {
                         "dom": 'Bfrtip',
                         "processing": true,
                         "columns": [
-                            {
-                                "class":          "details-control",
-                                "orderable":      false,
-                                "data":           null,
-                                "defaultContent": "",
-                                "width": "1px"
-                            },
+                            // {
+                            //     "class":          "details-control",
+                            //     "orderable":      false,
+                            //     "data":           null,
+                            //     "defaultContent": "",
+                            //     "width": "1px"
+                            // },
+                            { "data": "num","width":"30px" },
                             { "data": "dogmanureCode","width":"60px" },
                             { "data": "ownerName","width":"60px" },
-                            { "data": "ownerIndentity","width":"120px" },
+                            // { "data": "ownerIndentity","width":"120px" },
                             { "data": "dogGovcode","width":"80px"},
                             { "data": "managemethod","width":"60px"  },
-                            { "data": "collectionDate","width":"120px" },
-                            { "data": "testingDate" ,"width":"120px"},
+                            // { "data": "collectionDate","width":"120px" },
+                            // { "data": "testingDate" ,"width":"120px"},
                             { "data": "testingMethod" ,"width":"60px"},
                             { "data": "testingResult" ,"width":"60px"},
-                            { "data": "testingPerson" ,"width":"50px"},
+                            // { "data": "testingPerson" ,"width":"50px"},
                             { "data": "action" ,"width":"140px"}
                         ],
                         buttons: [

@@ -272,10 +272,10 @@ public class DogApi {
                 String telphone = json.getString("telphone");
 
                 try {
-                    Dogowner owner = ownerService.checkOwner(ownername, owneridentity, ownerhamletcode, telphone);
+                    Map<String,Object> map = ownerService.checkOwner(ownername, owneridentity, ownerhamletcode, telphone);
                     r.setCode(200);
                     r.setMsg("获取村主人信息成功！");
-                    r.setData(owner);
+                    r.setData(map);
                     r.setSuccess(true);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
