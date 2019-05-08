@@ -36,7 +36,7 @@ public class ManureServiceImpl implements ManureService{
         List<Manure> manurelist = manureMapper.selectByExample(example);
         List<ManureView> manureviewlist = new ArrayList<>();
         ManureView manureView = null;
-        Integer num = 0;
+        Integer num = 1;
         for(Manure manure: manurelist){
             manureView = new ManureView();
             manureView.setId(manure.getId());
@@ -89,6 +89,17 @@ public class ManureServiceImpl implements ManureService{
         manure.setCollectionPerson(collection_person);
         manure.setDistrictcode(districtcode);
         boolean flag = manureMapper.insert(manure)==1?true:false;
+        return flag;
+    }
+
+    @Override
+    public boolean modifyManure(Integer manureid, String testmethod, Date testdate, String testresult, String testperson) {
+        Manure manure = manureMapper.selectByPrimaryKey(manureid);
+        manure.setTestingMethod(testmethod);
+        manure.setTestingDate(testdate);
+        manure.setTestingResult(testresult);
+        manure.setTestingPerson(testperson);
+        boolean flag = manureMapper.updateByPrimaryKey(manure)==1?true:false;
         return flag;
     }
 }

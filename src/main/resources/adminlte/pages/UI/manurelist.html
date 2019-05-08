@@ -149,56 +149,63 @@
         <!-- /.content -->
     </div>
 
-    <div id="dogid" style="display: none">0</div>
-    <div class="modal fade" id="dogInfoDiv" tabindex="-1" role="dialog">
+    <div id="manureid" style="display: none">0</div>
+    <div class="modal fade" id="manureInfoDiv" tabindex="-1" role="dialog">
         <div class="modal-dialog model80" >
 
             <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">犬粪详细信息</h4>
+                </div>
                 <div class="modal-body">
-                    <!--<form role="form">-->
-                        <!--<div class="alert alert-info alert-dismissible">-->
-                            <!--<h4><i class="icon fa fa-info"></i>犬只基本信息</h4>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash; text input &ndash;&gt;-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>犬只名称：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="犬只名称"  id="input_dogname" disabled/>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>犬只性别：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="犬只性别" id="input_dogsex" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>所属村：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="所属村" id="input_dogbelonghamlet" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>重量：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="重量" id="input_dogweight" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>毛色：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="毛色" id="input_dogcolor" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>年龄：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="年龄" id="input_dogage" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>管理员名称：</label>-->
-                            <!--<input type="text" class="form-control" placeholder="管理员名称" id="input_adminname" disabled>-->
-                        <!--</div>-->
-                        <!--<div class="form-group  has-success">-->
-                            <!--<label>管理员电话：</label>-->
-                            <!--<div class="has-success" id="input_adminphone"  style="padding-top:7px;">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div class="col-md-offset-2 col-md-8">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<button type="button" id="a_dogmodify" data-toggle="modal" href="#dogDiv" class="btn btn-info btn-flat">修改牧犬信息</button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</form>-->
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group  has-success">
+                            <label>犬粪编号：</label>
+                            <input type="text" class="form-control" placeholder="犬粪编号"  id="input_manurecode" disabled/>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>犬主姓名：</label>
+                            <input type="text" class="form-control" placeholder="犬主姓名" id="input_ownername" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>身份证号：</label>
+                            <input type="text" class="form-control" placeholder="身份证号" id="input_ownerindentity" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>犬只编号：</label>
+                            <input type="text" class="form-control" placeholder="犬只编号" id="input_doggovcode" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>防控方式：</label>
+                            <input type="text" class="form-control" placeholder="防控方式" id="input_managemethod" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>采集日期：</label>
+                            <input type="datetime-local" value="1970-01-01T00:00" class="form-control" placeholder="采集日期" id="input_collectiondate" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>采集人：</label>
+                            <input type="text" class="form-control" placeholder="采集人" id="input_collectionperson" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>检测日期：</label>
+                            <input type="datetime-local" value="1970-01-01T00:00" class="form-control" placeholder="检测日期" id="input_testdate" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>检测方法：</label>
+                            <input type="text" class="form-control" placeholder="检测方法" id="input_testmethod" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>检测结果：</label>
+                            <input type="text" class="form-control" placeholder="检测结果" id="input_testresult" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>检测人：</label>
+                            <input type="text" class="form-control" placeholder="检测人" id="input_testperson" disabled>
+                        </div>
+                    </form>
                     <!--<form role="form">-->
                         <!--<div class="alert alert-info alert-dismissible">-->
                             <!--<h4><i class="icon fa fa-info"></i>设备基本信息</h4>-->
@@ -296,49 +303,45 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div class="modal fade" id="dogModifyDiv" tabindex="-1" role="dialog">
+    <div class="modal fade" id="dogManureReg" tabindex="-1" role="dialog">
         <div class="modal-dialog model80" >
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">信息详情</h4>
-            </div>
             <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">录入检测结果</h4>
+                </div>
                 <div class="modal-body">
                     <form role="form">
-                        <div class="alert alert-info alert-dismissible">
-                            <h4><i class="icon fa fa-info"></i>犬只基本信息</h4>
-                        </div>
                         <!-- text input -->
                         <div class="form-group  has-success">
-                            <label>犬只名称：</label>
-                            <input type="text" class="form-control" placeholder="犬只名称"  id="modalinput_dogname"/>
+                            <label>犬粪编号：</label>
+                            <input type="text" class="form-control" placeholder="犬粪编号"  id="reginput_manurecode" disabled/>
                         </div>
                         <div class="form-group  has-success">
-                            <label>犬只性别：</label>
-                            <select class="form-control select2"  id="modalselect_dogsex" style="width: 100%;">
-                                <option>公狗</option>
-                                <option>母狗</option>
-                            </select>
+                            <label>犬主姓名：</label>
+                            <input type="text" class="form-control" placeholder="犬主姓名" id="reginput_ownername" disabled>
                         </div>
                         <div class="form-group  has-success">
-                            <label>所属村：</label>
-                            <input type="text" class="form-control" placeholder="所属村" id="modalinput_dogbelonghamlet" disabled>
+                            <label>检测日期：</label>
+                            <input type="datetime-local" value="1970-01-01T00:00" class="form-control" placeholder="检测日期" id="reginput_testdate">
                         </div>
                         <div class="form-group  has-success">
-                            <label>重量：</label>
-                            <input type="text" class="form-control" placeholder="重量" id="modalinput_dogweight" />
+                            <label>检测方法：</label>
+                            <input type="text" class="form-control" placeholder="检测方法" id="reginput_testmethod">
                         </div>
                         <div class="form-group  has-success">
-                            <label>毛色：</label>
-                            <input type="text" class="form-control" placeholder="毛色" id="modalinput_dogcolor" />
+                            <label>检测结果：</label>
+                            <input type="text" class="form-control" placeholder="检测结果" id="reginput_testresult">
                         </div>
                         <div class="form-group  has-success">
-                            <label>年龄：</label>
-                            <input type="text" class="form-control" placeholder="年龄" id="modalinput_dogage" />
+                            <label>检测人：</label>
+                            <input type="text" class="form-control" placeholder="检测人" id="reginput_testperson">
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-8">
-                                <button type="button" id="a_dogmodify" class="btn btn-info btn-flat">修改牧犬信息</button>
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <button type="button" id="a_manurereg" class="btn btn-info btn-flat">录入检测结果</button>
+                                </div>
                             </div>
                         </div>
                     <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->

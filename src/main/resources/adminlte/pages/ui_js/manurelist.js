@@ -141,7 +141,8 @@ $(function () {
                         if(data.data.data[i].testingDate != null){
                             data.data.data[i].testingDate = timetrans(data.data.data[i].testingDate).replace('T'," ");
                         }
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='ThisRowDetail("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='TestThisRow("+ data.data.data[i].id + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                        var valueStr = JSON.stringify(data.data.data[i]);  //对象转字符串
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='TestThisRow("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -275,36 +276,21 @@ $(function () {
         return '主人姓名: '+viewdata[index].ownerName+'';
     }
 
-    function timetrans(date){
-//    var date = new Date(date*1000);//如果date为13位不需要乘1000
-        var date = new Date(date);
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
-        var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-        var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-        var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
-        return Y+M+D+h+m+s;
-    }
-
-    $("#a_dogmodify").click(function () {
-        var dogid = $('#dogid').html();
-        //修改牧犬
-        var clicktype = "dogmodify";
-        var dogid = dogid;
-        var dogname = $("#modalinput_dogname").val();
-        var dogsex = $("#modalselect_dogsex").find("option:selected").text();
-        var dogweight = $("#modalinput_dogweight").val();
-        var dogcolor = $("#modalinput_dogcolor").val();
-        var dogage = $("#modalinput_dogage").val();
+    $("#a_manurereg").click(function () {
+        var manureid = $('#manureid').html();
+        //修改或录入犬粪信息
+        var clicktype = "manuremodify";
+        var testdate = $("#reginput_testdate").val()+":00";
+        var testmethod = $("#reginput_testmethod").val();
+        var testresult = $("#reginput_testresult").val();
+        var testperson = $("#reginput_testperson").val();
         var senddata = {};
         senddata.clicktype = clicktype;
-        senddata.dogid = dogid;
-        senddata.dogname = dogname;
-        senddata.dogsex = dogsex;
-        senddata.dogweight = dogweight;
-        senddata.dogcolor = dogcolor;
-        senddata.dogage = dogage;
+        senddata.manureid = manureid;
+        senddata.testdate = testdate;
+        senddata.testmethod = testmethod;
+        senddata.testresult = testresult;
+        senddata.testperson = testperson;
         $.ajax({
             url: "/aidog/api/bindoraddapi",
             type: "POST",
@@ -323,52 +309,66 @@ $(function () {
 })
 
 
-function TestThisRow(id) {
-    alert(id);
-}
-
-function ThisRowDetail(id) {
-    alert(id);
-}
-
-function modifyDog(id) {
-    $("#dogid").html(id);
-    var modifydogsenddata = {};
-    modifydogsenddata.dogid = id;
-    $.ajax({
-        url: "/aidog/api/getdoginfo",
-        method: "POST",
-        data: modifydogsenddata,
-        beforeSend: function (request) {
-            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
-        },
-        success: function (data) {
-            if (data.data != null) {
-                //牧犬信息
-                $("#modalinput_dogname").val(data.data.dog.dogName);
-                $("#modalselect_dogsex").find("option[text='"+data.data.dog.dogSex+"']").attr("selected",true);
-                alert($("#modalselect_dogsex").find("option:selected").text());
-                $("#modalinput_dogbelonghamlet").val(data.data.hamlet);
-                $("#modalinput_dogweight").val(data.data.dog.dogWeight);
-                $("#modalinput_dogcolor").val(data.data.dog.dogColor);
-                $("#modalinput_dogage").val(data.data.dog.dogAge);
-            }
+function TestThisRow(data) {
+    if (data != null) {
+        //牧犬信息
+        $('#manureid').html(data.id);
+        $("#reginput_manurecode").val(data.dogmanureCode);
+        $("#reginput_ownername").val(data.ownerName);
+        if(data.testingDate == null || data.testingDate == ""){
+            $("#reginput_testdate").val("");
+        }else{
+            $("#reginput_testdate").val(timetrans(data.testingDate));
         }
-    })
-    $("#dogModifyDiv").modal('show');
+        if(data.testingMethod == null || data.testingMethod == ""){
+            $("#reginput_testmethod").val("");
+        }else{
+            $("#reginput_testmethod").val(data.testingMethod);
+        }
+        if(data.testingResult == null || data.testingResult == ""){
+            $("#reginput_testresult").val("");
+        }else{
+            $("#reginput_testresult").val(data.testingResult);
+        }
+        if(data.testingPerson == null || data.testingPerson == ""){
+            $("#reginput_testperson").val("");
+        }else{
+            $("#reginput_testperson").val(data.testingPerson);
+        }
+    }
+    $("#dogManureReg").modal('show');
 }
 
-function modifyNec(id) {
-    alert(id);
+function timetrans(date){
+//    var date = new Date(date*1000);//如果date为13位不需要乘1000
+    var date = new Date(date);
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+    return Y+M+D+h+m+s;
 }
 
-function modifyApp(id) {
-    alert(id);
+function ShowRowDetail(data) {
+    if (data != null) {
+        //牧犬信息
+        $("#input_manurecode").val(data.dogmanureCode);
+        $("#input_ownername").val(data.ownerName);
+        $("#input_ownerindentity").val(data.ownerIndentity);
+        $("#input_doggovcode").val(data.dogGovcode);
+        $("#input_managemethod").val(data.managemethod);
+        $("#input_collectiondate").val(timetrans(data.collectionDate));
+        $("#input_collectionperson").val(data.collectionPerson);
+        $("#input_testdate").val(timetrans(data.testingDate));
+        $("#input_testmethod").val(data.testingMethod);
+        $("#input_testresult").val(data.testingResult);
+        $("#input_testperson").val(data.testingPerson);
+    }
+    $("#manureInfoDiv").modal('show');
 }
 
-function modifyOwner(id) {
-    alert(id);
-}
 
 function objToArray(array) {
     var arr = []

@@ -111,7 +111,21 @@ public class DogApi {
                     result = "采集犬粪失败!";
                 }
             }
-
+            else if (clicktype.equals("manuremodify"))
+            {
+                Integer manureid = json.getInt("manureid");
+                String testmethod = json.getString("testmethod");
+                String testresult = json.getString("testresult");
+                String testperson = json.getString("testperson");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                Date testdate = format.parse(json.getString("testdate"));
+                try {
+                    result = manureService.modifyManure(manureid, testmethod, testdate, testresult,testperson)==true?"录入犬粪检测结果成功!":"录入犬粪检测结果失败!";
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    result = "录入犬粪检测结果失败!";
+                }
+            }
             else if (clicktype.equals("neckletadd"))
             {
 //                String neckletid = json.getString("neckletid");
