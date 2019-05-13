@@ -472,4 +472,9 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+    @Override
+    public Manager selectByNameAndDistrictcode(String managername, String districtcode) {
+        return  managerMapper.selectByNameAndDistrictcode(managername,districtcode);
+    }
 }

@@ -67,4 +67,6 @@ public interface ManagerMapper {
     @Select("select privilegelevel from manager where province=#{param1} and city=#{param2} and county=#{param3} and village=#{param4} and hamlet=#{param5}")
     List<Integer> getHamletManagerByDistrictName(String provinceName,String cityName, String countyName, String villageName ,String hamletName);
 
+    @Select("select * from manager where manager_name = #{managername} and districtcode = #{districtcode}")
+    Manager selectByNameAndDistrictcode(@Param("managername") String managername, @Param("districtcode") String districtcode);
 }

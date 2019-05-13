@@ -58,6 +58,7 @@
                         <input id="articleImageFile" name="excelFile" type="file" class="form-control" style="width: 300px; display: inline;" />
                         <input id="saveZipButton" type="button" style="width: 60px;height: 35px;" value="上传" />
                     </div>
+                    <br/><br/><br/><span id="testbatch">批量注册文件内容</span>
                 </form>
             </div>
         </div>
@@ -152,9 +153,10 @@
                     request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
                     console.log("正在进行，请稍候");
                 },
-                success : function(responseStr) {
-                    if(responseStr=="01"){
+                success : function(data) {
+                    if(data.success==true){
                         alert("导入成功");
+                        $("#testbatch").html(data.data);
                     }else{
                         alert("导入失败");
                     }

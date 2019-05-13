@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface DogService {
 
-    Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, String dogownerid,
+    Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, int dogownerid,
                String dogweight, String dogcolor, int dogage, String govcode)  throws Exception;
 
     Map<String, Object> getDogList(String districtcode, int startPage, int pageSize);

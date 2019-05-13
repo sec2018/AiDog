@@ -1,5 +1,9 @@
 package com.sec.aidog.common;
 
+import com.sec.aidog.dao.DistrictMapper;
+import com.sec.aidog.pojo.District;
+import com.sec.aidog.util.NameConversionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.types.Expiration;
 
 public class Constant {

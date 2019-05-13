@@ -134,12 +134,12 @@ $(function () {
                 }
                 alert(data.msg);
                 if(data.success == true){
-                    $("#input_ownerid").val(data.data.ownerId);
-                    $("#input_ownername").val(data.data.ownerName);
+                    $("#input_ownerid").val(data.data.dogowner.ownerId);
+                    $("#input_ownername").val(data.data.dogowner.ownerName);
                     document.getElementById("input_ownername").readOnly = true;
-                    $("#input_owneridentity").val(data.data.ownerIdentity);
+                    $("#input_owneridentity").val(data.data.dogowner.ownerIdentity);
                     document.getElementById("input_owneridentity").readOnly = true;
-                    $("#input_telphone").val(data.data.ownerTel);
+                    $("#input_telphone").val(data.data.dogowner.ownerTel);
                     document.getElementById("input_telphone").readOnly = true;
 
                     var senddata = {};

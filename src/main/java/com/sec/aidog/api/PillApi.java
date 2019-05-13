@@ -25,7 +25,7 @@ public class PillApi {
     private PillService pillService;
 
     //获取牧犬列表，根据地区编号
-    @ApiOperation(value = "获取药珥列表", notes = "获取药珥列表")
+    @ApiOperation(value = "获取药饵列表", notes = "获取药饵列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "startitem", value = "startitem", required = true, dataType = "Integer",paramType = "query"),
             @ApiImplicitParam(name = "pagesize", value = "pagesize", required = true, dataType = "Integer",paramType = "query"),
@@ -59,13 +59,13 @@ public class PillApi {
             }
             Map<String, Object> map = pillService.getPillList(districtcode,startitem,pagesize);
             r.setCode(200);
-            r.setMsg("获取药珥列表信息成功！");
+            r.setMsg("获取药饵列表信息成功！");
             r.setData(map);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
             r.setData(e.getClass().getName() + ":" + e.getMessage());
-            r.setMsg("获取药珥列表信息失败");
+            r.setMsg("获取药饵列表信息失败");
             r.setSuccess(false);
             e.printStackTrace();
         }

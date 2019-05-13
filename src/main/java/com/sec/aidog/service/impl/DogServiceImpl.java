@@ -38,12 +38,12 @@ public class DogServiceImpl implements DogService{
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
-    public Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, String dogownerid,
+    public Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, int dogownerid,
                          String dogweight, String dogcolor, int dogage,String govcode) throws Exception {
         String result = "添加失败";
         Dog sheepdog = null;
         DogExample example = new DogExample();
-        example.createCriteria().andDogownerIdEqualTo(Integer.parseInt(dogownerid)).andDogGovcodeEqualTo(govcode);
+        example.createCriteria().andDogownerIdEqualTo(dogownerid).andDogGovcodeEqualTo(govcode);
         List<Dog> dogList = dogMapper.selectByExample(example);
         if (dogList!=null && dogList.size()==1) {
             return dogList.get(0);
@@ -56,7 +56,7 @@ public class DogServiceImpl implements DogService{
         sheepdog.setAppId("-1");
         sheepdog.setUsername(username);
         sheepdog.setManagerName(managerMapper.findUserByName(username).getManagerName());
-        sheepdog.setDogownerId(Integer.parseInt(dogownerid));
+        sheepdog.setDogownerId(dogownerid);
         sheepdog.setDogWeight(dogweight);
         sheepdog.setDogColor(dogcolor);
         sheepdog.setDogAge(dogage);

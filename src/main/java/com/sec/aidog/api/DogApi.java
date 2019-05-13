@@ -1,5 +1,6 @@
 package com.sec.aidog.api;
 
+import com.sec.aidog.common.DistrictCommon;
 import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.NeckletMapper;
@@ -12,9 +13,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,6 +60,12 @@ public class DogApi {
     @Autowired
     private ManureService manureService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private DistrictCommon districtCommon;
+
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -96,10 +105,10 @@ public class DogApi {
                     pill.setPillBuyer(pillbuyer);
                     pill.setPillBuyertel(pillbuyertel);
                     pill.setDistrictcode(districtcode);
-                    result = pillMapper.insert(pill)>0?"添加药珥成功！":"添加药珥失败!";
+                    result = pillMapper.insert(pill)>0?"添加药饵成功！":"添加药饵失败!";
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
-                    result = "添加药珥失败!";
+                    result = "添加药饵失败!";
                 }
             }
 
@@ -346,7 +355,7 @@ public class DogApi {
                 String dogsex = json.getString("dogsex");
                 String dogbelonghamlet = json.getString("dogbelonghamlet");
                 String ownerhamletcode = json.getString("ownerhamletcode");
-                String dogownerid = json.getString("dogownerid");
+                int dogownerid = Integer.parseInt(json.getString("dogownerid"));
                 String dogweight = json.getString("dogweight");
                 String dogcolor = json.getString("dogcolor");
                 int dogage = Integer.parseInt(json.getString("dogage"));
@@ -535,30 +544,81 @@ public class DogApi {
     })
     @RequestMapping(value="batchdogregexcel",method = RequestMethod.POST)
     @ResponseBody
-    public void export(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<JsonResult> export(@RequestParam("file") MultipartFile file,
                        HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
         try {
             // @RequestParam("file") MultipartFile file 是用来接收前端传递过来的文件
             // 1.创建workbook对象，读取整个文档
             InputStream inputStream = file.getInputStream();
-            POIFSFileSystem poifsFileSystem = new POIFSFileSystem(inputStream);
-            HSSFWorkbook wb = new HSSFWorkbook(poifsFileSystem);
+//            POIFSFileSystem poifsFileSystem = new POIFSFileSystem(inputStream);  //仅支持07之前的xls
+            Workbook wb = WorkbookFactory.create(inputStream);
+//            XSSFWorkbook wb = new XSSFWorkbook(poifsFileSystem);  //仅支持07之前的xls
             // 2.读取页脚sheet
-            HSSFSheet sheetAt = wb.getSheetAt(0);
+            //HSSFSheet sheetAt = wb.getSheetAt(0);  //仅支持07之前的xls
+            Sheet sheetAt = wb.getSheetAt(0);
             // 3.循环读取某一行
+            int rownum = 0;
+            String res = "";
             for (Row row : sheetAt) {
+                if(rownum == 0){
+                    rownum++;
+                    continue;
+                }
                 // 4.读取每一行的单元格
-                String stringCellValue1 = row.getCell(0).getStringCellValue(); // 第一列数据
-                String stringCellValue2 = row.getCell(1).getStringCellValue();// 第二列
+                String province = row.getCell(0).getStringCellValue(); // 第一列数据
+                String city = row.getCell(1).getStringCellValue();// 第二列
+                String county = row.getCell(2).getStringCellValue();//
+                String village = row.getCell(3).getStringCellValue();//
+                String hamlet = row.getCell(4).getStringCellValue();//
+                String ownername = row.getCell(5).getStringCellValue();//
+                String owneridentity = row.getCell(6).getStringCellValue();//
+                String ownertel = row.getCell(7).getStringCellValue();//
+                String dogname = row.getCell(8).getStringCellValue();//
+                String managername = row.getCell(9).getStringCellValue();//
+                String dogcovcode = row.getCell(10).getStringCellValue();//
+                String ownersex = row.getCell(11).getStringCellValue();//
+                int ownerage = Integer.parseInt((row.getCell(12).getNumericCellValue()+"").split("\\.")[0]);
+                String ownerjob = row.getCell(13).getStringCellValue();//
+                String owneraddr = row.getCell(14).getStringCellValue();//
+                String dogsex = row.getCell(15).getStringCellValue();//
+                String dogweight = row.getCell(16).getStringCellValue();//
+                String dogcolor = row.getCell(17).getStringCellValue();//
+                int dogage =  Integer.parseInt((row.getCell(18).getNumericCellValue()+"").split("\\.")[0]);
                 // 写多少个具体看大家上传的文件有多少列.....
                 // 测试是否读取到数据,及数据的正确性
-                System.out.println(stringCellValue1);
-                System.out.println(stringCellValue2);
+                res += province+"   "+city+"   "+county+"   "+village+"   "+hamlet+"   "+ownername+"   "+owneridentity+"   "+ownertel+"   "+
+                        dogname+"   "+managername+"   "+dogcovcode+"   "+ownersex+"   "+ownerage+"   "+ownerjob+"   "+owneraddr+"   "+dogsex+"   "+dogweight+"   "+
+                        dogcolor+"   "+dogage+"<\\br>";
+
+                //注册逻辑
+                District thishamlet = districtCommon.GetDistrictcode(province,city,county,village,hamlet);
+                String hamletcode = thishamlet.getDistrictcode();
+                //主人注册
+                Dogowner owner = ownerService.addOwner(ownername, owneridentity, ownersex, hamletcode, ownerage, ownerjob, owneraddr, ownertel);
+                if(owner==null){
+                    continue;
+                }
+                //犬只注册
+                String username = userService.selectByNameAndDistrictcode(managername,hamletcode).getUsername();
+                Dog dog = dogService.addDog(username, dogname, dogsex, hamlet, hamletcode, owner.getOwnerId(), dogweight, dogcolor, dogage,dogcovcode);
+                if(dog == null){
+                    continue;
+                }
             }
+            r.setCode(200);
+            r.setMsg("批量插入信息成功！");
+            r.setData(res);
+            r.setSuccess(true);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            r.setCode(500);
+            r.setMsg("批量插入信息失败！");
+            r.setData(null);
+            r.setSuccess(false);
         }
-
+        return ResponseEntity.ok(r);
     }
 }

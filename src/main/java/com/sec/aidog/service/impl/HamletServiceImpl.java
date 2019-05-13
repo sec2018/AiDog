@@ -1,5 +1,7 @@
 package com.sec.aidog.service.impl;
 
+import com.sec.aidog.common.Constant;
+import com.sec.aidog.common.DistrictCommon;
 import com.sec.aidog.dao.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.HamletService;
@@ -44,28 +46,16 @@ public class HamletServiceImpl implements HamletService {
     @Autowired
     private AppconfigMapper appconfigMapper;
 
+    @Autowired
+    private DistrictCommon districtCommon;
+
     @Override
     public Map<String, Object> GetHamletMap(String province, String city, String county, String village,
                                             String hamlet,HttpServletRequest request) {
         HttpSession session = request.getSession();
         Map<String,Object> GetHamletMap = new HashMap<String,Object>();
         try {
-            province = nameConversionUtil.EchartsAreaNameToGov(province);
-            city = nameConversionUtil.EchartsAreaNameToGov(city);
-            county = nameConversionUtil.EchartsAreaNameToGov(county);
-            village = nameConversionUtil.EchartsAreaNameToGov(village);
-            hamlet = nameConversionUtil.EchartsAreaNameToGov(hamlet);
-            //获得该地区地区编码前两位(省)
-            String provinceCode0to2 = districtMapper.getDistrictsByDistrictName(province).getDistrictcode().substring(0,2);
-            //获得该地区地区编码前四位(市)
-            String cityCode0to4 = districtMapper.getCityAndBelowDistrictsByDistrictName(city, provinceCode0to2).getDistrictcode().substring(0,4);
-            //获得该地区地区编码前六位(县)
-            String countyCode0to6 = districtMapper.getCityAndBelowDistrictsByDistrictName(county, cityCode0to4).getDistrictcode().substring(0,6);
-            //获得该地区地区编码前九位(乡)
-            String villageCode0to9 = districtMapper.getCityAndBelowDistrictsByDistrictName(village, countyCode0to6).getDistrictcode().substring(0,9);
-            //获得该地区地区编码前12位(村)
-            District thishamlet = districtMapper.getCityAndBelowDistrictsByDistrictName(hamlet, villageCode0to9);
-
+            District thishamlet = districtCommon.GetDistrictcode(province,city,county,village,hamlet);
             String hamletcode = thishamlet.getDistrictcode();
             session.setAttribute("hamletcode", hamletcode);
             List<Dog> doginfo = new ArrayList<Dog>();
