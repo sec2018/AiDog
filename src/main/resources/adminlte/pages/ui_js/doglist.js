@@ -144,8 +144,9 @@ $(function () {
                         if(data.data.data[i].appId =="-1"){
                             data.data.data[i].appId = "无喂饲器";
                         }
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改犬只</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
-                            "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改主人</a>";
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDevice(\""+ data.data.data[i].necId+ "\",\""+ data.data.data[i].appId+ "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 智能防控</a>";
+                        // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
+                        //     "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -162,7 +163,7 @@ $(function () {
                         'info'        : true,
                         'bAutoWidth'  : false,
                         "responsive": false,
-                         //允许重建
+                        //允许重建
                         "destroy": true,
                         "scrollX":true,
                         "oLanguage": {
@@ -202,10 +203,10 @@ $(function () {
                             { "data": "ownerIdentity","width":"120px"  },
                             { "data": "dogName","width":"60px"  },
                             { "data": "dogGovcode","width":"70px"  },
-                            { "data": "necId","width":"70px"},
+                            { "data": "necId","width":"60px"},
                             { "data": "appId","width":"70px" },
                             { "data": "managerName","width":"70px" },
-                            { "data": "action" ,"width":"320px"}
+                            { "data": "action" ,"width":"220px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -320,7 +321,45 @@ $(function () {
             }
         })
     });
+
+    $("#a_ownermodify").click(function () {
+        var ownerid = $('#ownerid').html();
+        //修改犬主人
+        var clicktype = "ownermodify";
+        var ownername = $("#modalinput_ownername").val();
+        var owneridentity = $("#modalinput_owneridentity").val();
+        var ownersex = $("#modalinput_ownersex").val();
+        var ownerage = $("#modalinput_ownerage").val();
+        var ownerjob = $("#modalinput_ownerjob").val();
+        var owneraddr = $("#modalinput_homeaddress").val();
+        var ownertel = $("#modalinput_ownertel").val();
+        var ownersenddata = {};
+        ownersenddata.clicktype = clicktype;
+        ownersenddata.ownerid = ownerid;
+        ownersenddata.ownername = ownername;
+        ownersenddata.owneridentity = owneridentity;
+        ownersenddata.ownersex = ownersex;
+        ownersenddata.ownerage = ownerage;
+        ownersenddata.ownerjob = ownerjob;
+        ownersenddata.owneraddr = owneraddr;
+        ownersenddata.ownertel = ownertel;
+        $.ajax({
+            url: "/aidog/api/operateapi",
+            type: "POST",
+            data:  JSON.stringify(ownersenddata),
+            contentType: "application/json",
+            dataType: "text",    // 控制回来的数据类型
+            beforeSend: function (request) {
+                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+            },
+            success: function (data) {
+                alert(data.data.msg);
+                window.location.reload();
+            }
+        })
+    });
 })
+
 
 
 function detailInfo(id) {
@@ -435,12 +474,47 @@ function modifyNec(id) {
     alert(id);
 }
 
+function modifyDevice(necid,appid){
+    if(necid == "无项圈" && appid == "无喂饲器"){
+        alert("无项圈或喂饲器！");
+    }
+    else if(necid != "无项圈" && appid == "无喂饲器"){
+        alert(necid);
+    }
+    else if(necid == "无项圈" && appid != "无喂饲器"){
+        alert(appid);
+    }
+}
+
 function modifyApp(id) {
     alert(id);
 }
 
 function modifyOwner(id) {
-    alert(id);
+    $('#ownerid').html(id)
+    var modifyownersenddata = {};
+    modifyownersenddata.ownerid = id;
+    $.ajax({
+        url: "/aidog/api/getownerinfo",
+        method: "POST",
+        data: modifyownersenddata,
+        beforeSend: function (request) {
+            request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+        },
+        success: function (data) {
+            if (data.data != null) {
+                //牧犬信息
+                $("#modalinput_ownername").val(data.data.ownerName);
+                $("#modalinput_owneridentity").val(data.data.ownerIdentity);
+                $("#modalinput_ownersex").val(data.data.ownerSex);
+                $("#modalinput_ownerage").val(data.data.ownerAge);
+                $("#modalinput_ownerjob").val(data.data.ownerJob);
+                $("#modalinput_homeaddress").val(data.data.ownerAddr);
+                $("#modalinput_ownertel").val(data.data.ownerTel);
+            }
+        }
+    })
+    $("#ownerModifyDiv").modal('show');
 }
 
 function objToArray(array) {

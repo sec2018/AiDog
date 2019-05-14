@@ -147,6 +147,7 @@
     </div>
 
     <div id="dogid" style="display: none">0</div>
+    <div id="ownerid" style="display: none">0</div>
     <div class="modal fade" id="dogInfoDiv" tabindex="-1" role="dialog">
         <div class="modal-dialog model80" >
 
@@ -438,6 +439,61 @@
                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
                     <!--&lt;!&ndash;</div>&ndash;&gt;-->
                     <!--</div>-->
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="ownerModifyDiv" tabindex="-1" role="dialog">
+        <div class="modal-dialog model80" >
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">信息详情</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="alert alert-info alert-dismissible" style="padding:2px;">
+                            <h5><i class="icon fa fa-info"></i>犬主基本信息</h5>
+                        </div>
+                        <!-- text input -->
+                        <div class="form-group  has-success">
+                            <label>姓名：</label>
+                            <input type="text" class="form-control" placeholder="姓名" id="modalinput_ownername">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>主人身份证（选）：</label>
+                            <input type="text" class="form-control" placeholder="主人身份证（选）" id="modalinput_owneridentity" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>性别：</label>
+                            <input type="text" class="form-control" placeholder="性别" id="modalinput_ownersex" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>年龄：</label>
+                            <input type="text" class="form-control" placeholder="年龄" id="modalinput_ownerage">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>职业：</label>
+                            <input type="text" class="form-control" placeholder="职业" id="modalinput_ownerjob">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>家庭住址(村)：</label>
+                            <input type="text" class="form-control" placeholder="家庭住址(村)" id="modalinput_homeaddress">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>联系方式：</label>
+                            <input type="text" class="form-control" placeholder="联系方式" id="modalinput_ownertel">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <button type="button" id="a_ownermodify" class="btn btn-info btn-flat">修改犬主信息</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div><!-- /.modal-content -->

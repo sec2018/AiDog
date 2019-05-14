@@ -3,6 +3,7 @@ package com.sec.aidog.api;
 import com.sec.aidog.common.DistrictCommon;
 import com.sec.aidog.common.RedisUtil;
 import com.sec.aidog.dao.DogMapper;
+import com.sec.aidog.dao.DogownerMapper;
 import com.sec.aidog.dao.NeckletMapper;
 import com.sec.aidog.dao.PillMapper;
 import com.sec.aidog.pojo.*;
@@ -47,6 +48,9 @@ public class DogApi {
 
     @Autowired
     private OwnerService ownerService;
+
+    @Autowired
+    private DogownerMapper dogownerMapper;
 
     @Autowired
     private DogMapper dogMapper;
@@ -380,6 +384,43 @@ public class DogApi {
                     r.setSuccess(false);
                     e.printStackTrace();
                 }
+            }else if(clicktype.equals("ownermodify")) {
+                String ownerid = json.getString("ownerid");
+                String ownername  = json.getString("ownername");
+                String owneridentity = json.getString("owneridentity");
+                String ownersex = json.getString("ownersex");
+                String ownerage = json.getString("ownerage");
+                String ownerjob = json.getString("ownerjob");
+                String owneraddr = json.getString("owneraddr");
+                String ownertel = json.getString("ownertel");
+                try {
+                    Dogowner dogowner = dogownerMapper.selectByPrimaryKey(Integer.parseInt(ownerid));
+                    dogowner.setOwnerName(ownername);
+                    dogowner.setOwnerIdentity(owneridentity);
+                    dogowner.setOwnerSex(ownersex);
+                    dogowner.setOwnerAge(Integer.parseInt(ownerage));
+                    dogowner.setOwnerJob(ownerjob);
+                    dogowner.setOwnerAddr(owneraddr);
+                    dogowner.setOwnerTel(ownertel);
+                    boolean flag = dogownerMapper.updateByPrimaryKey(dogowner) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("修改犬主成功!");
+                        r.setData(dogowner);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("修改犬主失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("修改犬主失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -618,6 +659,36 @@ public class DogApi {
             r.setMsg("批量插入信息失败！");
             r.setData(null);
             r.setSuccess(false);
+        }
+        return ResponseEntity.ok(r);
+    }
+
+    //获取牧犬详细信息
+    @ApiOperation(value = "获取犬主详细信息", notes = "获取犬主详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ownerid", value = "dogid", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="getownerinfo",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetOwnerInfo(@RequestParam(value = "ownerid") int ownerid, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+            Dogowner owner = dogownerMapper.selectByPrimaryKey(ownerid);
+            r.setCode(200);
+            r.setMsg("获取主人信息成功！");
+            r.setData(owner);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取主人信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
         }
         return ResponseEntity.ok(r);
     }
