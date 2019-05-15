@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
 @Mapper
-@Component("sysLayconfigMapper")
+//@Component("sysLayconfigMapper")
 public interface SysLayconfigMapper {
     int countByExample(SysLayconfigExample example);
 
@@ -26,7 +27,8 @@ public interface SysLayconfigMapper {
 
     SysLayconfig selectByPrimaryKey(Integer id);
 
-    SysLayconfig selectLayConfigByMid(String mid);
+    @Select("select * from sys_layconfig where mid = #{mid} order by updatetime desc limit 1")
+    SysLayconfig selectLayConfigByMid(@Param("mid") String mid);
 
     int updateByExampleSelective(@Param("record") SysLayconfig record, @Param("example") SysLayconfigExample example);
 

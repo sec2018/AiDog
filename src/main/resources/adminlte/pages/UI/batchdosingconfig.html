@@ -546,12 +546,12 @@
             }
 
             $("#a_dosingconfig").click(function () {
-                necid = $("#input_neckletid").val();
-                if (necid == "") {
-                    alert("请先查询获取项圈投药时间配置！");
+                var necids = $("#selectnecs").html();
+                if (necids == "" || necids == null) {
+                    alert("请先批量获取项圈！");
                     return;
                 }
-                var necid = "necid=" + necid + "&";
+                var necid = "necid=" + necids.substring(0,necids.length-1) + "&";
                 var one1 = new Date($("#input_lay1").val()).valueOf();
                 var two2 = new Date($("#input_lay2").val()).valueOf();
                 var three3 = new Date($("#input_lay3").val()).valueOf();
@@ -630,6 +630,7 @@
                     spanarr += neccheck[item].id +"|";
                 }
             })
+            spanarr = spanarr.replace(/\"/g, "");
             $("#selectnecs").html(spanarr);
             $("#doglist").modal('hide');
         }

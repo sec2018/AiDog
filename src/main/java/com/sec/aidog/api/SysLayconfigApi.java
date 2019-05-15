@@ -256,6 +256,20 @@ public class SysLayconfigApi {
 																 @RequestParam(value = "areacycle")Integer areacycle,
 																 HttpServletRequest request){
 		JsonResult r = new JsonResult();
+		if(necid.contains("|")){
+			String[] necarr = necid.split("\\|");
+			for(int i=0;i<necarr.length;i++){
+				r = setDosingtimeconfig(necarr[i],one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle);
+			}
+		}else{
+			r = setDosingtimeconfig(necid,one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle);
+		}
+		return ResponseEntity.ok(r);
+	}
+
+	public JsonResult setDosingtimeconfig(String necid,String one,String two,String three,String four, String five,String six, String seven,String eight,
+										  String nine,String ten, String eleven,String twelve, Integer areacycle){
+		JsonResult r = new JsonResult();
 		try {
 			SysLayconfig layconfig = sysLayconfigMapper.selectLayConfigByMid(necid);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
@@ -360,6 +374,7 @@ public class SysLayconfigApi {
 				r.setMsg("配置项圈时间失败");
 				r.setSuccess(false);
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				return r;
 			}
 		} catch (Exception e) {
 			r.setCode(500);
@@ -368,8 +383,9 @@ public class SysLayconfigApi {
 			r.setSuccess(false);
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			e.printStackTrace();
+			return r;
 		}
-		return ResponseEntity.ok(r);
+		return r;
 	}
 
 	
