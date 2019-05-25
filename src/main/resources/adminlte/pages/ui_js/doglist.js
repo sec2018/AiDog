@@ -119,6 +119,68 @@ $(function () {
 
     });
 
+    function distrctcodetoaddr(districtcode) {
+        var province = "";
+        var city = "";
+        var county = "";
+        var village = "";
+        var hamlet = "";
+        switch (districtcode.substring(0, 2)){
+            case "15":
+                province = "内蒙古自治区";
+                break;
+            case "51":
+                province = "四川省";
+                break;
+            case "53":
+                province = "云南省";
+                break;
+            case "54":
+                province = "西藏自治区";
+                break;
+            case "61":
+                province = "陕西省";
+                break;
+            case "62":
+                province = "甘肃省";
+                break;
+            case "63":
+                province = "青海省";
+                break;
+            case "64":
+                province = "宁夏回族自治区";
+                break;
+            case "65":
+                province = "新疆维吾尔族自治区";
+                break;
+            case "66":
+                province = "建设兵团";
+                break;
+        }
+        for (var i = 0; i < datares.data1.length; i++) {
+            if (datares.data1[i].districtcode.toString() == districtcode.substring(0, 4)+"00000000") {
+                city = datares.data1[i].districtname;
+            }
+        }
+        for (var i = 0; i < datares.data2.length; i++) {
+            if (datares.data2[i].districtcode.toString() == districtcode.substring(0, 6)+"000000") {
+                county = datares.data2[i].districtname;
+            }
+        }
+        for (var i = 0; i < datares.data3.length; i++) {
+            if (datares.data3[i].districtcode.toString() == districtcode.substring(0, 9)+"000") {
+                village = datares.data3[i].districtname;
+            }
+        }
+        for (var i = 0; i < datares.data4.length; i++) {
+            if (datares.data4[i].districtcode.toString() == districtcode) {
+                hamlet = datares.data4[i].districtname;
+            }
+        }
+        return province+city+county+village+hamlet;
+    }
+
+
     $("#a_getdoglist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
@@ -147,6 +209,7 @@ $(function () {
                         data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDevice(\""+ data.data.data[i].necId+ "\",\""+ data.data.data[i].appId+ "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 智能防控</a>";
                         // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
                         //     "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;";
+                        data.data.data[i].detailaddr = distrctcodetoaddr(data.data.data[i].districtcode);
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -202,7 +265,7 @@ $(function () {
                             { "data": "ownerName","width":"60px" },
                             { "data": "ownerIdentity","width":"120px"  },
                             { "data": "dogName","width":"60px"  },
-                            { "data": "dogGovcode","width":"70px"  },
+                            { "data": "dogGovcode","width":"80px"  },
                             { "data": "necId","width":"60px"},
                             { "data": "appId","width":"70px" },
                             { "data": "managerName","width":"70px" },
@@ -273,7 +336,7 @@ $(function () {
     });
 
     function format ( index ) {
-        return '主人姓名: '+viewdata[index].ownerName+'';
+        return '主人姓名: '+viewdata[index].ownerName+' &nbsp;&nbsp; 详细归属地：'+viewdata[index].detailaddr+'';
     }
 
     function timetrans(date){

@@ -142,7 +142,11 @@ $(function () {
                             data.data.data[i].testingDate = timetrans(data.data.data[i].testingDate).replace('T'," ");
                         }
                         var valueStr = JSON.stringify(data.data.data[i]);  //对象转字符串
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='TestThisRow("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                        if(data.data.data[i].testingResult != null){
+                            data.data.data[i].action = "<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                        }else{
+                            data.data.data[i].action = "<a href='javascript:void(0);'onclick='TestThisRow("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                        }
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -199,14 +203,15 @@ $(function () {
                             { "data": "dogmanureCode","width":"60px" },
                             { "data": "ownerName","width":"60px" },
                             // { "data": "ownerIndentity","width":"120px" },
-                            { "data": "dogGovcode","width":"80px"},
+                            { "data": "dogGovcode","width":"90px"},
                             { "data": "managemethod","width":"60px"  },
+                            { "data": "deviceId","width":"60px"  },
                             // { "data": "collectionDate","width":"120px" },
-                            // { "data": "testingDate" ,"width":"120px"},
                             { "data": "testingMethod" ,"width":"60px"},
                             { "data": "testingResult" ,"width":"60px"},
-                            // { "data": "testingPerson" ,"width":"50px"},
-                            { "data": "action" ,"width":"140px"}
+                            { "data": "testingPerson" ,"width":"50px"},
+                            { "data": "testingDate" ,"width":"120px"},
+                            { "data": "action" ,"width":"120px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -281,9 +286,16 @@ $(function () {
         //修改或录入犬粪信息
         var clicktype = "manuremodify";
         var testdate = $("#reginput_testdate").val()+":00";
-        var testmethod = $("#reginput_testmethod").val();
-        var testresult = $("#reginput_testresult").val();
+        // var testmethod = $("#reginput_testmethod").val();
+        var testmethod = $("#regselect_testmethod").find("option:selected").text();
+        // var testresult = $("#reginput_testresult").val();
+        var testresult = $("#regselect_testresult").find("option:selected").text();
         var testperson = $("#reginput_testperson").val();
+        if(testdate == null || testmethod == null || testresult == null || testperson == null ||
+            testdate == "" || testmethod == "" || testresult == "" || testperson == ""){
+            alert("信息填写不完整！");
+            return;
+        }
         var senddata = {};
         senddata.clicktype = clicktype;
         senddata.manureid = manureid;
@@ -359,6 +371,7 @@ function ShowRowDetail(data) {
         $("#input_ownerindentity").val(data.ownerIndentity);
         $("#input_doggovcode").val(data.dogGovcode);
         $("#input_managemethod").val(data.managemethod);
+        $("#input_deviceid").val(data.deviceId);
         $("#input_collectiondate").val(timetrans(data.collectionDate));
         $("#input_collectionperson").val(data.collectionPerson);
         $("#input_testdate").val(timetrans(data.testingDate));

@@ -14,6 +14,7 @@ $(function () {
         datares = data;
     });
 
+
     $("#select_province").on('change', function () {
         var selectvalue = $(this).find('option:selected').val();
         selectvalue = selectvalue.substring(0,2);

@@ -57,10 +57,13 @@
                     </div>
                     <div class="form-group  has-success">
                         <label>周期设置：</label>
-                        <!--<div class="col-md-offset-2 col-md-8">-->
-                            <button type="button" id="a_thirtyday" class="btn btn-info btn-flat">每30天</button>
-                            <button type="button" id="a_setday" class="btn btn-info btn-flat">每月定期</button>
-                        <!--</div>-->
+                        <div class="clearfix">
+                            <button type="button" id="a_thirtyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每30天</button>
+                            <button type="button" id="a_setday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每月定期</button>
+                            <button type="button" id="a_sixtyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每60天</button>
+                            <button type="button" id="a_ninetyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每90天</button>
+                            <button type="button" id="a_180day" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每180天</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -281,6 +284,126 @@
                 date10.setDate(date.getDate() + 270);
                 date11.setDate(date.getDate() + 300);
                 date12.setDate(date.getDate() + 330);
+                $("#input_lay1").val((timetrans(date1)));
+                $("#input_lay2").val((timetrans(date2)));
+                $("#input_lay3").val((timetrans(date3)));
+                $("#input_lay4").val((timetrans(date4)));
+                $("#input_lay5").val((timetrans(date5)));
+                $("#input_lay6").val((timetrans(date6)));
+                $("#input_lay7").val((timetrans(date7)));
+                $("#input_lay8").val((timetrans(date8)));
+                $("#input_lay9").val((timetrans(date9)));
+                $("#input_lay10").val((timetrans(date10)));
+                $("#input_lay11").val((timetrans(date11)));
+                $("#input_lay12").val((timetrans(date12)));
+            });
+
+            $("#a_sixtyday").click(function () {
+                var date = new Date($("#input_lay").val());
+                var date1 = new Date(date);
+                var date2 = new Date(date);
+                var date3 = new Date(date);
+                var date4 = new Date(date);
+                var date5 = new Date(date);
+                var date6 = new Date(date);
+                var date7 = new Date(date);
+                var date8 = new Date(date);
+                var date9 = new Date(date);
+                var date10 = new Date(date);
+                var date11 = new Date(date);
+                var date12 = new Date(date);
+                date1.setDate(date.getDate());
+                date2.setDate(date.getDate() + 60);
+                date3.setDate(date.getDate() + 120);
+                date4.setDate(date.getDate() + 180);
+                date5.setDate(date.getDate() + 240);
+                date6.setDate(date.getDate() + 300);
+                date7.setDate(date.getDate() + 360);
+                date8.setDate(date.getDate() + 420);
+                date9.setDate(date.getDate() + 480);
+                date10.setDate(date.getDate() + 540);
+                date11.setDate(date.getDate() + 600);
+                date12.setDate(date.getDate() + 660);
+                $("#input_lay1").val((timetrans(date1)));
+                $("#input_lay2").val((timetrans(date2)));
+                $("#input_lay3").val((timetrans(date3)));
+                $("#input_lay4").val((timetrans(date4)));
+                $("#input_lay5").val((timetrans(date5)));
+                $("#input_lay6").val((timetrans(date6)));
+                $("#input_lay7").val((timetrans(date7)));
+                $("#input_lay8").val((timetrans(date8)));
+                $("#input_lay9").val((timetrans(date9)));
+                $("#input_lay10").val((timetrans(date10)));
+                $("#input_lay11").val((timetrans(date11)));
+                $("#input_lay12").val((timetrans(date12)));
+            });
+
+            $("#a_ninetyday").click(function () {
+                var date = new Date($("#input_lay").val());
+                var date1 = new Date(date);
+                var date2 = new Date(date);
+                var date3 = new Date(date);
+                var date4 = new Date(date);
+                var date5 = new Date(date);
+                var date6 = new Date(date);
+                var date7 = new Date(date);
+                var date8 = new Date(date);
+                var date9 = new Date(date);
+                var date10 = new Date(date);
+                var date11 = new Date(date);
+                var date12 = new Date(date);
+                date1.setDate(date.getDate());
+                date2.setDate(date.getDate() + 90);
+                date3.setDate(date.getDate() + 180);
+                date4.setDate(date.getDate() + 270);
+                date5.setDate(date.getDate() + 360);
+                date6.setDate(date.getDate() + 450);
+                date7.setDate(date.getDate() + 540);
+                date8.setDate(date.getDate() + 630);
+                date9.setDate(date.getDate() + 720);
+                date10.setDate(date.getDate() + 810);
+                date11.setDate(date.getDate() + 900);
+                date12.setDate(date.getDate() + 990);
+                $("#input_lay1").val((timetrans(date1)));
+                $("#input_lay2").val((timetrans(date2)));
+                $("#input_lay3").val((timetrans(date3)));
+                $("#input_lay4").val((timetrans(date4)));
+                $("#input_lay5").val((timetrans(date5)));
+                $("#input_lay6").val((timetrans(date6)));
+                $("#input_lay7").val((timetrans(date7)));
+                $("#input_lay8").val((timetrans(date8)));
+                $("#input_lay9").val((timetrans(date9)));
+                $("#input_lay10").val((timetrans(date10)));
+                $("#input_lay11").val((timetrans(date11)));
+                $("#input_lay12").val((timetrans(date12)));
+            });
+
+            $("#a_180day").click(function () {
+                var date = new Date($("#input_lay").val());
+                var date1 = new Date(date);
+                var date2 = new Date(date);
+                var date3 = new Date(date);
+                var date4 = new Date(date);
+                var date5 = new Date(date);
+                var date6 = new Date(date);
+                var date7 = new Date(date);
+                var date8 = new Date(date);
+                var date9 = new Date(date);
+                var date10 = new Date(date);
+                var date11 = new Date(date);
+                var date12 = new Date(date);
+                date1.setDate(date.getDate());
+                date2.setDate(date.getDate() + 180);
+                date3.setDate(date.getDate() + 360);
+                date4.setDate(date.getDate() + 540);
+                date5.setDate(date.getDate() + 720);
+                date6.setDate(date.getDate() + 900);
+                date7.setDate(date.getDate() + 1080);
+                date8.setDate(date.getDate() + 1260);
+                date9.setDate(date.getDate() + 1440);
+                date10.setDate(date.getDate() + 1620);
+                date11.setDate(date.getDate() + 1800);
+                date12.setDate(date.getDate() + 1980);
                 $("#input_lay1").val((timetrans(date1)));
                 $("#input_lay2").val((timetrans(date2)));
                 $("#input_lay3").val((timetrans(date3)));

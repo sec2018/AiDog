@@ -145,8 +145,8 @@ $(function () {
                         data.data.data[i].firstdosingtime = "2019-04-20 09:00:00";
                         data.data.data[i].nextdosingtime = "2019-05-20 09:00:00";
                         data.data.data[i].leftnum = 11;
-                        data.data.data[i].power = "3.6v";
-                        data.data.data[i].temp = "21度"
+                        data.data.data[i].power = "3.6";
+                        data.data.data[i].temp = "21"
                         data.data.data[i].pillcode = "gov-23124";
                     }
                     viewdata = $.extend(true,[],data.data.data);
@@ -200,14 +200,14 @@ $(function () {
                                 "defaultContent": "",
                                 "width": "1px"
                             },
-                            { "data": "necId","width":"70px" },
-                            { "data": "pillcode","width":"70px"  },
-                            { "data": "status","width":"70px"  },
-                            { "data": "firstdosingtime","width":"70px"  },
-                            { "data": "nextdosingtime","width":"70px"  },
+                            { "data": "necId","width":"60px" },
+                            { "data": "pillcode","width":"60px"  },
+                            { "data": "status","width":"50px"  },
+                            { "data": "firstdosingtime","width":"120px"  },
+                            { "data": "nextdosingtime","width":"120px"  },
                             { "data": "leftnum","width":"70px"},
-                            { "data": "power","width":"70px" },
-                            { "data": "temp","width":"70px" }
+                            { "data": "power","width":"60px" },
+                            { "data": "temp","width":"60px" }
                         ],
                         buttons: [
                             'pageLength',

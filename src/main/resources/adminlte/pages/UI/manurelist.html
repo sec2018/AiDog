@@ -94,6 +94,8 @@
                                     <option value="620000000000">甘肃省</option>
                                     <option value="630000000000">青海省</option>
                                     <option value="640000000000">宁夏回族自治区</option>
+                                    <option value="650000000000">新疆维吾尔族自治区</option>
+                                    <option value="660000000">建设兵团</option>
                                 </select>
                                 <select id="select_city" class="form-control col-md-2" style="margin-bottom: 5px">
                                     <option value="-1">请选择</option>
@@ -127,13 +129,14 @@
                                     <th>犬粪编号</th>
                                     <th>犬主姓名</th>
                                     <!--<th>身份证号</th>-->
-                                    <th>犬只编号</th>
+                                    <th>犬只政府编码</th>
                                     <th>防控方式</th>
+                                    <th>硬件编码</th>
                                     <!--<th>采集日期</th>-->
-                                    <!--<th>检测日期</th>-->
                                     <th>检测方法</th>
                                     <th>检测结果</th>
-                                    <!--<th>检测人</th>-->
+                                    <th>检测人</th>
+                                    <th>检测日期</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -174,12 +177,16 @@
                             <input type="text" class="form-control" placeholder="身份证号" id="input_ownerindentity" disabled>
                         </div>
                         <div class="form-group  has-success">
-                            <label>犬只编号：</label>
-                            <input type="text" class="form-control" placeholder="犬只编号" id="input_doggovcode" disabled>
+                            <label>犬只政府编码：</label>
+                            <input type="text" class="form-control" placeholder="犬只政府编码" id="input_doggovcode" disabled>
                         </div>
                         <div class="form-group  has-success">
                             <label>防控方式：</label>
                             <input type="text" class="form-control" placeholder="防控方式" id="input_managemethod" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>硬件编号：</label>
+                            <input type="text" class="form-control" placeholder="硬件编号" id="input_deviceid" disabled>
                         </div>
                         <div class="form-group  has-success">
                             <label>采集日期：</label>
@@ -327,11 +334,21 @@
                         </div>
                         <div class="form-group  has-success">
                             <label>检测方法：</label>
-                            <input type="text" class="form-control" placeholder="检测方法" id="reginput_testmethod">
+                            <!--<input type="text" class="form-control" placeholder="检测方法" id="reginput_testmethod">-->
+                            <select class="form-control select2"  id="regselect_testmethod" style="width: 100%;">
+                                <option value="ELISA">ELISA</option>
+                                <option value="剖检">剖检</option>
+                                <option value="槟榔碱导泄">槟榔碱导泄</option>
+                                <option value="PCR">PCR</option>
+                            </select>
                         </div>
                         <div class="form-group  has-success">
                             <label>检测结果：</label>
-                            <input type="text" class="form-control" placeholder="检测结果" id="reginput_testresult">
+                            <!--<input type="text" class="form-control" placeholder="检测结果" id="reginput_testresult">-->
+                            <select class="form-control select2"  id="regselect_testresult" style="width: 100%;">
+                                <option value="阴性">阴性</option>
+                                <option value="阳性">阳性</option>
+                            </select>
                         </div>
                         <div class="form-group  has-success">
                             <label>检测人：</label>

@@ -39,6 +39,16 @@ public class ManureView {
 
     private String testingPerson;
 
+    private String deviceId;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
     public String getOwnerIndentity() {
         return ownerIndentity;
     }

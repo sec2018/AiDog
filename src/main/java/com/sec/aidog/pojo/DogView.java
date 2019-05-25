@@ -42,6 +42,7 @@ public class DogView {
 
     private String ownerIdentity;
 
+
     public String getOwnerIdentity() {
         return ownerIdentity;
     }

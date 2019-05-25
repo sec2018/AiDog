@@ -62,10 +62,13 @@ public class ManureServiceImpl implements ManureService{
             manureView.setDogGovcode(govcode);
             if(!dog.getNecId().equals("-1" )&& dog.getAppId().equals("-1")){
                 manureView.setManagemethod("项圈管理");
+                manureView.setDeviceId(dog.getNecId());
             }else if(!dog.getAppId().equals("-1" ) && dog.getNecId().equals("-1")){
                 manureView.setManagemethod("喂饲器管理");
+                manureView.setDeviceId(dog.getAppId());
             }else if(dog.getNecId().equals("-1") && dog.getAppId().equals("-1")){
                 manureView.setManagemethod("人工管理");
+                manureView.setDeviceId("无设备");
             }
             manureView.setNum(num);
             num++;
