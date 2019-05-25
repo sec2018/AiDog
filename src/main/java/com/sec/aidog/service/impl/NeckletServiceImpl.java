@@ -1,23 +1,19 @@
 package com.sec.aidog.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sec.aidog.dao.DogMapper;
 import com.sec.aidog.dao.LastnecdosingMapper;
 import com.sec.aidog.dao.NecconfigMapper;
 import com.sec.aidog.dao.NeckletMapper;
-import com.sec.aidog.pojo.Dog;
-import com.sec.aidog.pojo.Lastnecdosing;
-import com.sec.aidog.pojo.Necconfig;
-import com.sec.aidog.pojo.Necklet;
+import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.NeckletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class NeckletServiceImpl implements NeckletService{
@@ -100,6 +96,36 @@ public class NeckletServiceImpl implements NeckletService{
             map.put(""+i, maptemp);
             i++;
         }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getNeckletList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<NeckletView> neckletViewList = new ArrayList<>();
+        List<SysLaytime> SysLaytimelist = neckletMapper.selectViewLayTime(districtcode);
+        List<SysDeviceconf> sysDeviceconflist = neckletMapper.selectViewDeviceconf(districtcode);
+        List<SysLayconfig> sysLayconfiglist = neckletMapper.selectViewLayconfig(districtcode);
+
+        NeckletView neckletView = null;
+        for(int i=0;i<SysLaytimelist.size();i++){
+            neckletView = new NeckletView();
+            neckletView.setNecId(SysLaytimelist.get(i).getMid());
+            neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");
+            neckletView.setTemperature(SysLaytimelist.get(i).getTemperature()==null?"未反馈":SysLaytimelist.get(i).getTemperature()+"");
+            neckletView.setPillcode("PL2306");
+            neckletView.setDosingstatus(sysDeviceconflist.get(i).getStatus()+"");
+            neckletView.setConfstatus("正常");
+            neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
+            neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
+            neckletView.setLeftnum(11);
+            neckletViewList.add(neckletView);
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", neckletViewList);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
         return map;
     }
 }

@@ -184,5 +184,53 @@ public class NecApi {
         }
         return ResponseEntity.ok(r);
     }
+
+    //获取项圈列表，根据地区编号
+    @ApiOperation(value = "获取项圈列表", notes = "获取项圈列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "startitem", value = "startitem", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "pagesize", value = "pagesize", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "level", value = "地区等级", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "districtcode", value = "行政编码", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="getneclist",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetNeckletList(@RequestParam(value = "startitem") int startitem,@RequestParam(value = "pagesize") int pagesize,@RequestParam(value = "level",required = true)String level,@RequestParam(value = "districtcode",required = true)String districtcode, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+
+            switch (level){
+                case "province":
+                    districtcode = districtcode.substring(0,2);
+                    break;
+                case "city":
+                    districtcode = districtcode.substring(0,4);
+                    break;
+                case "county":
+                    districtcode = districtcode.substring(0,6);
+                    break;
+                case "village":
+                    districtcode = districtcode.substring(0,9);
+                    break;
+            }
+            Map<String, Object> map = neckletService.getNeckletList(districtcode==null?"":districtcode,startitem,pagesize);
+            r.setCode(200);
+            r.setMsg("获取项圈列表信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取项圈列表信息成功");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
 }
 

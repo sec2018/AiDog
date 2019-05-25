@@ -14,4 +14,6 @@ public interface NeckletService {
     boolean bindNecklet(String necid, Integer dogid);
 
     Map<String, Object> getHamletOwnerNecList(String hamletcode,Integer ownerid);
+
+    Map<String, Object> getNeckletList(String districtcode, int startPage, int pageSize);
 }

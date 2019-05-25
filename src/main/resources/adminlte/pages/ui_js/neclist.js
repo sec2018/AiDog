@@ -126,7 +126,7 @@ $(function () {
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
-            url:  "/aidog/api/getdoglist",
+            url:  "/aidog/api/getneclist",
             type: "POST",
             data:  senddata,
             beforeSend: function (request) {
@@ -138,16 +138,19 @@ $(function () {
                     return;
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
-                        if(data.data.data[i].necId == "-1"){
-                            data.data.data[i].necId = "测试";
-                        }
-                        data.data.data[i].status = "正常";
-                        data.data.data[i].firstdosingtime = "2019-04-20 09:00:00";
-                        data.data.data[i].nextdosingtime = "2019-05-20 09:00:00";
-                        data.data.data[i].leftnum = 11;
-                        data.data.data[i].power = "3.6";
-                        data.data.data[i].temp = "21"
-                        data.data.data[i].pillcode = "gov-23124";
+                        // if(data.data.data[i].necId == "-1"){
+                        //     data.data.data[i].necId = "测试";
+                        // }
+                        // data.data.data[i].dosingstatus = "正常";
+                        // data.data.data[i].firstdosingtime = "2019-04-20 09:00:00";
+                        // data.data.data[i].nextdosingtime = "2019-05-20 09:00:00";
+                        // data.data.data[i].leftnum = 11;
+                        // data.data.data[i].power = "3.6";
+                        // data.data.data[i].temperature = "21"
+                        // data.data.data[i].pillcode = "gov-23124";
+                        // data.data.data[i].confstatus = "硬件信息接收中";
+                        data.data.data[i].firstDosingTime = timetrans(data.data.data[i].firstDosingTime);
+                        data.data.data[i].nextDosingTime = timetrans(data.data.data[i].nextDosingTime);
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -202,12 +205,13 @@ $(function () {
                             },
                             { "data": "necId","width":"60px" },
                             { "data": "pillcode","width":"60px"  },
-                            { "data": "status","width":"50px"  },
-                            { "data": "firstdosingtime","width":"120px"  },
-                            { "data": "nextdosingtime","width":"120px"  },
-                            { "data": "leftnum","width":"70px"},
-                            { "data": "power","width":"60px" },
-                            { "data": "temp","width":"60px" }
+                            { "data": "dosingstatus","width":"50px"  },
+                            { "data": "firstDosingTime","width":"115px"  },
+                            { "data": "nextDosingTime","width":"115px"  },
+                            { "data": "leftnum","width":"50px"},
+                            { "data": "power","width":"40px" },
+                            { "data": "temperature","width":"45px" },
+                            { "data": "confstatus","width":"80px" }
                         ],
                         buttons: [
                             'pageLength',
@@ -274,7 +278,7 @@ $(function () {
     });
 
     function format ( index ) {
-        return '主人姓名: '+viewdata[index].ownerName+'';
+        return '';
     }
 
     function timetrans(date){
@@ -282,7 +286,7 @@ $(function () {
         var date = new Date(date);
         var Y = date.getFullYear() + '-';
         var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
+        var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
         var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
         var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
         var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
