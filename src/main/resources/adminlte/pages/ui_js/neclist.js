@@ -149,8 +149,16 @@ $(function () {
                         // data.data.data[i].temperature = "21"
                         // data.data.data[i].pillcode = "gov-23124";
                         // data.data.data[i].confstatus = "硬件信息接收中";
-                        data.data.data[i].firstDosingTime = timetrans(data.data.data[i].firstDosingTime);
-                        data.data.data[i].nextDosingTime = timetrans(data.data.data[i].nextDosingTime);
+                        if(data.data.data[i].firstDosingTime!=null){
+                            data.data.data[i].firstDosingTime = timetrans(data.data.data[i].firstDosingTime);
+                        }else{
+                            data.data.data[i].firstDosingTime = "无";
+                        }
+                        if(data.data.data[i].nextDosingTime!=null){
+                            data.data.data[i].nextDosingTime = timetrans(data.data.data[i].nextDosingTime);
+                        }else{
+                            data.data.data[i].nextDosingTime = "无";
+                        }
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -205,13 +213,13 @@ $(function () {
                             },
                             { "data": "necId","width":"60px" },
                             { "data": "pillcode","width":"60px"  },
-                            { "data": "dosingstatus","width":"50px"  },
+                            { "data": "dosingstatus","width":"100px"  },
                             { "data": "firstDosingTime","width":"115px"  },
                             { "data": "nextDosingTime","width":"115px"  },
-                            { "data": "leftnum","width":"50px"},
-                            { "data": "power","width":"40px" },
-                            { "data": "temperature","width":"45px" },
-                            { "data": "confstatus","width":"80px" }
+                            { "data": "leftnum","width":"60px"},
+                            { "data": "power","width":"50px" },
+                            { "data": "temperature","width":"55px" },
+                            { "data": "confstatus","width":"100px" }
                         ],
                         buttons: [
                             'pageLength',

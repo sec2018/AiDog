@@ -114,11 +114,90 @@ public class NeckletServiceImpl implements NeckletService{
             neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");
             neckletView.setTemperature(SysLaytimelist.get(i).getTemperature()==null?"未反馈":SysLaytimelist.get(i).getTemperature()+"");
             neckletView.setPillcode("PL2306");
-            neckletView.setDosingstatus(changestatus(sysDeviceconflist.get(i).getStatus()));
+            String devicestatus = changestatus(sysDeviceconflist.get(i).getStatus());   //投药状态加轮询状态
+            String dosingstatus = devicestatus.substring(0,12);
+            neckletView.setDosingstatus(dosingstatus.substring(0,4)+"-"+dosingstatus.substring(4,8)+"-"+dosingstatus.substring(8,12));
             neckletView.setConfstatus("正常");
-            neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
-            neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
-            neckletView.setLeftnum(11);
+            if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("1")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
+                neckletView.setConfstatus("硬件接收信息中");
+            }else if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("0")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
+                neckletView.setConfstatus("硬件已完成配置");
+            }
+            int countnum = 12;
+            for(int j = 11;j >=0;j--){
+                if(dosingstatus.charAt(j) == '0'){
+                    countnum--;
+                }else{
+                    break;
+                }
+            }
+            switch(countnum){
+                case 12:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwelve());
+                    neckletView.setNextDosingTime(null);
+                    neckletView.setLeftnum(0);
+                    break;
+                case 11:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEleven());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwelve());
+                    neckletView.setLeftnum(1);
+                    break;
+                case 10:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTen());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEleven());
+                    neckletView.setLeftnum(2);
+                    break;
+                case 9:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getNine());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTen());
+                    neckletView.setLeftnum(3);
+                    break;
+                case 8:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEight());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getNine());
+                    neckletView.setLeftnum(4);
+                    break;
+                case 7:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSeven());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEight());
+                    neckletView.setLeftnum(5);
+                    break;
+                case 6:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSix());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSeven());
+                    neckletView.setLeftnum(6);
+                    break;
+                case 5:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFive());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSix());
+                    neckletView.setLeftnum(7);
+                    break;
+                case 4:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFour());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFive());
+                    neckletView.setLeftnum(8);
+                    break;
+                case 3:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getThree());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFour());
+                    neckletView.setLeftnum(9);
+                    break;
+                case 2:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwo());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getThree());
+                    neckletView.setLeftnum(10);
+                    break;
+                case 1:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
+                    neckletView.setLeftnum(11);
+                    break;
+                case 0:
+                    neckletView.setFirstDosingTime(null);
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getOne());
+                    neckletView.setLeftnum(12);
+                    break;
+            }
             neckletViewList.add(neckletView);
         }
         Map<String, Object> map = new HashMap<String,Object>();
@@ -131,17 +210,22 @@ public class NeckletServiceImpl implements NeckletService{
 
 
     public String changestatus(Integer int_status){
-        int_status = 23;
-        String result = Integer.toBinaryString(int_status);
-
-        String status = int_status.toString(2)+"";
-//        status = status.split("").reverse().join("");
-//        while(status.length<12){
-//            status = status+"0";
-//        }
-        status = status.substring(0,4)+"-"+status.substring(4,8)+"-"+status.substring(8,12);
+        String status = Integer.toBinaryString(int_status);
+        byte[] bytes = status.getBytes();
+        //倒置
+        for (int l = 0, h = status.length() - 1; l < h; l++, h--) {
+            // Swap values at l and h
+            byte temp = bytes[l];
+            bytes[l] = bytes[h];
+            bytes[h] = temp;
+        }
+        status = new String(bytes);
+        while(status.length()<16){
+            status = status+"0";
+        }
+//        status = status.substring(0,4)+"-"+status.substring(4,8)+"-"+status.substring(8,12)+"-"+status.substring(12,16);
+//        System.out.println(status);
         return status;
     }
-
 
 }
