@@ -7,6 +7,7 @@
       <arg column="realtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="nec_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="power" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="temperature" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lng" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="lat" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="nec_status" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, realtime, nec_id, power, lng, lat, nec_status
+    id, realtime, nec_id, power, temperature, lng, lat, nec_status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sec.aidog.model.LastnecareabackExample" >
     select
@@ -105,11 +106,11 @@
   </delete>
   <insert id="insert" parameterType="com.sec.aidog.pojo.Lastnecareaback" >
     insert into lastnecareaback (id, realtime, nec_id, 
-      power, lng, lat, nec_status
-      )
+      power, temperature, lng, 
+      lat, nec_status)
     values (#{id,jdbcType=INTEGER}, #{realtime,jdbcType=TIMESTAMP}, #{necId,jdbcType=VARCHAR}, 
-      #{power,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{necStatus,jdbcType=VARCHAR}
-      )
+      #{power,jdbcType=VARCHAR}, #{temperature,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, 
+      #{lat,jdbcType=VARCHAR}, #{necStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sec.aidog.pojo.Lastnecareaback" >
     insert into lastnecareaback
@@ -125,6 +126,9 @@
       </if>
       <if test="power != null" >
         power,
+      </if>
+      <if test="temperature != null" >
+        temperature,
       </if>
       <if test="lng != null" >
         lng,
@@ -148,6 +152,9 @@
       </if>
       <if test="power != null" >
         #{power,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=VARCHAR},
       </if>
       <if test="lng != null" >
         #{lng,jdbcType=VARCHAR},
@@ -181,6 +188,9 @@
       <if test="record.power != null" >
         power = #{record.power,jdbcType=VARCHAR},
       </if>
+      <if test="record.temperature != null" >
+        temperature = #{record.temperature,jdbcType=VARCHAR},
+      </if>
       <if test="record.lng != null" >
         lng = #{record.lng,jdbcType=VARCHAR},
       </if>
@@ -201,6 +211,7 @@
       realtime = #{record.realtime,jdbcType=TIMESTAMP},
       nec_id = #{record.necId,jdbcType=VARCHAR},
       power = #{record.power,jdbcType=VARCHAR},
+      temperature = #{record.temperature,jdbcType=VARCHAR},
       lng = #{record.lng,jdbcType=VARCHAR},
       lat = #{record.lat,jdbcType=VARCHAR},
       nec_status = #{record.necStatus,jdbcType=VARCHAR}
@@ -220,6 +231,9 @@
       <if test="power != null" >
         power = #{power,jdbcType=VARCHAR},
       </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=VARCHAR},
+      </if>
       <if test="lng != null" >
         lng = #{lng,jdbcType=VARCHAR},
       </if>
@@ -237,6 +251,7 @@
     set realtime = #{realtime,jdbcType=TIMESTAMP},
       nec_id = #{necId,jdbcType=VARCHAR},
       power = #{power,jdbcType=VARCHAR},
+      temperature = #{temperature,jdbcType=VARCHAR},
       lng = #{lng,jdbcType=VARCHAR},
       lat = #{lat,jdbcType=VARCHAR},
       nec_status = #{necStatus,jdbcType=VARCHAR}

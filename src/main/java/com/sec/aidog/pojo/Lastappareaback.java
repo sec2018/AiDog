@@ -11,17 +11,20 @@ public class Lastappareaback {
 
     private String power;
 
+    private String temperature;
+
     private String lng;
 
     private String lat;
 
     private String appStatus;
 
-    public Lastappareaback(Integer id, Date realtime, String appId, String power, String lng, String lat, String appStatus) {
+    public Lastappareaback(Integer id, Date realtime, String appId, String power, String temperature, String lng, String lat, String appStatus) {
         this.id = id;
         this.realtime = realtime;
         this.appId = appId;
         this.power = power;
+        this.temperature = temperature;
         this.lng = lng;
         this.lat = lat;
         this.appStatus = appStatus;
@@ -61,6 +64,14 @@ public class Lastappareaback {
 
     public void setPower(String power) {
         this.power = power == null ? null : power.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
     }
 
     public String getLng() {

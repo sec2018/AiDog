@@ -365,6 +365,76 @@ public class LastnecareabackExample {
             return (Criteria) this;
         }
 
+        public Criteria andTemperatureIsNull() {
+            addCriterion("temperature is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureIsNotNull() {
+            addCriterion("temperature is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureEqualTo(String value) {
+            addCriterion("temperature =", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureNotEqualTo(String value) {
+            addCriterion("temperature <>", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureGreaterThan(String value) {
+            addCriterion("temperature >", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureGreaterThanOrEqualTo(String value) {
+            addCriterion("temperature >=", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureLessThan(String value) {
+            addCriterion("temperature <", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureLessThanOrEqualTo(String value) {
+            addCriterion("temperature <=", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureLike(String value) {
+            addCriterion("temperature like", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureNotLike(String value) {
+            addCriterion("temperature not like", value, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureIn(List<String> values) {
+            addCriterion("temperature in", values, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureNotIn(List<String> values) {
+            addCriterion("temperature not in", values, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureBetween(String value1, String value2) {
+            addCriterion("temperature between", value1, value2, "temperature");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemperatureNotBetween(String value1, String value2) {
+            addCriterion("temperature not between", value1, value2, "temperature");
+            return (Criteria) this;
+        }
+
         public Criteria andLngIsNull() {
             addCriterion("lng is null");
             return (Criteria) this;

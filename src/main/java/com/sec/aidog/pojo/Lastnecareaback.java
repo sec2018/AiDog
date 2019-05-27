@@ -11,17 +11,20 @@ public class Lastnecareaback {
 
     private String power;
 
+    private String temperature;
+
     private String lng;
 
     private String lat;
 
     private String necStatus;
 
-    public Lastnecareaback(Integer id, Date realtime, String necId, String power, String lng, String lat, String necStatus) {
+    public Lastnecareaback(Integer id, Date realtime, String necId, String power, String temperature, String lng, String lat, String necStatus) {
         this.id = id;
         this.realtime = realtime;
         this.necId = necId;
         this.power = power;
+        this.temperature = temperature;
         this.lng = lng;
         this.lat = lat;
         this.necStatus = necStatus;
@@ -61,6 +64,14 @@ public class Lastnecareaback {
 
     public void setPower(String power) {
         this.power = power == null ? null : power.trim();
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature == null ? null : temperature.trim();
     }
 
     public String getLng() {

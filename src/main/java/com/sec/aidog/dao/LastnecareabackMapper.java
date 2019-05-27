@@ -34,5 +34,5 @@ public interface LastnecareabackMapper {
     int updateByPrimaryKey(Lastnecareaback record);
 
     @Select("select * from lastnecareaback where nec_id = #{neckletid}")
-    Lastnecareaback getLastnecareaback(String neckletid);
+    com.sec.aidog.pojo.Lastnecareaback getLastnecareaback(String neckletid);
 }
