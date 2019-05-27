@@ -70,8 +70,13 @@
         <!-- /.social-auth-links -->
 
         
-        <div><button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button></div>
-        <div class="text-center mt10"><a href="#registerDiv" data-toggle="modal" id="btn_register"  style="cursor:pointer">注册新会员&nbsp;&gt;&gt;</a></div>
+        <div>
+            <button id="btnsubmit" type="button" class="btn btn-primary btn-block btn-flat">登录</button>
+        </div>
+        <div class="text-center mt10">
+            <a class="btn-glow primary login" id="btn_visitor" style="margin-right: 10px;cursor:pointer">游客</a>
+            <a href="#registerDiv" data-toggle="modal" id="btn_register"  style="cursor:pointer">注册新会员&nbsp;&gt;&gt;</a>
+        </div>
 
     </div>
     <!-- /.login-box-body -->
@@ -254,6 +259,9 @@
             });
         });
 
+        $("#btn_visitor").click(function () {
+            window.location.href = timestamp("guest.html");
+        });
 
         $('#modalselect_adminlevel').on('change', function () {
             var selectText = $(this).find('option:selected').text();

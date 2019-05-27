@@ -50,6 +50,7 @@ public class AidogApplication extends SpringBootServletInitializer {
 
 	@PostConstruct
 	private void init(){
+
 		Map<String,Object> data = new HashMap<String,Object>();
 		try {
 			List<Map<String, String>> map1 = userService.GetAllCities();

@@ -114,7 +114,7 @@ public class NeckletServiceImpl implements NeckletService{
             neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");
             neckletView.setTemperature(SysLaytimelist.get(i).getTemperature()==null?"未反馈":SysLaytimelist.get(i).getTemperature()+"");
             neckletView.setPillcode("PL2306");
-            neckletView.setDosingstatus(sysDeviceconflist.get(i).getStatus()+"");
+            neckletView.setDosingstatus(changestatus(sysDeviceconflist.get(i).getStatus()));
             neckletView.setConfstatus("正常");
             neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
             neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
@@ -128,4 +128,20 @@ public class NeckletServiceImpl implements NeckletService{
         map.put("totalNum", page.getTotal());
         return map;
     }
+
+
+    public String changestatus(Integer int_status){
+        int_status = 23;
+        String result = Integer.toBinaryString(int_status);
+
+        String status = int_status.toString(2)+"";
+//        status = status.split("").reverse().join("");
+//        while(status.length<12){
+//            status = status+"0";
+//        }
+        status = status.substring(0,4)+"-"+status.substring(4,8)+"-"+status.substring(8,12);
+        return status;
+    }
+
+
 }
