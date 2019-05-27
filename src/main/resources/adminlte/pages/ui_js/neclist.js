@@ -219,7 +219,20 @@ $(function () {
                             { "data": "leftnum","width":"60px"},
                             { "data": "power","width":"50px" },
                             { "data": "temperature","width":"55px" },
-                            { "data": "confstatus","width":"100px" }
+                            { "data": "confstatus","width":"100px"}
+                        ],
+                        "columnDefs": [
+                            {
+                                "targets": 9,
+                                "createdCell": function (td, cellData, rowData, row, col) {
+                                    if (cellData == '硬件接收信息中') {
+                                        $(td).css('color', 'red')
+                                    }
+                                    if (cellData == '硬件已完成配置') {
+                                        $(td).css('color', 'green')
+                                    }
+                                }
+                            }
                         ],
                         buttons: [
                             'pageLength',

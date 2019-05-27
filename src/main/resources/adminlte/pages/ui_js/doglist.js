@@ -23,6 +23,14 @@ $(function () {
     var level = "";
     $("#select_province").on('change', function () {
         districtcode = $(this).find('option:selected').val();
+        // if(districtcode == "0"){
+        //     $("#select_city").attr("disabled","disabled");
+        //     $("#select_county").attr("disabled","disabled");
+        //     $("#select_village").attr("disabled","disabled");
+        //     $("#select_hamlet").attr("disabled","disabled");
+        // }else{
+        //
+        // }
         level = "province";
         var selectvalue = $(this).find('option:selected').val();
         selectvalue = selectvalue.substring(0,2);
@@ -265,7 +273,7 @@ $(function () {
                             { "data": "ownerName","width":"60px" },
                             { "data": "ownerIdentity","width":"120px"  },
                             { "data": "dogName","width":"60px"  },
-                            { "data": "dogGovcode","width":"80px"  },
+                            { "data": "dogGovcode","width":"90px"  },
                             { "data": "necId","width":"60px"},
                             { "data": "appId","width":"70px" },
                             { "data": "managerName","width":"70px" },
