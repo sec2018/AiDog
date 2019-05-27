@@ -2,10 +2,7 @@ package com.sec.aidog.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sec.aidog.dao.DogMapper;
-import com.sec.aidog.dao.LastnecdosingMapper;
-import com.sec.aidog.dao.NecconfigMapper;
-import com.sec.aidog.dao.NeckletMapper;
+import com.sec.aidog.dao.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.NeckletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,9 @@ public class NeckletServiceImpl implements NeckletService{
 
     @Autowired
     private LastnecdosingMapper lastnecdosingMapper;
+
+    @Autowired
+    private LastnecareabackMapper lastnecareabackMapper;
 
     @Override
     public boolean batchNecRegister(List<Necklet> neclist) {
@@ -64,6 +64,10 @@ public class NeckletServiceImpl implements NeckletService{
                 lastnecdosing.setRealtime(new Date());
                 lastnecdosing.setDistrictcode(dog.getDistrictcode());
                 boolean flag4 = lastnecdosingMapper.insert(lastnecdosing)!=0?true:false;
+                Lastnecareaback lastnecareaback = new Lastnecareaback();
+                lastnecareaback.setNecId(necid);
+                lastnecareaback.setRealtime(new Date());
+                boolean flag5 = lastnecareabackMapper.insert(lastnecareaback)!=0?true:false;
                 if(flag1 && flag2 && flag3 && flag4){
                     return true;
                 }else{
