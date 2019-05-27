@@ -152,7 +152,7 @@ $(function () {
                     var dt = $('#datatable').DataTable({
                         data: data.data.data,
                         "jQueryUI": true,
-                        'paging'      : true,
+                        'paging': true,
                         lengthMenu: [　//显示几条数据设置
                             [10, 20,30, 50,-1],
                             ['10 条', '20 条','30条', '50 条','全部']
@@ -162,7 +162,7 @@ $(function () {
                         "pageLength": 10, //每行显示记录数
                         'info'        : true,
                         'bAutoWidth'  : false,
-                        "responsive": false,
+                        "responsive": true,
                         //允许重建
                         "destroy": true,
                         "scrollX":true,
@@ -271,7 +271,6 @@ $(function () {
                             $('#'+id+' td.details-control').trigger( 'click' );
                         } );
                     });
-
                 }
             }
         })
