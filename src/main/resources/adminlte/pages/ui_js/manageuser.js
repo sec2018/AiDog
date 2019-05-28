@@ -139,7 +139,6 @@ $(function () {
                         $('#'+id+' td.details-control').trigger( 'click' );
                     } );
                 });
-
             }
         }
     })

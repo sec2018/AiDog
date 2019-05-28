@@ -198,10 +198,10 @@ $(function () {
                             { "data": "countnum","width":"50px" },
                             { "data": "districtname","width":"130px"  },
                             { "data": "managemethod","width":"70px"  },
-                            { "data": "manurenum"},
-                            { "data": "manuretestnum"},
-                            { "data": "manurebadnum"},
-                            { "data": "manurebadper"}
+                            { "data": "manurenum","width":"120px" },
+                            { "data": "manuretestnum","width":"120px" },
+                            { "data": "manurebadnum","width":"130px" },
+                            { "data": "manurebadper","width":"110px" }
                         ],
                         buttons: [
                             'pageLength',
