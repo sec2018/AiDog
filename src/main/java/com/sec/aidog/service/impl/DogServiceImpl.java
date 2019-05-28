@@ -162,10 +162,10 @@ public class DogServiceImpl implements DogService{
                         dogSta.setNecdognumper("0");
                         dogSta.setAppdognumper("0");
                     }else{
-//                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
+                        DecimalFormat df = new DecimalFormat("0.0000");//保留4位小数
 //                        String s = df.format(num);
-                        dogSta.setNecdognumper((neckdognumtotal/(sdlist.size()*1.0000))*100+"%");
-                        dogSta.setAppdognumper((feedernumtotal/(sdlist.size()*1.0000))*100+"%");
+                        dogSta.setNecdognumper(df.format((neckdognumtotal/(sdlist.size()*1.0000))*100)+"%");
+                        dogSta.setAppdognumper(df.format((feedernumtotal/(sdlist.size()*1.0000))*100)+"%");
                     }
                     dogstalist.add(dogSta);
                 }
