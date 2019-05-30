@@ -315,6 +315,7 @@ public class SysLayconfigApi {
 			boolean flag2  = false;
 			if(flag) {
 				String command02 = Analyse.Command_02_Send(layconfig);
+				redisService.remove("time_"+necid);
 				flag2  = redisService.setpersist("time_"+necid, command02);
 			}
 			if(flag2) {
@@ -342,6 +343,11 @@ public class SysLayconfigApi {
 					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));
 					sysDeviceconf.setUpdatetime(new Date());
 					flag3 = sysDeviceconfMapper.insert(sysDeviceconf)==1?true:false;
+				}
+				if(flag3) {
+					String command03 = Analyse.Command_03_Send(sysDeviceconf);
+					redisService.remove("device_"+necid);
+					redisService.setpersist("device_"+necid, command03);
 				}
 				boolean flag4 = false;
 				Necconfig necconfig = necconfigMapper.getNecconfig(necid);
@@ -480,9 +486,11 @@ public class SysLayconfigApi {
         	boolean flag3 = false;
         	if(flag01 && flag02) {
         		String command03 = Analyse.Command_03_Send(sysDeviceconf);
+				redisService.remove("device_"+mid);
         		flag2  = redisService.setpersist("device_"+mid, command03);
         		
         		String command02 = Analyse.Command_02_Send(layconfig);
+				redisService.remove("time_"+mid);
         		flag3  = redisService.setpersist("time_"+mid, command02);
         	}
         	if(flag2 && flag3) {

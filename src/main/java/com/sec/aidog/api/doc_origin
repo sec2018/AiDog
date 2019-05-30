@@ -37,7 +37,7 @@ public class Analyse {
         if(hexstr.length()!=64){
             return null;
         }
-        String[] rescommand_10 = new String[13];
+        String[] rescommand_10 = new String[11];
         if(hexstr.substring(0,2).equals("3A") && hexstr.substring(60,64).equals("0D0A")){
             byte[] res = ScheduleCheck.hexStringToBytes(hexstr);
             //10命令
@@ -49,11 +49,6 @@ public class Analyse {
             for(int i=4,k=0;i>0;i--,k++){
                 v[k]=res[i];
             }
-//            int sta = res[1] + res[2]*256;
-//            int sta1 = res[1] + res[2]*16;
-//            int sta2 = res[1] + (res[2]&0x0F)*256;   //0x0F 屏蔽4位   0x00屏蔽8位
-//            int sta3 = res[2]>>8;                    //右移8位
-//            int sta4 = res[2]&0x0F;
             int res2 = ScheduleCheck.byteArrayToInt(v);
             System.out.println("设备地址码： "+res2);
             rescommand_10[0] = res2+"";
@@ -133,46 +128,25 @@ public class Analyse {
             String res57 = res57_lngdegree+"."+res57_latcent+res57_latsecond;
             System.out.println("经度： "+res57);
             rescommand_10[8] = res57;
-            //           //投药寄存器状态  2个字节  小端模式   (第25，26个字节)
-//            v[0] = 0;
-//            v[1] = 0;
-//            for(int i=25,k=2;i>23;i--,k++){
-//                v[k]=res[i];
-//            }
-//            int res58 = ScheduleCheck.byteArrayToInt(v);
-//            System.out.println("投药寄存器状态： "+res58);
-//            rescommand_10[9] = res58+"";
-
-            //轮询次数  投药寄存器状态  2个字节  小端模式   (第25，26个字节)
-            //            int sta2 = res[1] + (res[2]&0x0F)*256;   //0x0F 屏蔽4位   0x00屏蔽8位
-            //轮询次数  右移4位
-            int res581 = res[25] >> 4;
-            //投药寄存器状态
-            int res582 = res[24] + (res[25]&0x0F)*256;
-            System.out.println("轮询次数： "+res581);
-            rescommand_10[9] = res581+"";
-            System.out.println("投药寄存器状态： "+res582);
-            rescommand_10[10] = res582+"";
+            //投药寄存器状态  2个字节  小端模式   (第25，26个字节)
+            v[0] = 0;
+            v[1] = 0;
+            for(int i=25,k=2;i>23;i--,k++){
+                v[k]=res[i];
+            }
+            int res58 = ScheduleCheck.byteArrayToInt(v);
+            System.out.println("投药寄存器状态： "+res58);
+            rescommand_10[9] = res58+"";
             //gsm信号强度 2个字节  小端模式   (第27，28个字节)
-//            v[0] = 0;
-//            v[1] = 0;
-//            for(int i=27,k=2;i>25;i--,k++){
-//                v[k]=res[i];
-//            }
-//            int res59 = ScheduleCheck.byteArrayToInt(v);
-//            System.out.println("gsm信号强度： "+res59);
-//            rescommand_10[10] = res59+"";
-            //gsm信号强度 1个字节    (第26个字节)
-            v[3] = res[26];
-            int res591 = ScheduleCheck.byteArrayToInt(v);
-            System.out.println("gsm信号强度： "+res591);
-            rescommand_10[11] = res591+"";
+            v[0] = 0;
+            v[1] = 0;
+            for(int i=27,k=2;i>25;i--,k++){
+                v[k]=res[i];
+            }
+            int res59 = ScheduleCheck.byteArrayToInt(v);
+            System.out.println("gsm信号强度： "+res59);
+            rescommand_10[10] = res59+"";
 
-            //投药编号  1个字节      (第27个字节)
-            v[3] = res[27];
-            int res592 = ScheduleCheck.byteArrayToInt(v);
-            System.out.println("投药编号： "+res592);
-            rescommand_10[12] = res592+"";
 
 
             //endregion
@@ -203,7 +177,7 @@ public class Analyse {
             //设置高位在前
             Mid = Integer.reverseBytes(Mid);
             v = ScheduleCheck.intToByteArray(Mid);
-            return "3A"+ ScheduleCheck.bytesToHexString(v).toUpperCase()+"10"+"0000"+"0D0A";
+            return "3A"+ScheduleCheck.bytesToHexString(v).toUpperCase()+"10"+"0000"+"0D0A";
         }
         return "";
     }
@@ -304,9 +278,6 @@ public class Analyse {
         //服务器IP地址
 //        String ip = "122.112.252.45";
         String ip = sysDeviceconf.getIp();
-        if(ip==null){
-            ip = "0.0.0.0";
-        }
         String[] iparr = ip.split("\\.");
         String ipres = "";
         for(int i=0;i<=3;i++){
@@ -317,76 +288,52 @@ public class Analyse {
         //端口号
 //        String port = "59999";
 //        int Port = Integer.parseInt(port);
-        int Port = 0;
-        if(sysDeviceconf.getPort() != null){
-            Port = sysDeviceconf.getPort();
-        }
+        int Port = sysDeviceconf.getPort();
         Port = Integer.reverseBytes(Port);
         v = ScheduleCheck.intToByteArray(Port);
         String portres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,4);
         //投药信息上传周期
 //        int infoupdatecycle = 45;
-        int infoupdatecycle = 0;
-        if(sysDeviceconf.getInfoupdatecycle() == null){
-            infoupdatecycle = sysDeviceconf.getInfoupdatecycle();
-        }
+        int infoupdatecycle = sysDeviceconf.getInfoupdatecycle();
         infoupdatecycle = Integer.reverseBytes(infoupdatecycle);
         v = ScheduleCheck.intToByteArray(infoupdatecycle);
         String infoupdatecycleres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,4);
         //心跳周期
 //        int tickcycle = 10000;
-        int tickcycle = 0;
-        if(sysDeviceconf.getTickcycle() != null){
-            tickcycle = sysDeviceconf.getTickcycle();
-        }
+        int tickcycle = sysDeviceconf.getTickcycle();
         tickcycle = Integer.reverseBytes(tickcycle);
         v = ScheduleCheck.intToByteArray(tickcycle);
         String tickcycleres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,4);
         //LED使能
 //        int ledenable = 1;
-        int ledenable = 0;
-        if(sysDeviceconf.getLedenable() != null){
-            ledenable = sysDeviceconf.getLedenable();
-        }
+        int ledenable = sysDeviceconf.getLedenable();
         ledenable = Integer.reverseBytes(ledenable);
         v = ScheduleCheck.intToByteArray(ledenable);
         String ledenableres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,2);
         //临时投药标志
 //        int tempflag = 1;
-        int tempflag = 0;
-        if(sysDeviceconf.getTemporaryflag() != null){
-            tempflag = sysDeviceconf.getTemporaryflag();
-        }
+        int tempflag = sysDeviceconf.getTemporaryflag();
         tempflag = Integer.reverseBytes(tempflag);
         v = ScheduleCheck.intToByteArray(tempflag);
         String tempflagres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,2);
         //临时投药时间
 //        int tempgmt = 1561123123;
-        int tempgmt = 0;
-        if(sysDeviceconf.getTemporarygmt() != null){
-            tempgmt = (int)(sysDeviceconf.getTemporarygmt().getTime()/1000);
-        }
+        int tempgmt = (int)(sysDeviceconf.getTemporarygmt().getTime()/1000);
         tempgmt = Integer.reverseBytes(tempgmt);
         v = ScheduleCheck.intToByteArray(tempgmt);
         String tempgmtres = ScheduleCheck.bytesToHexString(v).toUpperCase();
         //clearErr  清除故障标志位
-        int clearErr = 0;
-        if(sysDeviceconf.getClearerr() != null){
-            clearErr = sysDeviceconf.getClearerr();
-        }
+        int clearErr = sysDeviceconf.getClearerr();
         clearErr = Integer.reverseBytes(clearErr);
         v = ScheduleCheck.intToByteArray(clearErr);
         String clearErrres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,2);
         //恢复出厂设置
-        int factory = 0;
-        if(sysDeviceconf.getFactory() != null){
-            factory = sysDeviceconf.getFactory();
-        }
+        int factory = sysDeviceconf.getFactory();
         factory = Integer.reverseBytes(factory);
         v = ScheduleCheck.intToByteArray(factory);
         String factoryres = ScheduleCheck.bytesToHexString(v).toUpperCase().substring(0,2);
 
-        resp = "3A"+midstr+"03"+"1200"+ipres+portres+infoupdatecycleres+tickcycleres+ledenableres+tempflagres+tempgmtres+clearErrres+factoryres+"0000"+"0D0A";
+        resp = "3A"+midstr+"03"+"1200"+ipres+portres+infoupdatecycleres+tickcycleres+ledenableres+tempflagres+tempgmtres+clearErrres+factoryres+"0000"+"0000"+"0D0A";
         return resp;
     }
 
@@ -619,47 +566,47 @@ public class Analyse {
             v[1] = 0;
             v[2] = 0;
             v[3] = res[16];
-            char res53_1 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_1 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[17];
-            char res53_2 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_2 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[18];
-            char res53_3 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_3 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[19];
-            char res53_4 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_4 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[20];
-            char res53_5 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_5 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[21];
-            char res53_6 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_6 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[22];
-            char res53_7 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_7 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[23];
-            char res53_8 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_8 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[24];
-            char res53_9 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_9 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[25];
-            char res53_10 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_10 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[26];
-            char res53_11 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_11 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[27];
-            char res53_12 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_12 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[28];
-            char res53_13 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_13 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[29];
-            char res53_14 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_14 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[30];
-            char res53_15 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_15 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[31];
-            char res53_16 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_16 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[32];
-            char res53_17 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_17 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[33];
-            char res53_18 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_18 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[34];
-            char res53_19 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_19 = (char)ScheduleCheck.byteArrayToInt(v);
             v[3] = res[35];
-            char res53_20 = (char) ScheduleCheck.byteArrayToInt(v);
+            char res53_20 = (char)ScheduleCheck.byteArrayToInt(v);
             String res53 = ""+res53_1+res53_2+res53_3+res53_4+res53_5+res53_6+res53_7+res53_8+res53_9+res53_10+res53_11+res53_12+res53_13+res53_14+res53_15+res53_16+res53_17+res53_18+res53_19+res53_20;
-            System.out.println("SIM_CCID: "+res53);
+            System.out.println(res53);
             rescommand_05[4] = res53;
             //CRC16 2个字节  小端模式         (第37，38个字节)
             v[0] = 0;
