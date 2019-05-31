@@ -308,10 +308,17 @@ public class DogApi {
 
                 try {
                     Map<String,Object> map = ownerService.checkOwner(ownername, owneridentity, ownerhamletcode, telphone);
-                    r.setCode(200);
-                    r.setMsg("获取村主人信息成功！");
-                    r.setData(map);
-                    r.setSuccess(true);
+                    if(map == null){
+                        r.setCode(500);
+                        r.setMsg("获取村主人信息失败");
+                        r.setData(map);
+                        r.setSuccess(false);
+                    }else{
+                        r.setCode(200);
+                        r.setMsg("获取村主人信息成功！");
+                        r.setData(map);
+                        r.setSuccess(true);
+                    }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     r.setCode(500);
