@@ -338,6 +338,7 @@ public class SysLayconfigApi {
 				}else{
 					sysDeviceconf = new SysDeviceconf();
 					sysDeviceconf.setMid(necid);
+					sysDeviceconf.setStatus(0);
 					sysDeviceconf.setInfoupdatecycle(areacycle);
 					sysDeviceconf.setUimodifyflag(Byte.valueOf("1"));
 					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));

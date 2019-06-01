@@ -305,7 +305,7 @@ public class Analyse {
 //        String ip = "122.112.252.45";
         String ip = sysDeviceconf.getIp();
         if(ip==null){
-            ip = "0.0.0.0";
+            ip = "122.112.252.45";
         }
         String[] iparr = ip.split("\\.");
         String ipres = "";
@@ -317,7 +317,7 @@ public class Analyse {
         //端口号
 //        String port = "59999";
 //        int Port = Integer.parseInt(port);
-        int Port = 0;
+        int Port = 59999;
         if(sysDeviceconf.getPort() != null){
             Port = sysDeviceconf.getPort();
         }

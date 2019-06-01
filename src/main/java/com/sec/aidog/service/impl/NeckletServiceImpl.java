@@ -112,7 +112,7 @@ public class NeckletServiceImpl implements NeckletService{
         List<SysLayconfig> sysLayconfiglist = neckletMapper.selectViewLayconfig(districtcode);
 
         NeckletView neckletView = null;
-        for(int i=0;i<SysLaytimelist.size();i++){
+        for(int i=0;i<sysDeviceconflist.size();i++){
             neckletView = new NeckletView();
             neckletView.setNecId(SysLaytimelist.get(i).getMid());
             neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");

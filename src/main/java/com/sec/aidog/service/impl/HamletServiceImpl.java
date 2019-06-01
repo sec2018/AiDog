@@ -67,7 +67,7 @@ public class HamletServiceImpl implements HamletService {
                 maptemp.put("neckletid", each.getNecId());
                 maptemp.put("dogname", each.getDogName());
                 Lastnecareaback lr = lastnecareabackMapper.getLastnecareaback(each.getNecId());
-                if(lr!=null) {
+                if(lr!=null && lr.getLng()!=null && lr.getLat()!=null) {
                     maptemp.put("lng", Double.parseDouble(lr.getLng()));
                     maptemp.put("lat", Double.parseDouble(lr.getLat()));
                 }else {

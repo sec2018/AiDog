@@ -214,11 +214,11 @@ $(function () {
                             { "data": "necId","width":"60px" },
                             { "data": "pillcode","width":"60px"  },
                             { "data": "dosingstatus","width":"100px"  },
-                            { "data": "firstDosingTime","width":"115px"  },
-                            { "data": "nextDosingTime","width":"115px"  },
+                            { "data": "firstDosingTime","width":"125px"  },
+                            { "data": "nextDosingTime","width":"125px"  },
                             { "data": "leftnum","width":"60px"},
                             { "data": "power","width":"50px" },
-                            { "data": "temperature","width":"55px" },
+                            { "data": "temperature","width":"80px" },
                             { "data": "confstatus","width":"100px"}
                         ],
                         "columnDefs": [
