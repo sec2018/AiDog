@@ -310,16 +310,16 @@
                 </div>
             </div>
             <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="菜单搜索...">
-                    <span class="input-group-btn">
-                <button type="button" name="search" id="search-btn" class="btn btn-flat" onclick="search_menu()"><i
-                        class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
+            <!--<form action="#" method="get" class="sidebar-form">-->
+                <!--<div class="input-group" >-->
+                    <!--<input type="text" name="q" class="form-control" placeholder="菜单搜索..." onkeydown="search_menu_enter();">-->
+                    <!--<span class="input-group-btn">-->
+                        <!--<button type="button" name="search" id="search-btn" class="btn btn-flat" onclick="search_menu()"><i-->
+                                <!--class="fa fa-search"></i>-->
+                        <!--</button>-->
+                    <!--</span>-->
+                <!--</div>-->
+            <!--</form>-->
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
@@ -764,6 +764,12 @@
     /**
      * 本地搜索菜单
      */
+    function search_menu_enter(){
+        if (event.keyCode==13) {  //回车键的键值为13
+            document.getElementById("search-btn").click(); //调用登录按钮的登录事件
+        }
+    }
+
     function search_menu() {
         //要搜索的值
         var text = $('input[name=q]').val();
