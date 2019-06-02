@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>硬件投药提醒率</title>
+    <title>本级及以下硬件驱虫比</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="../../DataTables/Buttons-1.5.4/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="../../DataTables/Buttons-1.5.4/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="../ui_js/anaremind.js"></script>
+    <script type="text/javascript" src="../ui_js/anadog.js"></script>
     <style type="text/css">
         .table-bordered th,
         .table-bordered td {
@@ -112,7 +112,7 @@
         </div>
         <div class="box-body">
             <div class="col-md-8">
-                <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">获取当前区域硬件投药提醒率列表</button>
+                <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">获取当前区域硬件驱虫比统计列表</button>
             </div>
         </div>
     </div>
@@ -130,14 +130,12 @@
                                 <th></th>
                                 <th>序号</th>
                                 <th>行政名</th>
-                                <th>项圈数量</th>
-                                <th>项圈应提醒次数</th>
-                                <th>项圈投药提醒率</th>
-                                <th>喂饲器数量</th>
-                                <th>喂饲器应提醒次数</th>
-                                <th>喂饲器提醒率</th>
-                                <th>总提醒次数</th>
-                                <th>总提醒率</th>
+                                <th>犬总数量</th>
+                                <th>管理犬数量</th>
+                                <th>项圈管理数量</th>
+                                <th>项圈佩戴比</th>
+                                <th>喂饲器管理数量</th>
+                                <th>喂饲器佩戴比</th>
                             </tr>
                             </thead>
                             <tbody id="tbody">
