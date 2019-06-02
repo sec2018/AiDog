@@ -86,7 +86,7 @@ function GetHamletEcharts(data) {
     function addMarker(point, title, content, dogid) {
         marker = new AMap.Marker({
             //icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            icon: "../../dist/img/necklet_3.ico",
+            icon: "../../dist/img/necklet_1.png",
             //position: [116.41, 39.91]
             position: point,
             //icon: new AMap.Icon({
@@ -120,7 +120,7 @@ function GetHamletEcharts(data) {
     function addNeckletMarker(point, title, content, dogid) {
         marker = new AMap.Marker({
             //icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-            icon: "../../dist/img/necklet_3.ico",
+            icon: "../../dist/img/necklet_1.png",
             //position: [116.41, 39.91]
             position: point,
             //icon: new AMap.Icon({
