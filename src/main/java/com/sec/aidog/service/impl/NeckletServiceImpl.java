@@ -30,6 +30,9 @@ public class NeckletServiceImpl implements NeckletService{
     @Autowired
     private LastnecareabackMapper lastnecareabackMapper;
 
+    @Autowired
+    private GuestInfoDao guestInfoDao;
+
     @Override
     public boolean batchNecRegister(List<Necklet> neclist) {
         boolean isSuccess = neckletMapper.insertBatchNecRegister(neclist)>0?true:false;
@@ -49,7 +52,7 @@ public class NeckletServiceImpl implements NeckletService{
         try{
             Dog dog = dogMapper.selectByPrimaryKey(dogid);
             Necklet necklet = neckletMapper.selectByNecId(necid);
-            if(dog != null && necklet!=null){
+            if(dog != null && necklet!= null){
                 dog.setNecId(necid);
                 boolean flag1 = dogMapper.updateByPrimaryKey(dog)!=0?true:false;
                 necklet.setBindTime(new Date());
@@ -68,6 +71,7 @@ public class NeckletServiceImpl implements NeckletService{
                 lastnecareaback.setNecId(necid);
                 lastnecareaback.setRealtime(new Date());
                 boolean flag5 = lastnecareabackMapper.insert(lastnecareaback)!=0?true:false;
+
                 if(flag1 && flag2 && flag3 && flag4){
                     return true;
                 }else{

@@ -520,7 +520,7 @@ public class DogApi {
     }
 
     //获取牧犬详细信息
-    @ApiOperation(value = "获取牧犬详细信息", notes = "获取牧犬详细信息")
+    @ApiOperation(value = "获取犬只详细信息", notes = "获取犬只详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "dogid", value = "dogid", required = true, dataType = "Integer",paramType = "query"),
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
@@ -536,13 +536,13 @@ public class DogApi {
             //权限控制
             Map<String, Object> map = dogService.getDogInfo(dogid);
             r.setCode(200);
-            r.setMsg("获取牧犬信息成功！");
+            r.setMsg("获取犬只信息成功！");
             r.setData(map);
             r.setSuccess(true);
         } catch (Exception e) {
             r.setCode(500);
             r.setData(e.getClass().getName() + ":" + e.getMessage());
-            r.setMsg("获取牧犬信息失败");
+            r.setMsg("获取犬只信息失败");
             r.setSuccess(false);
             e.printStackTrace();
         }
@@ -550,7 +550,7 @@ public class DogApi {
     }
 
 
-    @ApiOperation(value = "获取未绑定牧犬及项圈列表", notes = "获取未绑定牧犬及项圈列表")
+    @ApiOperation(value = "获取未绑定犬只及项圈列表", notes = "获取未绑定犬只及项圈列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
             @ApiImplicitParam(name = "hamletcode", value = "村行政编码", required = true , dataType = "String",paramType = "query")
@@ -586,7 +586,7 @@ public class DogApi {
 
 
     // excel导入
-    @ApiOperation(value = "从excel中批量注册牧犬及犬主人", notes = "从excel中批量注册牧犬及犬主人")
+    @ApiOperation(value = "从excel中批量注册犬只及犬主人", notes = "从excel中批量注册犬只及犬主人")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
     })
@@ -670,7 +670,7 @@ public class DogApi {
         return ResponseEntity.ok(r);
     }
 
-    //获取牧犬详细信息
+    //获取犬只详细信息
     @ApiOperation(value = "获取犬主详细信息", notes = "获取犬主详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ownerid", value = "dogid", required = true, dataType = "Integer",paramType = "query"),

@@ -14,5 +14,4 @@ public interface GuestInfoDao {
 
     @Select("select * from guestinfo where neckletid = '-1'")
     List<Guestinfo> getGuestFeederInfo();
-
 }
