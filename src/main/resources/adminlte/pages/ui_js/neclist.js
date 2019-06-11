@@ -226,7 +226,7 @@ $(function () {
                                 "targets": 9,
                                 "createdCell": function (td, cellData, rowData, row, col) {
                                     if (cellData == '硬件接收信息中') {
-                                        $(td).css('color', 'red')
+                                        $(td).css('color', 'black')
                                     }
                                     if (cellData == '硬件已完成配置') {
                                         $(td).css('color', 'green')

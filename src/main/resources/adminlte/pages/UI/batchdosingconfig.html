@@ -120,27 +120,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第1次投药时间：</label>
-                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00" readonly="readonly"/>
+                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第2次投药时间：</label>
-                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00" readonly="readonly"/>
+                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第3次投药时间：</label>
-                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00" readonly="readonly"/>
+                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第4次投药时间：</label>
-                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00" readonly="readonly"/>
+                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第5次投药时间：</label>
-                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00" readonly="readonly"/>
+                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第6次投药时间：</label>
-                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00" readonly="readonly"/>
+                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00"/>
                     </div>
                 </form>
             </div>
@@ -154,27 +154,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第7次投药时间：</label>
-                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00" readonly="readonly"/>
+                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00" />
                     </div>
                     <div class="form-group  has-success">
                         <label>第8次投药时间：</label>
-                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00" readonly="readonly"/>
+                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00" />
                     </div>
                     <div class="form-group  has-success">
                         <label>第9次投药时间：</label>
-                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00" readonly="readonly"/>
+                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00" />
                     </div>
                     <div class="form-group  has-success">
                         <label>第10次投药时间：</label>
-                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00" readonly="readonly"/>
+                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00" />
                     </div>
                     <div class="form-group  has-success">
                         <label>第11次投药时间：</label>
-                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00" readonly="readonly"/>
+                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00" />
                     </div>
                     <div class="form-group  has-success">
                         <label>第12次投药时间：</label>
-                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00" readonly="readonly"/>
+                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00" />
                     </div>
                 </form>
             </div>
@@ -469,7 +469,7 @@
             });
 
             $("#a_thirtyday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -509,7 +509,7 @@
             });
 
             $("#a_sixtyday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -549,7 +549,7 @@
             });
 
             $("#a_ninetyday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -589,7 +589,7 @@
             });
 
             $("#a_180day").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -629,7 +629,8 @@
             });
 
             $("#a_setday").click(function () {
-                var date = new Date($("#input_lay").val());
+//                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 $("#input_lay1").val(timetrans(date));
                 $("#input_lay2").val(timetrans(addMouthHandle(date,1)));
                 $("#input_lay3").val(timetrans(addMouthHandle(date,2)));
@@ -794,6 +795,20 @@
             var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
             var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
             return Y+M+D+h+m+s;
+        }
+
+        function fixDate(strTime) {
+            if (!strTime) {
+                return '';
+            }
+            var tempDate = new Date(strTime+':00+0800');
+            if(tempDate=='Invalid Date'){
+                strTime = strTime.replace(/T/g,' ');
+                strTime = strTime.replace(/-/g,'/');
+//                strTime = strTime.replace(/\.\d+/, ' ');
+                tempDate = new Date(strTime+':00+0800');
+            }
+            return tempDate;
         }
     </script>
 </body>

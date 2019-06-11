@@ -77,27 +77,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第1次投药时间：</label>
-                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00" readonly="readonly"/>
+                        <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第2次投药时间：</label>
-                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00" readonly="readonly"/>
+                        <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第3次投药时间：</label>
-                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00" readonly="readonly"/>
+                        <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第4次投药时间：</label>
-                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00" readonly="readonly"/>
+                        <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第5次投药时间：</label>
-                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00" readonly="readonly"/>
+                        <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第6次投药时间：</label>
-                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00" readonly="readonly"/>
+                        <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00"/>
                     </div>
                 </form>
             </div>
@@ -111,27 +111,27 @@
                     <!-- text input -->
                     <div class="form-group  has-success">
                         <label>第7次投药时间：</label>
-                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00" readonly="readonly"/>
+                        <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第8次投药时间：</label>
-                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00" readonly="readonly"/>
+                        <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第9次投药时间：</label>
-                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00" readonly="readonly"/>
+                        <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第10次投药时间：</label>
-                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00" readonly="readonly"/>
+                        <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第11次投药时间：</label>
-                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00" readonly="readonly"/>
+                        <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00"/>
                     </div>
                     <div class="form-group  has-success">
                         <label>第12次投药时间：</label>
-                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00" readonly="readonly"/>
+                        <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00"/>
                     </div>
                 </form>
             </div>
@@ -150,6 +150,48 @@
     </div>
     <script type="text/javascript">
         var necid = "";
+
+        var os = (function() {
+            var UserAgent = navigator.userAgent.toLowerCase();
+            return {
+                isIpad          : /ipad/.test(UserAgent),
+                isIphone        : /iphone os/.test(UserAgent),
+                isAndroid       : /android/.test(UserAgent),
+                isWindowsCe     : /windows ce/.test(UserAgent),
+                isWindowsMobile : /windows mobile/.test(UserAgent),
+                isWin2K         : /windows nt 5.0/.test(UserAgent),
+                isXP            : /windows nt 5.1/.test(UserAgent),
+                isVista         : /windows nt 6.0/.test(UserAgent),
+                isWin7          : /windows nt 6.1/.test(UserAgent),
+                isWin8          : /windows nt 6.2/.test(UserAgent),
+                isWin81         : /windows nt 6.3/.test(UserAgent),
+                isMac           : /mac os/.test(UserAgent)
+            };
+        }());
+
+        var bw = (function() {
+            var UserAgent = navigator.userAgent.toLowerCase();
+            return {
+                isUc      : /ucweb/.test(UserAgent), // UC浏览器
+                isChrome  : /chrome/.test(UserAgent.substr(-33,6)), // Chrome浏览器
+                isFirefox : /firefox/.test(UserAgent), // 火狐浏览器
+                isOpera   : /opera/.test(UserAgent),  // Opera浏览器
+                isSafire  : /safari/.test(UserAgent) && !/chrome/.test(UserAgent), // safire浏览器
+                is360     : /360se/.test(UserAgent), // 360浏览器
+                isBaidu   : /bidubrowser/.test(UserAgent), // 百度浏览器
+                isSougou  : /metasr/.test(UserAgent), // 搜狗浏览器
+                isIE6     : /msie 6.0/.test(UserAgent), // IE6
+                isIE7     : /msie 7.0/.test(UserAgent), // IE7
+                isIE8     : /msie 8.0/.test(UserAgent), // IE8
+                isIE9     : /msie 9.0/.test(UserAgent), // IE9
+                isIE10    : /msie 10.0/.test(UserAgent), // IE10
+                isIE11    : /msie 11.0/.test(UserAgent), // IE11
+                isLB      : /lbbrowser/.test(UserAgent), // 猎豹浏览器
+                isWX      : /micromessenger/.test(UserAgent), // 微信内置浏览器
+                isQQ      : /qqbrowser/.test(UserAgent) // QQ浏览器
+            };
+        }());
+
         $(function () {
             var senddata = {};
             $("#a_search").click(function () {
@@ -257,9 +299,12 @@
                 }
             });
 
-
             $("#a_thirtyday").click(function () {
-                var date = new Date($("#input_lay").val());
+//                var date = new Date($("#input_lay").val());
+//                if(os.isAndroid || os.isIpad || os.isIphone){
+//                    date = new Date($("#input_lay").val());
+//                }
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -299,7 +344,7 @@
             });
 
             $("#a_sixtyday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -339,7 +384,7 @@
             });
 
             $("#a_ninetyday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -379,7 +424,7 @@
             });
 
             $("#a_180day").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 var date1 = new Date(date);
                 var date2 = new Date(date);
                 var date3 = new Date(date);
@@ -419,7 +464,7 @@
             });
 
             $("#a_setday").click(function () {
-                var date = new Date($("#input_lay").val());
+                var date = fixDate($("#input_lay").val());
                 $("#input_lay1").val(timetrans(date));
                 $("#input_lay2").val(timetrans(addMouthHandle(date,1)));
                 $("#input_lay3").val(timetrans(addMouthHandle(date,2)));
@@ -539,6 +584,20 @@
             var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
             var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
             return Y+M+D+h+m+s;
+        }
+
+        function fixDate(strTime) {
+            if (!strTime) {
+                return '';
+            }
+            var tempDate = new Date(strTime+':00+0800');
+            if(tempDate=='Invalid Date'){
+                strTime = strTime.replace(/T/g,' ');
+                strTime = strTime.replace(/-/g,'/');
+//                strTime = strTime.replace(/\.\d+/, ' ');
+                tempDate = new Date(strTime+':00+0800');
+            }
+            return tempDate;
         }
     </script>
 </body>
