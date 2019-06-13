@@ -24,7 +24,7 @@ public class GuestServiceImpl implements GuestService {
         // TODO Auto-generated method stub
         //double lngtemp = 0.15 / Math.Cos(lat * Math.PI / 180);
 
-        double radius = 5; // 半径，单位km
+        double radius = 8; // 半径，单位km
         double degree = radius / 111;
 
         double lngtemp = degree / Math.cos(lat * 0.01745);

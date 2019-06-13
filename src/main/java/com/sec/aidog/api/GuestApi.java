@@ -43,13 +43,13 @@ public class GuestApi {
     @RequestMapping(value="guest/getdog",produces="text/html;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
     public String guestGetDog(@RequestParam(value="lng")Double lng,@RequestParam(value="lat")Double lat) {
-        String json = "";
+        String json = null;
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String ip = request.getRemoteAddr();
 
-        json = redisService.get("guest_"+ip);
+//        json = redisService.get("guest_"+ip);
         if(json == null) {
             Map<String,Object> data = new HashMap<String,Object>();
             List<Map<String,Object>> neckletlist = new ArrayList<Map<String,Object>>();
@@ -71,7 +71,7 @@ public class GuestApi {
             data.put("data1",neckletlist);
             data.put("data2",feederlist);
             json = JSONObject.fromObject(data).toString();
-            redisService.set("guest_"+ip, json);
+//            redisService.set("guest_"+ip, json);
         }
         return json;
     }

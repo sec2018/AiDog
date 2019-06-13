@@ -50,6 +50,7 @@ public class AidogApplication extends SpringBootServletInitializer {
 
 	@PostConstruct
 	private void init(){
+		changestatus(127);
 
 		Map<String,Object> data = new HashMap<String,Object>();
 		try {
@@ -68,5 +69,24 @@ public class AidogApplication extends SpringBootServletInitializer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public String changestatus(Integer int_status){
+		String status = Integer.toBinaryString(int_status);
+		byte[] bytes = status.getBytes();
+		//倒置
+		for (int l = 0, h = status.length() - 1; l < h; l++, h--) {
+			// Swap values at l and h
+			byte temp = bytes[l];
+			bytes[l] = bytes[h];
+			bytes[h] = temp;
+		}
+		status = new String(bytes);
+		while(status.length()<16){
+			status = status+"0";
+		}
+//        status = status.substring(0,4)+"-"+status.substring(4,8)+"-"+status.substring(8,12)+"-"+status.substring(12,16);
+//        System.out.println(status);
+		return status;
 	}
 }

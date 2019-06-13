@@ -63,8 +63,8 @@
 
             <ul id="all_bts">
                 <li><a id="route_bt" class="btn btn-default btn-primary active">到这里去</a></li>
-                <li><a id="owner_bt" class="btn btn-default btn-primary" data-toggle="modal" href="#contact_div">联系犬主人</a></li>
-                <li><a id="manager_bt" class="btn btn-default btn-primary" data-toggle="modal" href="#contact_div">联系犬管理员</a></li>
+                <li><a id="owner_bt" class="btn btn-default btn-primary" data-toggle="modal" href="#contact_div">犬及犬主信息</a></li>
+                <li><a id="manager_bt" class="btn btn-default btn-primary" data-toggle="modal" href="#contact_div">犬管理员信息</a></li>
             </ul>
 
 
@@ -154,7 +154,7 @@
             var selectedDogLng = 0;
             var selectedDogLat = 0;
 
-
+            var selectedDevice = "";
             var selectedDogOwner = "";
             var selectedOwnerPhone = "";
             var selectedDogManger = "";
@@ -341,7 +341,7 @@
 
             //在地图上添加项圈标记
             function addNeckletMarker(point, dogid, owner, ownerphone, manager, managerphone,
-                                      neckletid, dogname, nextmedtimes, healthy) {
+                                      deviceid, dogname, nextmedtimes, healthy) {
                 var healthyflag = "../dist/img/necklet_1.png";
                 if (healthy == 0) {
                     healthyflag = "../dist/img/bugnecklet.gif";
@@ -365,7 +365,7 @@
                     selectedDogLng = e.target.getPosition().lng;
                     selectedDogLat = e.target.getPosition().lat;
 
-
+                    selectedDevice = deviceid;
                     selectedDogOwner = owner;
                     selectedOwnerPhone = ownerphone;
                     selectedDogManger = manager;
@@ -383,7 +383,7 @@
 
             //在地图上添加喂食器标记
             function addFeederMarker(point, dogid, owner, ownerphone, manager, managerphone,
-                                     neckletid, dogname, nextmedtimes) {
+                                     deviceid, dogname, nextmedtimes) {
                 //function addNeckletMarker(point, content) {
                 marker = new AMap.Marker({
 
@@ -392,7 +392,7 @@
                     position: point,
                 });
 
-                var content = "<b>牧犬信息：" + dogid + "</b>";
+                var content = "<b>犬只信息：" + dogid + "</b>";
                 marker.content = content;
                 //marker.on('click', markerClick);
 
@@ -402,6 +402,7 @@
                     selectedDogLng = e.target.getPosition().lng;
                     selectedDogLat = e.target.getPosition().lat;
 
+                    selectedDevice = deviceid;
                     selectedDogOwner = owner;
                     selectedOwnerPhone = ownerphone;
                     selectedDogManger = manager;
@@ -513,7 +514,7 @@
 
 
                         if (all_necklet_dogs_num == 0) {
-                            alert("附近没有发现佩戴项圈的牧犬");
+                            alert("附近没有发现项圈");
                         }
                         if (all_feeder_dogs_num == 0) {
                             alert("附近没有发现喂饲器");
@@ -602,16 +603,16 @@
 
                 //alert(selectedDogOwner);
                 //alert(selectedManagerPhone);
-                document.getElementById("myModalLabel").innerHTML = "联系牧犬主人";
-                document.getElementById("myModelContent").innerHTML = "<h5>牧犬主人：" + selectedDogOwner + "</h5><br><h5>联系方式：<a href=\"tel:" + selectedOwnerPhone + "\">" + selectedOwnerPhone + "</a></h5>";
+                document.getElementById("myModalLabel").innerHTML = "犬及犬主信息";
+                document.getElementById("myModelContent").innerHTML = "<h5>设备编号：" + selectedDevice + "</h5><br><h5>犬只主人：" + selectedDogOwner + "</h5><br><h5>联系方式：<a href=\"tel:" + selectedOwnerPhone + "\">" + selectedOwnerPhone + "</a></h5>";
 
             }
 
 
             function ManagerBTClick() {
 
-                document.getElementById("myModalLabel").innerHTML = "联系牧犬管理员";
-                document.getElementById("myModelContent").innerHTML = "<h5>牧犬管理员：" + selectedDogManger + "</h5><br><h5>联系方式：<a href=\"tel:" + selectedManagerPhone + "\">" + selectedManagerPhone + "</a></h5>";
+                document.getElementById("myModalLabel").innerHTML = "联系犬只管理员";
+                document.getElementById("myModelContent").innerHTML = "<h5>犬只管理员：" + selectedDogManger + "</h5><br><h5>联系方式：<a href=\"tel:" + selectedManagerPhone + "\">" + selectedManagerPhone + "</a></h5>";
 
             }
 
