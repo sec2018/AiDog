@@ -152,6 +152,7 @@ function GetHamletEcharts(data) {
     }
 
     function addFeederMarker(point, title, content, dogid) {
+
         marker = new AMap.Marker({
             //icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
             icon: "../../dist/img/feeder_2.ico",
@@ -186,6 +187,7 @@ function GetHamletEcharts(data) {
     }
 
     function markerOver(e) {
+        this.icon = "../../dist/img/necklet_4_2.png"
         infoWindow.setContent(e.target.content);
         infoWindow.open(map, e.target.getPosition());
     }
