@@ -45,18 +45,29 @@ function objToArray(array) {
     return arr;
 }
 
+function add0(m){return m<10?'0'+m:m }
+
 function ChangeTimeFormat(logintime) {
     //	20170926084552 ---> 2017.09.26 08:45:52
     if(logintime == "--"){
         return logintime;
     }
-    var year = logintime.substring(0, 4);
-    var month = logintime.substring(4, 6);
-    var day = logintime.substring(6, 8);
-    var hour = logintime.substring(8, 10);
-    var min = logintime.substring(10, 12);
-    var sec = logintime.substring(12);
-    return year + "." + month + "." + day + " " + hour + ":" + min + ":" + sec;
+    // var year = logintime.substring(0, 4);
+    // var month = logintime.substring(4, 6);
+    // var day = logintime.substring(6, 8);
+    // var hour = logintime.substring(8, 10);
+    // var min = logintime.substring(10, 12);
+    // var sec = logintime.substring(12);
+    // return year + "." + month + "." + day + " " + hour + ":" + min + ":" + sec;
+
+    var time = new Date(logintime.time);
+    var y = time.getFullYear();
+    var m = time.getMonth()+1;
+    var d = time.getDate();
+    var h = time.getHours();
+    var mm = time.getMinutes();
+    var s = time.getSeconds();
+    return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
 }
 
 var district, map = null;
@@ -279,7 +290,7 @@ function GetHamletEcharts(data) {
             "<tr><th>牧犬名字：</th><th>" + p_feeder_dognames[i] + "</th></tr>" +
             "<tr><th>所属村庄：</th><th>" + harmletname + "</th></tr>" +
             "<tr><th>管理员：</th><th>" + p_feeder_mangers[i] + "</th></tr>" +
-            "<tr><th>下次投药时间：</th><th>" + ChangeTimeFormat(p_feeder_nextmedtimes[i]) + "</th></tr>" +
+            // "<tr><th>下次投药时间：</th><th>" + ChangeTimeFormat(p_feeder_nextmedtimes[i]) + "</th></tr>" +
             "</table></div>";
 
         markers.push(addFeederMarker([p_feeder_Xs[i], p_feeder_Ys[i]], one_title, one_content, n["dogid"]));
@@ -287,4 +298,8 @@ function GetHamletEcharts(data) {
 
     });
     map.setFitView();//地图自适应
+}
+
+function GetDogPage(id) {
+    alert(id);
 }

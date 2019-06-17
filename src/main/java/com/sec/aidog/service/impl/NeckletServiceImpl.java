@@ -139,74 +139,130 @@ public class NeckletServiceImpl implements NeckletService{
                     break;
                 }
             }
+            //同时设置最后一次投药表
+            Lastnecdosing lastnecdosing = lastnecdosingMapper.getLastnecdosing(SysLaytimelist.get(i).getMid());
             switch(countnum){
                 case 12:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwelve());
                     neckletView.setNextDosingTime(null);
                     neckletView.setLeftnum(0);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTwelve());
+                    lastnecdosing.setNextdosingTime(null);
+                    lastnecdosing.setLeftNum(0);
                     break;
                 case 11:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEleven());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwelve());
                     neckletView.setLeftnum(1);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getEleven());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTwelve());
+                    lastnecdosing.setLeftNum(1);
                     break;
                 case 10:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTen());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEleven());
                     neckletView.setLeftnum(2);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTen());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getEleven());
+                    lastnecdosing.setLeftNum(2);
                     break;
                 case 9:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getNine());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTen());
                     neckletView.setLeftnum(3);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getNine());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTen());
+                    lastnecdosing.setLeftNum(3);
                     break;
                 case 8:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEight());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getNine());
                     neckletView.setLeftnum(4);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getEight());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getNine());
+                    lastnecdosing.setLeftNum(4);
                     break;
                 case 7:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSeven());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEight());
                     neckletView.setLeftnum(5);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getSeven());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getEight());
+                    lastnecdosing.setLeftNum(5);
                     break;
                 case 6:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSix());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSeven());
                     neckletView.setLeftnum(6);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getSix());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getSeven());
+                    lastnecdosing.setLeftNum(6);
                     break;
                 case 5:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFive());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSix());
                     neckletView.setLeftnum(7);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getFive());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getSix());
+                    lastnecdosing.setLeftNum(7);
                     break;
                 case 4:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFour());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFive());
                     neckletView.setLeftnum(8);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getFour());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getFive());
+                    lastnecdosing.setLeftNum(8);
                     break;
                 case 3:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getThree());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFour());
                     neckletView.setLeftnum(9);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getThree());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getFour());
+                    lastnecdosing.setLeftNum(9);
                     break;
                 case 2:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwo());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getThree());
                     neckletView.setLeftnum(10);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTwo());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getThree());
+                    lastnecdosing.setLeftNum(10);
                     break;
                 case 1:
                     neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
                     neckletView.setLeftnum(11);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getOne());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTwo());
+                    lastnecdosing.setLeftNum(11);
                     break;
                 case 0:
                     neckletView.setFirstDosingTime(null);
                     neckletView.setNextDosingTime(sysLayconfiglist.get(i).getOne());
                     neckletView.setLeftnum(12);
+
+                    lastnecdosing.setLastdosingTime(null);
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getOne());
+                    lastnecdosing.setLeftNum(12);
                     break;
             }
             neckletViewList.add(neckletView);
+            lastnecdosingMapper.updateByPrimaryKey(lastnecdosing);
+
         }
         Map<String, Object> map = new HashMap<String,Object>();
         //每页信息
