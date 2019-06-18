@@ -159,6 +159,11 @@ $(function () {
                         }else{
                             data.data.data[i].nextDosingTime = "无";
                         }
+                        if(data.data.data[i].lastUpdateTime!=null){
+                            data.data.data[i].lastUpdateTime = timetrans(data.data.data[i].lastUpdateTime);
+                        }else{
+                            data.data.data[i].lastUpdateTime = "无";
+                        }
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -225,11 +230,12 @@ $(function () {
                             {
                                 "targets": 9,
                                 "createdCell": function (td, cellData, rowData, row, col) {
-                                    if (cellData == '硬件接收信息中') {
-                                        $(td).css('color', 'black')
-                                    }
-                                    if (cellData == '硬件已完成配置') {
-                                        $(td).css('color', 'green')
+                                    if (cellData == '硬件接收配置中') {
+                                        $(td).css('color', 'black');
+                                    }else if (cellData == '硬件已完成配置') {
+                                        $(td).css('color', 'green');
+                                    }else{
+                                        $(td).css('color', 'red');
                                     }
                                 }
                             }
@@ -299,7 +305,7 @@ $(function () {
     });
 
     function format ( index ) {
-        return '';
+        return '最近同步时间: '+viewdata[index].lastUpdateTime;
     }
 
     function timetrans(date){

@@ -17,6 +17,24 @@ public class NeckletView {
     private String power;
     private String temperature;
     private String confstatus;
+    private String err;
+    private Date lastUpdateTime;
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getErr() {
+        return err;
+    }
+
+    public void setErr(String err) {
+        this.err = err;
+    }
 
     public Integer getId() {
         return id;

@@ -378,10 +378,28 @@ public class NeckletServiceImpl implements NeckletService{
             neckletView.setDosingstatus(dosingstatus.substring(0,4)+"-"+dosingstatus.substring(4,8)+"-"+dosingstatus.substring(8,12));
             neckletView.setConfstatus("正常");
             if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("1")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
-                neckletView.setConfstatus("硬件接收信息中");
+                neckletView.setConfstatus("硬件接收配置中");
+                if(!SysLaytimelist.get(i).getErr().equals("0")){
+                    for (String key : ErrType.errmap.keySet()) {
+                        //map.keySet()返回的是所有key的值
+                        if(key.equals(SysLaytimelist.get(i).getErr())){
+                            neckletView.setConfstatus(ErrType.errmap.get(key));
+                        }
+                    }
+                }
             }else if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("0")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
                 neckletView.setConfstatus("硬件已完成配置");
+                if(!SysLaytimelist.get(i).getErr().equals("0")){
+                    for (String key : ErrType.errmap.keySet()) {
+                        //map.keySet()返回的是所有key的值
+                        if(key.equals(SysLaytimelist.get(i).getErr())){
+                            neckletView.setConfstatus(ErrType.errmap.get(key));
+                        }
+                    }
+                }
             }
+            neckletView.setLastUpdateTime(SysLaytimelist.get(i).getUpdatetime());
+
             int countnum = 12;
             for(int j = 11;j >=0;j--){
                 if(dosingstatus.charAt(j) == '0'){
