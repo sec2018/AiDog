@@ -15,6 +15,7 @@
         <script src="../ui_js/echarts.js"></script>
         <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.0&key=39f6a5bd38f3167dc032e09b8e6d2a12&plugin=AMap.MarkerClusterer"></script>
         <script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script src="../../bootstrap/js/bootstrap.js"></script>
         <script src="../ui_js/hamletmap.js"></script>
     </head>
 </head>
@@ -27,10 +28,20 @@
                     <div style="text-align: center;">
                         <h4 id="h3_logtitle"></h4>
                     </div>
-                    <div id="statsChart"></div>
+                    <div id="statsChart" style="height:750px"></div>
                 </div>
             </div>
         </div>
+        <div id="dogid" style="display: none">0</div>
+        <div class="modal fade" id="dogInfoDiv" tabindex="-1" role="dialog">
+            <div class="modal-dialog model80" >
+
+                <div class="modal-content">
+                    <div class="modal-body">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
     <script>
         $(function () {

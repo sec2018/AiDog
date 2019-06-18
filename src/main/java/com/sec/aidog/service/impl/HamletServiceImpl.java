@@ -5,6 +5,7 @@ import com.sec.aidog.common.DistrictCommon;
 import com.sec.aidog.dao.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.HamletService;
+import com.sec.aidog.service.NeckletService;
 import com.sec.aidog.util.NameConversionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,9 @@ public class HamletServiceImpl implements HamletService {
     @Autowired
     private DistrictCommon districtCommon;
 
+    @Autowired
+    private NeckletService neckletService;
+
     @Override
     public Map<String, Object> GetHamletMap(String province, String city, String county, String village,
                                             String hamlet,HttpServletRequest request) {
@@ -57,6 +61,10 @@ public class HamletServiceImpl implements HamletService {
         try {
             District thishamlet = districtCommon.GetDistrictcode(province,city,county,village,hamlet);
             String hamletcode = thishamlet.getDistrictcode();
+
+            //进行相关数据表的刷新
+            neckletService.getCommonNeckletList(hamletcode);
+
             session.setAttribute("hamletcode", hamletcode);
             List<Dog> doginfo = new ArrayList<Dog>();
             doginfo = dogMapper.getHamletDogs(hamletcode);
@@ -78,6 +86,7 @@ public class HamletServiceImpl implements HamletService {
                 maptemp.put("nextmedtime", lb.getNextdosingTime());
                 maptemp.put("manager", each.getManagerName());
                 maptemp.put("hamletname", hamlet);
+                maptemp.put("lastupdatetime",lr.getRealtime());
                 GetHamletMap.put(""+i, maptemp);
                 i++;
             }

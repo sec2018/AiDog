@@ -16,4 +16,6 @@ public interface NeckletService {
     Map<String, Object> getHamletOwnerNecList(String hamletcode,Integer ownerid);
 
     Map<String, Object> getNeckletList(String districtcode, int startPage, int pageSize);
+
+    Map<String, Object> getCommonNeckletList(String districtcode);
 }

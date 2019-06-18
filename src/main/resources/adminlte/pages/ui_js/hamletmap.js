@@ -225,6 +225,7 @@ function GetHamletEcharts(data) {
     var p_necklet_titles = [];
     var p_necklet_dognames = [];
     var p_necklet_nextmedtimes = [];
+    var p_necklet_lastupdatetime = [];
     var p_necklet_mangers = [];
 
     var p_feeder_ids = [];
@@ -241,8 +242,12 @@ function GetHamletEcharts(data) {
         p_necklet_ids[i] = n["neckletid"];
 
         p_necklet_Xs[i] = n["lng"];
+        p_necklet_Xs[i] = p_necklet_Xs[i] - Math.random()/10000.00;
+        p_necklet_Xs[i] = p_necklet_Xs[i] + Math.random()/10000.00;
         //alert("X=" + p_categories[i]);
         p_necklet_Ys[i] = n["lat"];
+        p_necklet_Ys[i] = p_necklet_Ys[i] - Math.random()/10000.00;
+        p_necklet_Ys[i] = p_necklet_Ys[i] + Math.random()/10000.00;
 
         p_necklet_titles[i] = "项圈编号：" + n["dogid"];
 
@@ -250,6 +255,7 @@ function GetHamletEcharts(data) {
         //p_figs[i] = n["fig"];
         p_necklet_mangers[i] = n["manager"];
         p_necklet_nextmedtimes[i] = n["nextmedtime"]==null?"--":n["nextmedtime"];
+        p_necklet_lastupdatetime[i] = n["lastupdatetime"]==null?"--":n["lastupdatetime"];
         //var one_title = p_titles[i];
 
         var one_title = "设备编号：<a onclick=\"GetDogPage(" + n["dogid"] + ")\">" + p_necklet_ids[i] + "</a>"
@@ -259,6 +265,7 @@ function GetHamletEcharts(data) {
             "<tr><th>所属村庄：</th><th>" + harmletname + "</th></tr>" +
             "<tr><th>管理员：</th><th>" + p_necklet_mangers[i] + "</th></tr>" +
             "<tr><th>下次投药时间：</th><th>" + ChangeTimeFormat(p_necklet_nextmedtimes[i]) + "</th></tr>" +
+            "<tr><th>最近同步时间：</th><th>" + ChangeTimeFormat(p_necklet_lastupdatetime[i]) + "</th></tr>" +
             "</table></div>";
 
         markers.push(addNeckletMarker([p_necklet_Xs[i], p_necklet_Ys[i]], one_title, one_content, n["dogid"]));
@@ -301,5 +308,14 @@ function GetHamletEcharts(data) {
 }
 
 function GetDogPage(id) {
-    alert(id);
+    $("#dogid").html(id);
+    $("#dogInfoDiv").modal({
+        remote: 'dogmodal.html'
+
+    });
+    $("#dogInfoDiv").modal('show');
+    //Bootstrap v3
+    $("#dogInfoDiv").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
 }

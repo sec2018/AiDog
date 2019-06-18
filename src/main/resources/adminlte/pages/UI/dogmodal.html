@@ -199,10 +199,11 @@
                         if(data.data.nec!=null && data.data.app==null){
                             $("#input_neckletid").val(data.data.nec.necId);
                             $("#input_appid").val("---");
-                            if(data.data.nec.powerleft == null){
+                            if(data.data.nec.power == null){
                                 $("#input_power").val("未设置参数或未得到硬件反馈！");
                             }else{
-                                $("#input_power").val(((data.data.nec.powerleft)/6).toFixed(2)*100+"%");
+                                //$("#input_power").val(((data.data.nec.powerleft)/6).toFixed(2)*100+"%");
+                                $("#input_power").val(data.data.nec.power);
                             }
                             if(data.data.nec.leftNum == null){
                                 $("#input_medleft").val("未设置参数或未得到硬件反馈！");
@@ -242,10 +243,11 @@
                         }else if(data.data.nec==null && data.data.app!=null){
                             $("#input_neckletid").val("---");
                             $("#input_appid").val(data.data.app.appId);
-                            if(data.data.app.powerleft == null){
+                            if(data.data.app.power == null){
                                 $("#input_power").val("未设置参数或未得到硬件反馈！");
                             }else{
-                                $("#input_power").val(((data.data.app.powerleft)/6).toFixed(2)*100+"%");
+                                //$("#input_power").val(((data.data.app.powerleft)/6).toFixed(2)*100+"%");
+                                $("#input_power").val(data.data.app.power);
                             }
                             if(data.data.app.leftNum == null){
                                 $("#input_medleft").val("未设置参数或未得到硬件反馈！");

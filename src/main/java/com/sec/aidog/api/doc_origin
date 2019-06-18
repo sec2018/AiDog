@@ -768,3 +768,247 @@ public class Analyse {
         return rescommand_06;
     }
 }
+
+
+@Override
+    public Map<String, Object> getNeckletList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<NeckletView> neckletViewList = new ArrayList<>();
+        List<SysLaytime> SysLaytimelist = neckletMapper.selectViewLayTime(districtcode);
+        List<SysDeviceconf> sysDeviceconflist = neckletMapper.selectViewDeviceconf(districtcode);
+        List<SysLayconfig> sysLayconfiglist = neckletMapper.selectViewLayconfig(districtcode);
+
+        NeckletView neckletView = null;
+        for(int i=0;i<sysDeviceconflist.size();i++){
+            neckletView = new NeckletView();
+            neckletView.setNecId(SysLaytimelist.get(i).getMid());
+            neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");
+            neckletView.setTemperature(SysLaytimelist.get(i).getTemperature()==null?"未反馈":SysLaytimelist.get(i).getTemperature()+"");
+            neckletView.setPillcode("PL2306");
+            String devicestatus = changestatus(sysDeviceconflist.get(i).getStatus());   //投药状态加轮询状态
+            String dosingstatus = devicestatus.substring(0,12);
+            neckletView.setDosingstatus(dosingstatus.substring(0,4)+"-"+dosingstatus.substring(4,8)+"-"+dosingstatus.substring(8,12));
+            neckletView.setConfstatus("正常");
+            if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("1")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
+                neckletView.setConfstatus("硬件接收信息中");
+            }else if(sysDeviceconflist.get(i).getUimodifyflag().equals(Byte.valueOf("0")) && sysDeviceconflist.get(i).getHardmodifyflag().equals(Byte.valueOf("0"))){
+                neckletView.setConfstatus("硬件已完成配置");
+            }
+            int countnum = 12;
+            for(int j = 11;j >=0;j--){
+                if(dosingstatus.charAt(j) == '0'){
+                    countnum--;
+                }else{
+                    break;
+                }
+            }
+            //同时设置最后一次投药表
+            Lastnecdosing lastnecdosing = lastnecdosingMapper.getLastnecdosing(SysLaytimelist.get(i).getMid());
+            switch(countnum){
+                case 12:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwelve());
+                    neckletView.setNextDosingTime(null);
+                    neckletView.setLeftnum(0);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTwelve());
+                    lastnecdosing.setNextdosingTime(null);
+                    lastnecdosing.setLeftNum(0);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 11:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEleven());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwelve());
+                    neckletView.setLeftnum(1);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getEleven());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTwelve());
+                    lastnecdosing.setLeftNum(1);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 10:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTen());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEleven());
+                    neckletView.setLeftnum(2);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTen());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getEleven());
+                    lastnecdosing.setLeftNum(2);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 9:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getNine());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTen());
+                    neckletView.setLeftnum(3);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getNine());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTen());
+                    lastnecdosing.setLeftNum(3);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 8:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getEight());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getNine());
+                    neckletView.setLeftnum(4);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getEight());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getNine());
+                    lastnecdosing.setLeftNum(4);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 7:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSeven());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getEight());
+                    neckletView.setLeftnum(5);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getSeven());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getEight());
+                    lastnecdosing.setLeftNum(5);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 6:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getSix());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSeven());
+                    neckletView.setLeftnum(6);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getSix());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getSeven());
+                    lastnecdosing.setLeftNum(6);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 5:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFive());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getSix());
+                    neckletView.setLeftnum(7);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getFive());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getSix());
+                    lastnecdosing.setLeftNum(7);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 4:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getFour());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFive());
+                    neckletView.setLeftnum(8);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getFour());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getFive());
+                    lastnecdosing.setLeftNum(8);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 3:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getThree());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getFour());
+                    neckletView.setLeftnum(9);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getThree());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getFour());
+                    lastnecdosing.setLeftNum(9);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 2:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getTwo());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getThree());
+                    neckletView.setLeftnum(10);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getTwo());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getThree());
+                    lastnecdosing.setLeftNum(10);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 1:
+                    neckletView.setFirstDosingTime(sysLayconfiglist.get(i).getOne());
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getTwo());
+                    neckletView.setLeftnum(11);
+
+                    lastnecdosing.setLastdosingTime(sysLayconfiglist.get(i).getOne());
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getTwo());
+                    lastnecdosing.setLeftNum(11);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+                case 0:
+                    neckletView.setFirstDosingTime(null);
+                    neckletView.setNextDosingTime(sysLayconfiglist.get(i).getOne());
+                    neckletView.setLeftnum(12);
+
+                    lastnecdosing.setLastdosingTime(null);
+                    lastnecdosing.setNextdosingTime(sysLayconfiglist.get(i).getOne());
+                    lastnecdosing.setLeftNum(12);
+                    lastnecdosing.setPower(neckletView.getPower());
+                    lastnecdosing.setLng(SysLaytimelist.get(i).getLongitude());
+                    lastnecdosing.setLat(SysLaytimelist.get(i).getLatitude());
+                    lastnecdosing.setTemperature(SysLaytimelist.get(i).getTemperature()==null?null:SysLaytimelist.get(i).getTemperature()+"");
+                    //最近一次投药时间
+                    lastnecdosing.setRealtime(sysDeviceconflist.get(i).getUpdatetime());
+                    break;
+            }
+            neckletViewList.add(neckletView);
+            lastnecdosingMapper.updateByPrimaryKey(lastnecdosing);
+
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", neckletViewList);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
