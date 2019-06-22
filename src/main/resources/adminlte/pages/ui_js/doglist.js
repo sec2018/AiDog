@@ -191,8 +191,10 @@ $(function () {
 
     $("#a_getdoglist").click(function () {
         var senddata = {};
-        senddata.startitem = 1;
-        senddata.pagesize = 10;
+        // senddata.startitem = 1;
+        // senddata.pagesize = 1000;
+        senddata.start = 1;
+        senddata.length = 10000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
@@ -342,6 +344,128 @@ $(function () {
             }
         })
     });
+
+
+
+    // var dt = $('#datatable').DataTable({
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "ajax": "/aidog/api/getdoglist",
+    //     "jQueryUI": true,
+    //     'paging'      : true,
+    //     lengthMenu: [　//显示几条数据设置
+    //         [10, 20,30, 50,-1],
+    //         ['10 条', '20 条','30条', '50 条','全部']
+    //     ],
+    //     'searching'   : true,
+    //     'ordering'    : true,
+    //     "pageLength": 10, //每行显示记录数
+    //     'info'        : true,
+    //     'bAutoWidth'  : false,
+    //     "responsive": false,
+    //     //允许重建
+    //     "destroy": true,
+    //     "scrollX":true,
+    //     "oLanguage": {
+    //         buttons: {
+    //             pageLength: {
+    //                 _: "每页%d条记录",
+    //                 '-1': "显示所有记录"
+    //             }
+    //         },
+    //         "sLengthMenu": "每页显示 _MENU_ 条记录",
+    //         "sZeroRecords": "暂无数据",
+    //         "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+    //         "sInfoEmtpy": "暂无数据",
+    //         "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
+    //         "sProcessing": "正在加载中",
+    //         "sSearch": "搜索",
+    //         "sUrl": "",
+    //         "oPaginate": {
+    //             "sFirst": "第一页",
+    //             "sPrevious": " 上一页 ",
+    //             "sNext": " 下一页 ",
+    //             "sLast": " 最后一页 "
+    //         }
+    //     },
+    //     "scrollY": "450px",
+    //     "dom": 'Bfrtip',
+    //     "processing": true,
+    //     "columns": [
+    //         {
+    //             "class":          "details-control",
+    //             "orderable":      false,
+    //             "data":           null,
+    //             "defaultContent": "",
+    //             "width": "1px"
+    //         },
+    //         { "data": "ownerName","width":"60px" },
+    //         { "data": "ownerIdentity","width":"120px"  },
+    //         { "data": "dogName","width":"60px"  },
+    //         { "data": "dogGovcode","width":"90px"  },
+    //         { "data": "necId","width":"60px"},
+    //         { "data": "appId","width":"70px" },
+    //         { "data": "managerName","width":"70px" },
+    //         { "data": "action" ,"width":"220px"}
+    //     ],
+    //     buttons: [
+    //         'pageLength',
+    //         {
+    //             text: "导出Excel",
+    //             extend: 'excelHtml5',
+    //             filename:"用户信息报表"+"_"+new Date(),
+    //             exportOptions: {
+    //                 format: {
+    //                 }
+    //             },
+    //             customize: function (win) {
+    //                 console.log(win);
+    //                 var sheet = win.xl.worksheets['sheet1.xml'];
+    //                 $('cols col', sheet).attr({'width':30});
+    //             }
+    //         },
+    //         {
+    //             extend: 'print',
+    //             text:"打印报表",
+    //             messageTop: function () {
+    //             }
+    //         }
+    //     ]
+    // });
+    //
+    //
+    // // Array to track the ids of the details displayed rows
+    // var detailRows = [];
+    //
+    // $('#tbody').on( 'click', 'tr td.details-control', function () {
+    //     var tr = $(this).closest('tr');
+    //     var row = dt.row( tr );
+    //     var idx = $.inArray( tr.attr('id'), detailRows );
+    //
+    //     if ( row.child.isShown() ) {
+    //         tr.removeClass( 'details' );
+    //         row.child.hide();
+    //
+    //         // Remove from the 'open' array
+    //         detailRows.splice( idx, 1 );
+    //     }
+    //     else {
+    //         tr.addClass( 'details' );
+    //         row.child( format( row.index() ) ).show();
+    //
+    //         // Add to the 'open' array
+    //         if ( idx === -1 ) {
+    //             detailRows.push( tr.attr('id') );
+    //         }
+    //     }
+    // } );
+    //
+    // // On each draw, loop over the `detailRows` array and show any child rows
+    // dt.on( 'draw', function () {
+    //     $.each( detailRows, function ( i, id ) {
+    //         $('#'+id+' td.details-control').trigger( 'click' );
+    //     } );
+    // });
 
     function format ( index ) {
         return '主人姓名: '+viewdata[index].ownerName+' &nbsp;&nbsp; 详细归属地：'+viewdata[index].detailaddr+'';

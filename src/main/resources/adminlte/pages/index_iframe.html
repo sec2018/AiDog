@@ -506,12 +506,13 @@
                 <i class="fa fa-backward"></i>
             </button>
             <nav class="page-tabs menuTabs tab-ui-menu" id="tab-menu">
-                <div class="page-tabs-content" style="margin-left: 0px;">
-
-                </div>
+                <div class="page-tabs-content" style="margin-left: 0px;"></div>
             </nav>
-            <button class="roll-nav roll-right tabRight" onclick="scrollTabRight()">
-                <i class="fa fa-forward" style="margin-left: 3px;"></i>
+            <button class="roll-nav roll-right tabRight" style="width:80px;" onclick="TechSupport()">
+                <!--<i class="fa fa-forward" style="margin-left: 3px;">-->
+
+                <!--</i>-->
+                技术支持
             </button>
             <div class="btn-group roll-nav roll-right">
                 <button class="dropdown tabClose" data-toggle="dropdown">
@@ -768,6 +769,10 @@
         if (event.keyCode==13) {  //回车键的键值为13
             document.getElementById("search-btn").click(); //调用登录按钮的登录事件
         }
+    }
+    
+    function TechSupport() {
+        alert("技术支持！");
     }
 
     function search_menu() {

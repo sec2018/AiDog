@@ -5,7 +5,7 @@ $(function(){
 			return;
 		}
 		var startitem = 1;
-		var pagesize = 10;
+		var pagesize = 10000;
 		var data = {};
 		data.startitem = startitem;
 		data.pagesize = pagesize;

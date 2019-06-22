@@ -29,6 +29,10 @@
             display:table;
             height:100%;
         }
+        .form-group-sm label{
+            font-size:12px;
+        }
+
     </style>
 </head>
 <body>
@@ -74,38 +78,36 @@
                 </form>
             </div>
         </div>
-    <div class="row" id="searchRow" style="padding-top: 30px;padding-bottom: 20px;">
-        <div class="col-md-12">
-            <button type="button" id="batchnec" class="btn btn-info btn-flat" style="margin-bottom: 10px">批量选择项圈</button>
-            <!--<select class="form-control select2" multiple="multiple" id="select_necklet" data-placeholder="选择项圈" style="width: 100%;">-->
-            <!--</select>-->
-            <span id="selectnecs" style="color:red;margin-left: 10px"></span>
-        </div>
-
-
-    </div>
     <div class="row">
         <div class="col-md-4">
+            <div class="row" id="searchRow" style="padding-top: 10px;padding-bottom: 11px;">
+                <div class="col-md-12">
+                    <button type="button" id="batchnec" class="btn btn-info btn-flat btn-sm" style="margin-bottom: 3px">批量选择项圈</button>
+                    <!--<select class="form-control select2" multiple="multiple" id="select_necklet" data-placeholder="选择项圈" style="width: 100%;">-->
+                    <!--</select>-->
+                    <span id="selectnecs" style="color:red;margin-left: 10px"></span>
+                </div>
+            </div>
             <div class="box-body">
                 <form role="form">
-                    <div class="alert alert-info alert-dismissible" style="padding: 2px">
+                    <div class="alert alert-info alert-dismissible" style="padding: 0 0 0 5px">
                         <h5><i class="icon fa fa-info"></i>信息配置</h5>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm has-success">
                         <label>反馈周期(分钟)：</label>
-                        <input type="text" class="form-control" placeholder="反馈周期" id="input_areacycle" />
+                        <input type="text" class="form-control" p btn-smlaceholder="反馈周期" id="input_areacycle" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm has-success">
                         <label>配置首次投药时间：</label>
                         <input id="input_lay" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <div class="clearfix">
-                            <button type="button" id="a_thirtyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每30天</button>
-                            <button type="button" id="a_setday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每月定期</button>
-                            <button type="button" id="a_sixtyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每60天</button>
-                            <button type="button" id="a_ninetyday" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每90天</button>
-                            <button type="button" id="a_180day" class="btn btn-info btn-flat pull-left" style="margin:0 10px 10px 0;">每180天</button>
+                            <button type="button" id="a_thirtyday" class="btn btn-info btn-flat pull-left btn-sm" style="margin:0 10px 10px 0;">每30天</button>
+                            <button type="button" id="a_setday" class="btn btn-info btn-flat pull-left btn-sm" style="margin:0 10px 10px 0;">每月定期</button>
+                            <button type="button" id="a_sixtyday" class="btn btn-info btn-flat pull-left btn-sm" style="margin:0 10px 10px 0;">每60天</button>
+                            <button type="button" id="a_ninetyday" class="btn btn-info btn-flat pull-left btn-sm" style="margin:0 10px 10px 0;">每90天</button>
+                            <button type="button" id="a_180day" class="btn btn-info btn-flat pull-left btn-sm" style="margin:0 10px 10px 0;">每180天</button>
                         </div>
                     </div>
                 </form>
@@ -114,31 +116,31 @@
         <div class="col-md-4">
             <div class="box-body">
                 <form role="form">
-                    <div class="alert alert-info alert-dismissible" style="padding: 2px">
+                    <div class="alert alert-info alert-dismissible" style="padding: 0 0 0 5px">
                         <h5><i class="icon fa fa-info"></i>项圈时间信息配置</h5>
                     </div>
                     <!-- text input -->
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第1次投药时间：</label>
                         <input id="input_lay1" class="form-control" type="datetime-local" value="2019-04-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第2次投药时间：</label>
                         <input id="input_lay2" class="form-control" type="datetime-local" value="2019-05-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第3次投药时间：</label>
                         <input id="input_lay3" class="form-control" type="datetime-local" value="2019-06-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第4次投药时间：</label>
                         <input id="input_lay4" class="form-control" type="datetime-local" value="2019-07-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第5次投药时间：</label>
                         <input id="input_lay5" class="form-control" type="datetime-local" value="2019-08-30T00:00"/>
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第6次投药时间：</label>
                         <input id="input_lay6" class="form-control" type="datetime-local" value="2019-09-30T00:00"/>
                     </div>
@@ -148,31 +150,31 @@
         <div class="col-md-4">
             <div class="box-body">
                 <form role="form">
-                    <div class="alert alert-info alert-dismissible" style="padding: 2px">
+                    <div class="alert alert-info alert-dismissible" style="padding: 0 0 0 5px">
                         <h5><i class="icon fa fa-info"></i>项圈时间信息配置</h5>
                     </div>
                     <!-- text input -->
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第7次投药时间：</label>
                         <input id="input_lay7" class="form-control" type="datetime-local" value="2019-10-30T00:00" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第8次投药时间：</label>
                         <input id="input_lay8" class="form-control" type="datetime-local" value="2019-11-30T00:00" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第9次投药时间：</label>
                         <input id="input_lay9" class="form-control" type="datetime-local" value="2019-12-30T00:00" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第10次投药时间：</label>
                         <input id="input_lay10" class="form-control" type="datetime-local" value="2020-01-30T00:00" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第11次投药时间：</label>
                         <input id="input_lay11" class="form-control" type="datetime-local" value="2020-02-28T00:00" />
                     </div>
-                    <div class="form-group  has-success">
+                    <div class="form-group form-group-sm  has-success">
                         <label>第12次投药时间：</label>
                         <input id="input_lay12" class="form-control" type="datetime-local" value="2020-03-30T00:00" />
                     </div>
@@ -184,7 +186,7 @@
             <div class="col-md-12">
                 <!-- Profile Image -->
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="button" id="a_dosingconfig" class="btn btn-info btn-flat">确认保存配置</button>
+                    <button type="button" id="a_dosingconfig" class="btn btn-info btn-flat  btn-sm">确认保存配置</button>
                 </div>
             </div>
                 <!-- /.box -->
@@ -335,7 +337,7 @@
                 var selectvalue = $(this).find('option:selected').text();
                 var senddata = {};
                 senddata.startitem = 1;
-                senddata.pagesize = 10;
+                senddata.pagesize = 10000;
                 senddata.districtcode = hamletcode;
                 senddata.level = "hamlet";
 

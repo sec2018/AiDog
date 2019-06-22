@@ -474,15 +474,18 @@ public class DogApi {
     //获取牧犬列表，根据地区编号
     @ApiOperation(value = "获取牧犬列表", notes = "获取牧犬列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "startitem", value = "startitem", required = true, dataType = "Integer",paramType = "query"),
-            @ApiImplicitParam(name = "pagesize", value = "pagesize", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "start", value = "start", required = true, dataType = "Integer",paramType = "query"),
+            @ApiImplicitParam(name = "length", value = "length", required = true, dataType = "Integer",paramType = "query"),
             @ApiImplicitParam(name = "level", value = "地区等级", required = true , dataType = "String",paramType = "query"),
             @ApiImplicitParam(name = "districtcode", value = "行政编码", required = true , dataType = "String",paramType = "query"),
             @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
     })
     @RequestMapping(value="getdoglist",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<JsonResult> GetDogList(@RequestParam(value = "startitem") int startitem,@RequestParam(value = "pagesize") int pagesize,@RequestParam(value = "level",required = true)String level,@RequestParam(value = "districtcode",required = true)String districtcode, HttpServletRequest request){
+    public ResponseEntity<JsonResult> GetDogList(@RequestParam(value = "start") int start,@RequestParam(value = "length") int length,@RequestParam(value = "level",required = true)String level,@RequestParam(value = "districtcode",required = true)String districtcode, HttpServletRequest request){
+        int startitem = start;
+        int pagesize = length;
+
         String token = request.getHeader("token");
         JsonResult r = new JsonResult();
         try {

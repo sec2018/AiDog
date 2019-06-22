@@ -122,7 +122,7 @@ $(function () {
     $("#a_getmanurelist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
-        senddata.pagesize = 10;
+        senddata.pagesize = 10000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
