@@ -228,8 +228,8 @@ function GetVillageEcharts(data) {
             one_icondir = "../../dist/img/village.png";
             p_titles[i] = one_title;
         } else {
-            // one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
-            one_title = "<a href=\"../UI/hamletmap.html?hamlet=" + escape(p_titles[i]) + "&village=" + escape(villageEchartsAreaName) + "&county=" + escape(countyEchartsAreaName) + "&city=" + escape(cityEchartsAreaName) + "&province=" + escape(provinceEchartsAreaName) + "\"><font color='blue'>"    + p_titles[i] + "</font></a>";
+            one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
+            // one_title = "<a href=\"../UI/hamletmap.html?hamlet=" + escape(p_titles[i]) + "&village=" + escape(villageEchartsAreaName) + "&county=" + escape(countyEchartsAreaName) + "&city=" + escape(cityEchartsAreaName) + "&province=" + escape(provinceEchartsAreaName) + "\"><font color='blue'>"    + p_titles[i] + "</font></a>";
             one_icondir = "../../dist/img/no.png";
             p_titles[i] = one_title;
         }

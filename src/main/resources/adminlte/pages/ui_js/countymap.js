@@ -280,8 +280,8 @@ function GetCountyEcharts(data) {
             one_icondir = "../../dist/img/town.png";
             p_titles[i] = one_title;
         } else {
-            // one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
-            one_title = "<a href=\"../UI/villagemap.html?village=" + escape(p_titles[i]) + "&county=" + escape(countyGov) + "&city=" + escape(cityGov) + "&province=" + escape(provinceGov) + "\"><font color='red'>" + p_titles[i] + "</font></a>";
+            one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
+            // one_title = "<a href=\"../UI/villagemap.html?village=" + escape(p_titles[i]) + "&county=" + escape(countyGov) + "&city=" + escape(cityGov) + "&province=" + escape(provinceGov) + "\"><font color='red'>" + p_titles[i] + "</font></a>";
             one_icondir = "../../dist/img/no.png";
             p_titles[i] = one_title;
         }
