@@ -259,16 +259,16 @@ public class SysLayconfigApi {
 		if(necid.contains("|")){
 			String[] necarr = necid.split("\\|");
 			for(int i=0;i<necarr.length;i++){
-				r = setDosingtimeconfig(necarr[i],one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle);
+				r = setDosingtimeconfig(necarr[i],one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle,false);
 			}
 		}else{
-			r = setDosingtimeconfig(necid,one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle);
+			r = setDosingtimeconfig(necid,one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle,false);
 		}
 		return ResponseEntity.ok(r);
 	}
 
 	public JsonResult setDosingtimeconfig(String necid,String one,String two,String three,String four, String five,String six, String seven,String eight,
-										  String nine,String ten, String eleven,String twelve, Integer areacycle){
+										  String nine,String ten, String eleven,String twelve, Integer areacycle, Boolean zeroflag){
 		JsonResult r = new JsonResult();
 		try {
 			SysLayconfig layconfig = sysLayconfigMapper.selectLayConfigByMid(necid);
@@ -334,6 +334,9 @@ public class SysLayconfigApi {
 					sysDeviceconf.setUimodifyflag(Byte.valueOf("1"));
 					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));
 					sysDeviceconf.setUpdatetime(new Date());
+					if(zeroflag){
+						sysDeviceconf.setStatus(0);
+					}
 					flag3 = sysDeviceconfMapper.updateByPrimaryKey(sysDeviceconf)==1?true:false;
 				}else{
 					sysDeviceconf = new SysDeviceconf();
@@ -343,6 +346,9 @@ public class SysLayconfigApi {
 					sysDeviceconf.setUimodifyflag(Byte.valueOf("1"));
 					sysDeviceconf.setHardmodifyflag(Byte.valueOf("0"));
 					sysDeviceconf.setUpdatetime(new Date());
+					if(zeroflag){
+						sysDeviceconf.setStatus(0);
+					}
 					flag3 = sysDeviceconfMapper.insert(sysDeviceconf)==1?true:false;
 				}
 				if(flag3) {
@@ -366,12 +372,18 @@ public class SysLayconfigApi {
 				if(flag3 && flag4 && flag5){
 					r.setCode(200);
 					r.setMsg("配置项圈时间成功！");
+					if(zeroflag){
+						r.setMsg("清零并配置项圈时间成功！");
+					}
 					r.setData(layconfig);
 					r.setSuccess(true);
 				}else{
 					r.setCode(500);
 					r.setData(null);
 					r.setMsg("配置项圈时间失败");
+					if(zeroflag){
+						r.setMsg("清零并配置项圈时间失败！");
+					}
 					r.setSuccess(false);
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
@@ -379,6 +391,9 @@ public class SysLayconfigApi {
 				r.setCode(500);
 				r.setData(null);
 				r.setMsg("配置项圈时间失败");
+				if(zeroflag){
+					r.setMsg("清零并配置项圈时间失败！");
+				}
 				r.setSuccess(false);
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				return r;
@@ -387,6 +402,9 @@ public class SysLayconfigApi {
 			r.setCode(500);
 			r.setData(e.getClass().getName() + ":" + e.getMessage());
 			r.setMsg("配置项圈时间失败");
+			if(zeroflag){
+				r.setMsg("清零并配置项圈时间失败！");
+			}
 			r.setSuccess(false);
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			e.printStackTrace();
@@ -395,6 +413,49 @@ public class SysLayconfigApi {
 		return r;
 	}
 
+
+	@ApiOperation(value = "配置清零", notes = "配置清零")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "necid", value = "项圈标识", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "one", value = "第1次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "two", value = "第2次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "three", value = "第3次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "four", value = "第4次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "five", value = "第5次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "six", value = "第6次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "seven", value = "第7次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "eight", value = "第8次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "nine", value = "第9次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "ten", value = "第10次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "eleven", value = "第11次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "twelve", value = "第12次投药时间", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "areacycle", value = "反馈时间", required = true, dataType = "Integer",paramType = "query"),
+			@ApiImplicitParam(name = "token", value = "token", required = true, dataType = "String",paramType = "header")
+	})
+	@RequestMapping(value="zeroconfig",method = RequestMethod.POST)
+	@Transactional
+	@ResponseBody
+	public ResponseEntity<JsonResult> ZeroConfigInsertLayConfigByNeckletId(@RequestParam(value = "necid")String necid,
+																 @RequestParam(value = "one")String one,@RequestParam(value = "two")String two,
+																 @RequestParam(value = "three")String three,@RequestParam(value = "four")String four,
+																 @RequestParam(value = "five")String five,@RequestParam(value = "six")String six,
+																 @RequestParam(value = "seven")String seven,@RequestParam(value = "eight")String eight,
+																 @RequestParam(value = "nine")String nine,@RequestParam(value = "ten")String ten,
+																 @RequestParam(value = "eleven")String eleven,@RequestParam(value = "twelve")String twelve,
+																 @RequestParam(value = "areacycle")Integer areacycle,
+																 HttpServletRequest request){
+		JsonResult r = new JsonResult();
+		if(necid.contains("|")){
+			String[] necarr = necid.split("\\|");
+			for(int i=0;i<necarr.length;i++){
+				r = setDosingtimeconfig(necarr[i],one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle,true);
+			}
+		}else{
+			r = setDosingtimeconfig(necid,one,two,three,four,five,six,seven,eight, nine,ten, eleven,twelve,areacycle,true);
+
+		}
+		return ResponseEntity.ok(r);
+	}
 	
 	@ApiOperation(value = "添加设备（项圈）", notes = "添加设备（项圈）")
 	@ApiImplicitParams({

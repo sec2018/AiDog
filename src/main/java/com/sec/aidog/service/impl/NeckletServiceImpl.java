@@ -33,6 +33,9 @@ public class NeckletServiceImpl implements NeckletService{
     @Autowired
     private GuestInfoDao guestInfoDao;
 
+    @Autowired
+    private NecareabackMapper necareabackMapper;
+
     @Override
     public boolean batchNecRegister(List<Necklet> neclist) {
         boolean isSuccess = neckletMapper.insertBatchNecRegister(neclist)>0?true:false;
@@ -356,6 +359,23 @@ public class NeckletServiceImpl implements NeckletService{
         Map<String, Object> map = getCommonNeckletList(districtcode);
         //管理员总数
         map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getNeckletLngLat(String districtcode, Date begintime, Date endtime, String necid) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        List<LngLat> lnglatlist = new ArrayList<>();
+        if(necid == null || necid.trim().equals("")){
+            lnglatlist = necareabackMapper.selectLngLatByDistrictcode(districtcode,begintime,endtime);
+        }else{
+            lnglatlist = necareabackMapper.selectLngLatByNecId(necid,begintime,endtime);
+        }
+//        List<String> lnglatli = new ArrayList<>();
+//        for (LngLat lnglat:lnglatlist) {
+//            lnglatli.add("\'center\':\'"+lnglat.getLng()+","+lnglat.getLat()+"\'");
+//        }
+        map.put("lnglatlist", lnglatlist);
         return map;
     }
 

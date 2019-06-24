@@ -232,5 +232,57 @@ public class NecApi {
         }
         return ResponseEntity.ok(r);
     }
+
+
+    //获取项圈列表，根据地区编号
+    @ApiOperation(value = "获取经纬度列表", notes = "获取经纬度列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "level", value = "地区等级", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "districtcode", value = "行政编码", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "necid", value = "项圈编号", required = true , dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "begintime", value = "开始时间", required = true, dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "endtime", value = "结束时间", required = true, dataType = "String",paramType = "query"),
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header")
+    })
+    @RequestMapping(value="getneclnglatlist",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetNeckletLngLatList(@RequestParam(value = "level",required = true)String level,@RequestParam(value = "districtcode",required = true)String districtcode,@RequestParam(value = "necid",required = true)String necid,
+                                                     @RequestParam(value = "begintime")String begintime,@RequestParam(value = "endtime")String endtime,HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+
+            switch (level){
+                case "province":
+                    districtcode = districtcode.substring(0,2);
+                    break;
+                case "city":
+                    districtcode = districtcode.substring(0,4);
+                    break;
+                case "county":
+                    districtcode = districtcode.substring(0,6);
+                    break;
+                case "village":
+                    districtcode = districtcode.substring(0,9);
+                    break;
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+            Map<String, Object> map = neckletService.getNeckletLngLat(districtcode==null?"":districtcode,format.parse(begintime),format.parse(endtime),necid);
+            r.setCode(200);
+            r.setMsg("获取经纬度列表信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取经纬度列表信息成功");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
 }
 

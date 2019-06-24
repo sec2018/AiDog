@@ -242,12 +242,12 @@ function GetHamletEcharts(data) {
         p_necklet_ids[i] = n["neckletid"];
 
         p_necklet_Xs[i] = n["lng"];
-        p_necklet_Xs[i] = p_necklet_Xs[i] - Math.random()/10000.00;
-        p_necklet_Xs[i] = p_necklet_Xs[i] + Math.random()/10000.00;
+        // p_necklet_Xs[i] = p_necklet_Xs[i] - Math.random()/10000.00;
+        // p_necklet_Xs[i] = p_necklet_Xs[i] + Math.random()/10000.00;
         //alert("X=" + p_categories[i]);
         p_necklet_Ys[i] = n["lat"];
-        p_necklet_Ys[i] = p_necklet_Ys[i] - Math.random()/10000.00;
-        p_necklet_Ys[i] = p_necklet_Ys[i] + Math.random()/10000.00;
+        // p_necklet_Ys[i] = p_necklet_Ys[i] - Math.random()/10000.00;
+        // p_necklet_Ys[i] = p_necklet_Ys[i] + Math.random()/10000.00;
 
         p_necklet_titles[i] = "项圈编号：" + n["dogid"];
 
