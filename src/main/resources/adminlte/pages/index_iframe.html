@@ -265,13 +265,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../dist/img/peoplelogo.jpg" class="user-image" alt="User Image">
+                            <img src="../dist/img/area.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs" id="manager_name">请登录</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="../dist/img/peoplelogo.jpg" class="img-circle" alt="User Image">
+                                <img src="../dist/img/area.jpg" class="img-circle" alt="User Image">
                                 <p id="manager_info">
                                     XXX地区管理者
                                 </p>
@@ -279,9 +279,9 @@
                             <!-- Menu Body -->
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">详细信息</a>
-                                </div>
+                                <!--<div class="pull-left">-->
+                                    <!--<a href="#" class="btn btn-default btn-flat">详细信息</a>-->
+                                <!--</div>-->
                                 <div class="pull-right">
                                     <a id="manager_logout" class="btn btn-default btn-flat">退出</a>
                                 </div>
@@ -737,6 +737,24 @@
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
+    <div class="modal fade" id="techsupport" tabindex="-1" role="dialog">
+        <div class="modal-dialog model80" >
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">技术支持</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div>
+                            <img src="../dist/img/techsupport.png" height="201" width="400"/>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
 <!-- ./wrapper -->
 
@@ -772,7 +790,7 @@
     }
     
     function TechSupport() {
-        alert("技术支持！");
+        $("#techsupport").modal('show');
     }
 
     function search_menu() {
@@ -842,7 +860,8 @@
                             window.location.href = "login.html";
                         }
                         $("#manager_name").html(data.managerName);
-                        $("#manager_info").html(data.workplace+" "+data.managerName);
+                        $("#manager_info").html(data.workplace+"<br/>"+data.managerName);
+                        $("#manager_info").css("font-size","13px");
                         var tel = '<br/><small style="margin-top: 5px">'+"联系方式：" + data.managerTel + " "+ data.officetel +'</small>';
                         $("#manager_info").append(tel);
                         switch (data.privilegelevel){
