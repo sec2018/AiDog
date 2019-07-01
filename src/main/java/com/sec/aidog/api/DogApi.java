@@ -2,10 +2,7 @@ package com.sec.aidog.api;
 
 import com.sec.aidog.common.DistrictCommon;
 import com.sec.aidog.common.RedisUtil;
-import com.sec.aidog.dao.DogMapper;
-import com.sec.aidog.dao.DogownerMapper;
-import com.sec.aidog.dao.NeckletMapper;
-import com.sec.aidog.dao.PillMapper;
+import com.sec.aidog.dao.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.*;
 import com.sec.aidog.util.JSONUtil;
@@ -69,6 +66,9 @@ public class DogApi {
 
     @Autowired
     private DistrictCommon districtCommon;
+
+    @Autowired
+    private AnalyzeillMapper analyzeillMapper;
 
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
@@ -425,6 +425,41 @@ public class DogApi {
                     r.setCode(500);
                     r.setData(e.getClass().getName() + ":" + e.getMessage());
                     r.setMsg("修改犬主失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }else if(clicktype.equals("illmodify")) {
+                String illid = json.getString("illid");
+                String personnum  = json.getString("personnum");
+                String personillnum = json.getString("personillnum");
+                String personilllevel = json.getString("personilllevel");
+                String dognum = json.getString("dognum");
+                String dogillnum = json.getString("dogillnum");
+                String dogilllevel = json.getString("dogilllevel");
+                try {
+                    Analyzeill analyzeill = analyzeillMapper.selectByPrimaryKey(Integer.parseInt(illid));
+                    analyzeill.setPersonnum(Integer.parseInt(personnum));
+                    analyzeill.setPersonillnum(Integer.parseInt(personillnum));
+                    analyzeill.setPersonilllevel(Double.parseDouble(personilllevel));
+                    analyzeill.setDognum(Integer.parseInt(dognum));
+                    analyzeill.setDogillnum(Integer.parseInt(dogillnum));
+                    analyzeill.setDogilllevel(Double.parseDouble(dogilllevel));
+                    boolean flag = analyzeillMapper.updateByPrimaryKey(analyzeill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入抽检信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入抽检信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入抽检信息失败!");
                     r.setSuccess(false);
                     e.printStackTrace();
                 }

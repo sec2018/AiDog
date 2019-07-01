@@ -67,7 +67,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Content Header (Page header) -->
-<div class="bcolor" >
+    <div class="bcolor" >
     <div class="row" style="padding-top: 20px;margin-top: 20px">
         <div class="col-md-12">
             <div class="box-body">
@@ -130,10 +130,10 @@
                                 <th></th>
                                 <th>序号</th>
                                 <th>行政名</th>
-                                <th>人员数量</th>
+                                <th>抽检人数量</th>
                                 <th>患病人数量</th>
                                 <th>人员患病率</th>
-                                <th>犬只数量</th>
+                                <th>抽检犬只数量</th>
                                 <th>患病犬只数量</th>
                                 <th>犬只患病率</th>
                                 <th>操作</th>
@@ -150,5 +150,60 @@
     </section>
     <!-- /.content -->
 </div>
+    <div id="illid" style="display: none">0</div>
+    <div class="modal fade" id="illModifyDiv" tabindex="-1" role="dialog">
+        <div class="modal-dialog model80" >
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">信息录入详情</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="alert alert-info alert-dismissible" style="padding:2px;">
+                            <h5><i class="icon fa fa-info"></i>患病率录入</h5>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>当前行政名：</label>
+                            <input type="text" class="form-control" placeholder="当前行政名" id="modalinput_districtname" disabled>
+                        </div>
+                        <!-- text input -->
+                        <div class="form-group  has-success">
+                            <label>抽检人数量：</label>
+                            <input type="text" class="form-control" placeholder="抽检人数量" id="modalinput_personnum">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>患病人数量：</label>
+                            <input type="text" class="form-control" placeholder="患病人数量" id="modalinput_personillnum">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>人员患病率：</label>
+                            <input type="text" class="form-control" placeholder="人员患病率" id="modalinput_personilllevel" disabled>
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>抽检犬只数量：</label>
+                            <input type="text" class="form-control" placeholder="抽检犬只数量" id="modalinput_dognum">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>患病犬只数量：</label>
+                            <input type="text" class="form-control" placeholder="患病犬只数量" id="modalinput_dogillnum">
+                        </div>
+                        <div class="form-group  has-success">
+                            <label>犬只患病率：</label>
+                            <input type="text" class="form-control" placeholder="犬只患病率" id="modalinput_dogilllevel" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <button type="button" id="a_illmodify" class="btn btn-info btn-flat">录入抽检信息</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>

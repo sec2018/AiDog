@@ -117,6 +117,71 @@ $(function () {
         var selectvalue = $(this).find('option:selected').text();
     });
 
+    $("#modalinput_personillnum").blur(function () {
+        if($("#modalinput_personnum").val() == null || $("#modalinput_personnum").val == ""){
+            alert("请先输入抽检人数！");
+        }else{
+            if(parseInt($("#modalinput_personillnum").val()) == 0){
+                $("#modalinput_personilllevel").val(0);
+            }else if(parseInt($("#modalinput_personillnum").val()) > parseInt($("#modalinput_personnum").val())){
+                alert("患病人数大于抽检人数！");
+            }else{
+                $("#modalinput_personilllevel").val(($("#modalinput_personillnum").val()*1.00/$("#modalinput_personnum").val()).toFixed(2));
+            }
+        }
+    });
+
+    $("#modalinput_dogillnum").blur(function () {
+        if($("#modalinput_dognum").val() == null || $("#modalinput_dognum").val == ""){
+            alert("请先输入抽检犬只数！");
+        }else{
+            if(parseInt($("#modalinput_dogillnum").val()) == 0){
+                $("#modalinput_dogilllevel").val(0);
+            }else if(parseInt($("#modalinput_dogillnum").val()) > parseInt($("#modalinput_dognum").val())){
+                alert("患病犬只数大于抽检犬只数！");
+            }else{
+                $("#modalinput_dogilllevel").val(($("#modalinput_dogillnum").val()*1.00/$("#modalinput_dognum").val()).toFixed(2));
+            }
+        }
+    });
+
+    $("#a_illmodify").click(function () {
+        var illid = $('#illid').html();
+        //修改录入信息
+        var clicktype = "illmodify";
+        var personnum = $("#modalinput_personnum").val();
+        var personillnum = $("#modalinput_personillnum").val();
+        var personilllevel = $("#modalinput_personilllevel").val();
+        var dognum = $("#modalinput_dognum").val();
+        var dogillnum = $("#modalinput_dogillnum").val();
+        var dogilllevel = $("#modalinput_dogilllevel").val();
+        var illsenddata = {};
+        illsenddata.clicktype = clicktype;
+        illsenddata.illid = illid;
+        illsenddata.personnum = personnum;
+        illsenddata.personillnum = personillnum;
+        illsenddata.personilllevel = personilllevel;
+        illsenddata.dognum = dognum;
+        illsenddata.dogillnum = dogillnum;
+        illsenddata.dogilllevel = dogilllevel;
+        $.ajax({
+            url: "/aidog/api/operateapi",
+            type: "POST",
+            data:  JSON.stringify(illsenddata),
+            contentType: "application/json",
+            dataType: "text",    // 控制回来的数据类型
+            beforeSend: function (request) {
+                request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+            },
+            success: function (data) {
+                data = eval("("+data+")");
+                alert(data.msg);
+                $("#illModifyDiv").modal('hide');
+                window.location.reload();
+            }
+        })
+    });
+
     $("#a_getdogstalist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
@@ -124,7 +189,7 @@ $(function () {
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
-            url:  "/aidog/api/getdogstalist",
+            url:  "/aidog/api/getillstalist",
             type: "POST",
             data:  senddata,
             beforeSend: function (request) {
@@ -136,12 +201,14 @@ $(function () {
                     return;
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
-                        data.data.data[i].personnum = 0;
-                        data.data.data[i].personillnum = 0;
-                        data.data.data[i].personilllevel = 0;
-                        data.data.data[i].dogillnum = 0;
-                        data.data.data[i].dogilllevel = 0;
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].districtname + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 输入犬只患病率</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyPerson(\""+ data.data.data[i].districtname + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 输入人员患病率</a>";
+                        data.data.data[i].countnum = i+1;
+                        data.data.data[i].personnum = data.data.data[i].personnum || 0;
+                        data.data.data[i].personillnum = data.data.data[i].personillnum || 0;
+                        data.data.data[i].personilllevel = data.data.data[i].personilllevel || 0;
+                        data.data.data[i].dognum = data.data.data[i].dognum || 0;
+                        data.data.data[i].dogillnum = data.data.data[i].dogillnum || 0;
+                        data.data.data[i].dogilllevel = data.data.data[i].dogilllevel || 0;
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 抽检患病率录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     var dt = $('#datatable').DataTable({
@@ -194,15 +261,15 @@ $(function () {
                                 "defaultContent": "",
                                 "width": "1px"
                             },
-                            { "data": "countnum","width":"50px" },
-                            { "data": "districtname","width":"130px"  },
-                            { "data": "personnum","width":"60px"},
+                            { "data": "countnum","width":"40px" },
+                            { "data": "districtName","width":"125px"  },
+                            { "data": "personnum","width":"75px"},
                             { "data": "personillnum","width":"70px" },
                             { "data": "personilllevel","width":"70px" },
-                            { "data": "dognum" ,"width":"60px"},
+                            { "data": "dognum" ,"width":"85px"},
                             { "data": "dogillnum" ,"width":"85px"},
                             { "data": "dogilllevel" ,"width":"70px"},
-                            { "data": "action" ,"width":"200px"}
+                            { "data": "action" ,"width":"90px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -285,12 +352,18 @@ $(function () {
     }
 })
 
-function modifyDog(districtname) {
-    alert("修改犬只患病信息！");
+function modifyIll(obj) {
+    $('#illid').html(obj.id);
+    $("#modalinput_districtname").val(obj.districtName);
+    $("#modalinput_personnum").val(obj.personnum);
+    $("#modalinput_personillnum").val(obj.personillnum);
+    $("#modalinput_personilllevel").val(obj.personilllevel);
+    $("#modalinput_dognum").val(obj.dognum);
+    $("#modalinput_dogillnum").val(obj.dogillnum);
+    $("#modalinput_dogilllevel").val(obj.dogilllevel);
+
+    $("#illModifyDiv").modal('show');
 }
 
-function modifyPerson(districtname) {
-    alert("修改人群患病信息！");
-}
 
 
