@@ -121,7 +121,7 @@ $(function () {
     $("#a_getpilllist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
-        senddata.pagesize = 10000;
+        senddata.pagesize = 100000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({

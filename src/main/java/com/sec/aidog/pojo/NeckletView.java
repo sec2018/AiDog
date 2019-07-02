@@ -20,6 +20,16 @@ public class NeckletView {
     private String err;
     private Date lastUpdateTime;
 
+    public String getDistrictcode() {
+        return districtcode;
+    }
+
+    public void setDistrictcode(String districtcode) {
+        this.districtcode = districtcode;
+    }
+
+    private String districtcode;
+
     public Date getLastUpdateTime() {
         return lastUpdateTime;
     }

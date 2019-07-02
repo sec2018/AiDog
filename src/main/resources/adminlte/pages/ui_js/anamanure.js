@@ -120,7 +120,7 @@ $(function () {
     $("#a_getdogstalist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
-        senddata.pagesize = 10000;
+        senddata.pagesize = 100000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         var managemethod = $("#select_managemethod").find("option:selected").text();

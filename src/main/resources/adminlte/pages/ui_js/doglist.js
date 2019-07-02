@@ -188,11 +188,12 @@ $(function () {
         return province+city+county+village+hamlet;
     }
 
+    var dt = $('#datatable').dataTable();
 
     $("#a_getdoglist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
-        senddata.pagesize = 10000;
+        senddata.pagesize = 100000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
@@ -215,13 +216,13 @@ $(function () {
                             data.data.data[i].appId = "无喂饲器";
                         }
                         // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDevice(\""+ data.data.data[i].necId+ "\",\""+ data.data.data[i].appId+ "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 智能防控</a>";
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>";
                         // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
                         //     "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;";
                         data.data.data[i].detailaddr = distrctcodetoaddr(data.data.data[i].districtcode);
                     }
                     viewdata = $.extend(true,[],data.data.data);
-                    var dt = $('#datatable').DataTable({
+                    dt = $('#datatable').dataTable({
                         data: data.data.data,
                         "jQueryUI": true,
                         'paging'      : true,
@@ -278,7 +279,7 @@ $(function () {
                             { "data": "necId","width":"60px"},
                             { "data": "appId","width":"70px" },
                             { "data": "managerName","width":"70px" },
-                            { "data": "action" ,"width":"40px"}
+                            { "data": "action" ,"width":"150px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -311,7 +312,7 @@ $(function () {
 
                     $('#tbody').on( 'click', 'tr td.details-control', function () {
                         var tr = $(this).closest('tr');
-                        var row = dt.row( tr );
+                        var row = dt.api().row( tr );
                         var idx = $.inArray( tr.attr('id'), detailRows );
 
                         if ( row.child.isShown() ) {
@@ -343,128 +344,6 @@ $(function () {
             }
         })
     });
-
-
-
-    // var dt = $('#datatable').DataTable({
-    //     "processing": true,
-    //     "serverSide": true,
-    //     "ajax": "/aidog/api/getdoglist",
-    //     "jQueryUI": true,
-    //     'paging'      : true,
-    //     lengthMenu: [　//显示几条数据设置
-    //         [10, 20,30, 50,-1],
-    //         ['10 条', '20 条','30条', '50 条','全部']
-    //     ],
-    //     'searching'   : true,
-    //     'ordering'    : true,
-    //     "pageLength": 10, //每行显示记录数
-    //     'info'        : true,
-    //     'bAutoWidth'  : false,
-    //     "responsive": false,
-    //     //允许重建
-    //     "destroy": true,
-    //     "scrollX":true,
-    //     "oLanguage": {
-    //         buttons: {
-    //             pageLength: {
-    //                 _: "每页%d条记录",
-    //                 '-1': "显示所有记录"
-    //             }
-    //         },
-    //         "sLengthMenu": "每页显示 _MENU_ 条记录",
-    //         "sZeroRecords": "暂无数据",
-    //         "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
-    //         "sInfoEmtpy": "暂无数据",
-    //         "sInfoFiltered": "数据表中共为 _MAX_ 条记录)",
-    //         "sProcessing": "正在加载中",
-    //         "sSearch": "搜索",
-    //         "sUrl": "",
-    //         "oPaginate": {
-    //             "sFirst": "第一页",
-    //             "sPrevious": " 上一页 ",
-    //             "sNext": " 下一页 ",
-    //             "sLast": " 最后一页 "
-    //         }
-    //     },
-    //     "scrollY": "450px",
-    //     "dom": 'Bfrtip',
-    //     "processing": true,
-    //     "columns": [
-    //         {
-    //             "class":          "details-control",
-    //             "orderable":      false,
-    //             "data":           null,
-    //             "defaultContent": "",
-    //             "width": "1px"
-    //         },
-    //         { "data": "ownerName","width":"60px" },
-    //         { "data": "ownerIdentity","width":"120px"  },
-    //         { "data": "dogName","width":"60px"  },
-    //         { "data": "dogGovcode","width":"90px"  },
-    //         { "data": "necId","width":"60px"},
-    //         { "data": "appId","width":"70px" },
-    //         { "data": "managerName","width":"70px" },
-    //         { "data": "action" ,"width":"220px"}
-    //     ],
-    //     buttons: [
-    //         'pageLength',
-    //         {
-    //             text: "导出Excel",
-    //             extend: 'excelHtml5',
-    //             filename:"用户信息报表"+"_"+new Date(),
-    //             exportOptions: {
-    //                 format: {
-    //                 }
-    //             },
-    //             customize: function (win) {
-    //                 console.log(win);
-    //                 var sheet = win.xl.worksheets['sheet1.xml'];
-    //                 $('cols col', sheet).attr({'width':30});
-    //             }
-    //         },
-    //         {
-    //             extend: 'print',
-    //             text:"打印报表",
-    //             messageTop: function () {
-    //             }
-    //         }
-    //     ]
-    // });
-    //
-    //
-    // // Array to track the ids of the details displayed rows
-    // var detailRows = [];
-    //
-    // $('#tbody').on( 'click', 'tr td.details-control', function () {
-    //     var tr = $(this).closest('tr');
-    //     var row = dt.row( tr );
-    //     var idx = $.inArray( tr.attr('id'), detailRows );
-    //
-    //     if ( row.child.isShown() ) {
-    //         tr.removeClass( 'details' );
-    //         row.child.hide();
-    //
-    //         // Remove from the 'open' array
-    //         detailRows.splice( idx, 1 );
-    //     }
-    //     else {
-    //         tr.addClass( 'details' );
-    //         row.child( format( row.index() ) ).show();
-    //
-    //         // Add to the 'open' array
-    //         if ( idx === -1 ) {
-    //             detailRows.push( tr.attr('id') );
-    //         }
-    //     }
-    // } );
-    //
-    // // On each draw, loop over the `detailRows` array and show any child rows
-    // dt.on( 'draw', function () {
-    //     $.each( detailRows, function ( i, id ) {
-    //         $('#'+id+' td.details-control').trigger( 'click' );
-    //     } );
-    // });
 
     function format ( index ) {
         return '主人姓名: '+viewdata[index].ownerName+' &nbsp;&nbsp; 详细归属地：'+viewdata[index].detailaddr+'';
@@ -511,7 +390,50 @@ $(function () {
             },
             success: function (data) {
                 alert(data);
-                window.location.reload();
+                // window.location.reload();
+                var tableSetings = dt.fnSettings();
+                var paging_length = tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start = tableSetings._iDisplayStart;//当前页开始
+                var page = (page_start/paging_length); //得到页数值  比页码小1
+                $("#dogModifyDiv").modal('hide');
+
+                dt.fnClearTable();
+                var senddata = {};
+                senddata.startitem = 1;
+                senddata.pagesize = 100000;
+                senddata.districtcode = districtcode;
+                senddata.level = level;
+                $.ajax({
+                    url:  "/aidog/api/getdoglist",
+                    type: "POST",
+                    data:  senddata,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                    },
+                    success: function (data) {
+                        if (data.data.data == null) {
+                            alert(data.data.msg);
+                            return;
+                        }else{
+                            for(var i = 0;i<data.data.data.length;i++){
+                                if(data.data.data[i].necId =="-1"){
+                                    data.data.data[i].necId = "无项圈";
+                                }
+                                if(data.data.data[i].appId =="-1"){
+                                    data.data.data[i].appId = "无喂饲器";
+                                }
+                                // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDevice(\""+ data.data.data[i].necId+ "\",\""+ data.data.data[i].appId+ "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 智能防控</a>";
+                                data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>";
+                                // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
+                                //     "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;";
+                                data.data.data[i].detailaddr = distrctcodetoaddr(data.data.data[i].districtcode);
+                            }
+                            viewdata = $.extend(true,[],data.data.data);
+                            dt.fnAddData(viewdata);
+                            dt.fnPageChange(page);//加载跳转
+                        }
+                    }
+                })
             }
         })
     });
@@ -547,8 +469,51 @@ $(function () {
                 request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
             },
             success: function (data) {
-                alert(data.data.msg);
-                window.location.reload();
+                alert(eval("("+data+")").msg);
+                var tableSetings = dt.fnSettings();
+                var paging_length = tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start = tableSetings._iDisplayStart;//当前页开始
+                var page = (page_start/paging_length); //得到页数值  比页码小1
+                $("#dogModifyDiv").modal('hide');
+
+                $("#ownerModifyDiv").modal('hide');
+                dt.fnClearTable();
+                var senddata = {};
+                senddata.startitem = 1;
+                senddata.pagesize = 100000;
+                senddata.districtcode = districtcode;
+                senddata.level = level;
+                $.ajax({
+                    url:  "/aidog/api/getdoglist",
+                    type: "POST",
+                    data:  senddata,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                    },
+                    success: function (data) {
+                        if (data.data.data == null) {
+                            alert(data.data.msg);
+                            return;
+                        }else{
+                            for(var i = 0;i<data.data.data.length;i++){
+                                if(data.data.data[i].necId =="-1"){
+                                    data.data.data[i].necId = "无项圈";
+                                }
+                                if(data.data.data[i].appId =="-1"){
+                                    data.data.data[i].appId = "无喂饲器";
+                                }
+                                // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDevice(\""+ data.data.data[i].necId+ "\",\""+ data.data.data[i].appId+ "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 智能防控</a>";
+                                data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>";
+                                // data.data.data[i].action = "<a href='javascript:void(0);'onclick='detailInfo(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyOwner(\""+ data.data.data[i].dogownerId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬主信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyDog(\""+ data.data.data[i].dogId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 犬信息</a>&nbsp;&nbsp;<a href='javascript:void(0);'onclick='modifyNec(\""+ data.data.data[i].necId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改项圈</a>&nbsp;&nbsp;" +
+                                //     "<a href='javascript:void(0);'onclick='modifyApp(\""+ data.data.data[i].appId + "\")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 修改喂食器</a>&nbsp;&nbsp;";
+                                data.data.data[i].detailaddr = distrctcodetoaddr(data.data.data[i].districtcode);
+                            }
+                            viewdata = $.extend(true,[],data.data.data);
+                            dt.fnAddData(viewdata);
+                            dt.fnPageChange(page);//加载跳转
+                        }
+                    }
+                })
             }
         })
     });

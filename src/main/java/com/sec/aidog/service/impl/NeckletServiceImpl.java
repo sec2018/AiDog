@@ -390,6 +390,9 @@ public class NeckletServiceImpl implements NeckletService{
         for(int i=0;i<sysDeviceconflist.size();i++){
             neckletView = new NeckletView();
             neckletView.setNecId(SysLaytimelist.get(i).getMid());
+
+            neckletView.setDistrictcode(neckletMapper.selectByNecId(SysLaytimelist.get(i).getMid()).getDistrictcode());
+
             neckletView.setPower(SysLaytimelist.get(i).getVoltage()==null?"未反馈":SysLaytimelist.get(i).getVoltage()+"");
             neckletView.setTemperature(SysLaytimelist.get(i).getTemperature()==null?"未反馈":SysLaytimelist.get(i).getTemperature()+"");
             neckletView.setPillcode("PL2306");

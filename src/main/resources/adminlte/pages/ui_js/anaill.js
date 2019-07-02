@@ -177,15 +177,56 @@ $(function () {
                 data = eval("("+data+")");
                 alert(data.msg);
                 $("#illModifyDiv").modal('hide');
-                window.location.reload();
+
+                var tableSetings = dt.fnSettings();
+                var paging_length = tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start = tableSetings._iDisplayStart;//当前页开始
+                var page = (page_start/paging_length); //得到页数值  比页码小1
+
+                dt.fnClearTable();
+                var senddata = {};
+                senddata.startitem = 1;
+                senddata.pagesize = 100000;
+                senddata.districtcode = districtcode;
+                senddata.level = level;
+                $.ajax({
+                    url:  "/aidog/api/getillstalist",
+                    type: "POST",
+                    data:  senddata,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                    },
+                    success: function (data) {
+                        if (data.data.data == null) {
+                            alert(data.data.msg);
+                            return;
+                        }else{
+                            for(var i = 0;i<data.data.data.length;i++){
+                                data.data.data[i].countnum = i+1;
+                                data.data.data[i].personnum = data.data.data[i].personnum || 0;
+                                data.data.data[i].personillnum = data.data.data[i].personillnum || 0;
+                                data.data.data[i].personilllevel = data.data.data[i].personilllevel || 0;
+                                data.data.data[i].dognum = data.data.data[i].dognum || 0;
+                                data.data.data[i].dogillnum = data.data.data[i].dogillnum || 0;
+                                data.data.data[i].dogilllevel = data.data.data[i].dogilllevel || 0;
+                                data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 抽检患病率录入</a>";
+                            }
+                            viewdata = $.extend(true,[],data.data.data);
+                            dt.fnAddData(viewdata);
+                            dt.fnPageChange(page);//加载跳转
+                        }
+                    }
+                })
             }
         })
     });
 
-    $("#a_getdogstalist").click(function () {
+    var dt = $('#datatable').dataTable();
+
+    $("#a_getillstalist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
-        senddata.pagesize = 10000;
+        senddata.pagesize = 100000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
@@ -211,7 +252,7 @@ $(function () {
                         data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 抽检患病率录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
-                    var dt = $('#datatable').DataTable({
+                    dt = $('#datatable').dataTable({
                         data: data.data.data,
                         "jQueryUI": true,
                         'paging'      : true,
