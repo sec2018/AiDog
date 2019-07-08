@@ -188,13 +188,13 @@ $(function () {
                         "dom": 'Bfrtip',
                         "processing": true,
                         "columns": [
-                            {
-                                "class":          "details-control",
-                                "orderable":      false,
-                                "data":           null,
-                                "defaultContent": "",
-                                "width": "1px"
-                            },
+                            // {
+                            //     "class":          "details-control",
+                            //     "orderable":      false,
+                            //     "data":           null,
+                            //     "defaultContent": "",
+                            //     "width": "1px"
+                            // },
                             { "data": "countnum","width":"50px" },
                             { "data": "districtname","width":"130px"  },
                             { "data": "managemethod","width":"70px"  },

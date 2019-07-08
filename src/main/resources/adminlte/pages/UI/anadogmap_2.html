@@ -100,14 +100,19 @@
                             <button type="button" id="btn_neckletlist" class="btn btn-info btn-flat">批量选择项圈</button>
                         </span>
                     </div>
-                    <div class="col-md-6 cc_from_item" style="margin-bottom:5px;width:520px;">
+                    <div class="col-md-6 cc_from_item" style="margin-bottom:5px;width:500px;">
                         起止时间:
                         <input id="input_begintime" class="form-control cc_from_item" style="display:inline-block;width: 200px;" type="datetime-local" value="2019-06-23T00:00"/>
                     <span style="display:inline-block;">-</span>
                         <input id="input_endtime" class="form-control cc_from_item" style="display:inline-block;width:200px;" type="datetime-local" value="2019-06-24T10:00"/>
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">绘制犬只活动地图</button>
+                    <div class="col-md-2" style="padding-right: 0;">
+                        <span class="col-md-8" style="padding-left: 0;">
+                            <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">绘制犬只活动地图</button>
+                        </span>
+                        <span class="col-md-3">
+                            <button type="button" id="btn_stanum" class="btn btn-info btn-flat">统计</button>
+                        </span>
                     </div>
                 </div>
 
@@ -173,6 +178,8 @@
     </div>
     <script type="text/javascript">
         var viewdata;
+        var necnum = 0;
+        var posnum = 0;
         $(function () {
             var datares = {};
             // $.ajax({
@@ -331,6 +338,12 @@
                 var necid = null;
                 if($("#input_neckletid").val()!=null && $("#input_neckletid").val()!="" && $("#input_neckletid").val()!="输入项圈编号"){
                     necid = $("#input_neckletid").val();
+                    necnum = necid.split("|").length == 1?1:necid.split("|").length-1;
+                }else{
+                    alert("未选择项圈！");
+                    necnum = 0;
+                    posnum = 0;
+                    return;
                 }
                 var begintime = $("#input_begintime").val()+":00";
                 var endtime = $("#input_endtime").val()+":00";
@@ -349,6 +362,7 @@
                     success: function (data) {
                         if (data.success) {
                             drawMap(data.data.lnglatlist);
+                            posnum = data.data.lnglatlist.length;
                         }
                         else {
                             return;
@@ -437,6 +451,9 @@
                 }
             });
 
+            $("#btn_stanum").click(function () {
+                alert("项圈数量： "+ necnum + "\r" + "位置总数： "+ posnum);
+            });
 
         });
 
