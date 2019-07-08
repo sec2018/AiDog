@@ -102,11 +102,15 @@ public class NeckletServiceImpl implements NeckletService{
         for (Dog item:neckletList)
         {
             Map<String, Object> maptemp = new HashMap<String, Object>();
+            String type = "项圈管理";
+            maptemp.put("managetype",type);
             maptemp.put("nec", item.getNecId());
             maptemp.put("id", item.getDogId());
             map.put(""+i, maptemp);
             i++;
         }
+//        List<Dog> appList = dogMapper.getUseAppListByHamletcode(hamletcode,ownerid);
+
         return map;
     }
 

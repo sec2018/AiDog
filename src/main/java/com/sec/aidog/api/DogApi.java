@@ -125,8 +125,9 @@ public class DogApi {
                 String districtcode = json.getString("districtcode");
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
                 Date date = format.parse(json.getString("manure_getdate"));
+                String managetype = json.getString("managetype");
                 try {
-                    result = manureService.addManure(dogmanure_code, dogowner_id, dog_id, collection_person,districtcode,date)==true?"采集犬粪成功!":"采集犬粪失败!";
+                    result = manureService.addManure(dogmanure_code, dogowner_id, dog_id, collection_person,districtcode,date,managetype)==true?"采集犬粪成功!":"采集犬粪失败!";
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     result = "采集犬粪失败!";

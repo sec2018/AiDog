@@ -83,11 +83,9 @@
                         <select class="form-control select2"  id="select_dogownername" style="width: 100%;">
                         </select>
                     </div>
-
                     <div class="form-group  has-success">
-                        <label>项圈编号：</label>
-                        <select class="form-control select2"  id="select_dognecid" style="width: 100%;">
-                        </select>
+                        <label>防控类型：</label>
+                        <input type="text" class="form-control" placeholder="人工管理"  id="input_managetype" readonly/>
                     </div>
                 </form>
             </div>
@@ -98,6 +96,11 @@
                     <div class="form-group  has-success">
                         <label>所属村：</label>
                         <input type="text" class="form-control" placeholder="所属村" id="input_dogbelonghamlet" disabled>
+                    </div>
+                    <div class="form-group  has-success">
+                        <label>项圈编号：</label>
+                        <select class="form-control select2"  id="select_dognecid" style="width: 100%;">
+                        </select>
                     </div>
                     <div class="form-group  has-success">
                         <label>采集人：</label>
@@ -265,10 +268,12 @@
                 },
                 success: function (data) {
                     var select_dognecid = document.getElementById("select_dognecid");
+                    select_dognecid.length = 0;
                     data.data = objToArray(data.data);
                     for (var i = 0; i < data.data.length; i++) {
                         //遍历后台传回的结果，一项项往select中添加option
                         select_dognecid.options.add(new Option(data.data[i].nec, data.data[i].id));
+                        $("#input_managetype").val(data.data[i].managetype);
                     }
                 }
             })
@@ -300,6 +305,7 @@
             senddata.collection_person =  collection_person;
             senddata.districtcode = districtcode;
             senddata.manure_getdate = manure_getdate;
+            senddata.managetype = $("#input_managetype").val();
             $.ajax({
                 url: "/aidog/api/bindoraddapi",
                 type: "POST",

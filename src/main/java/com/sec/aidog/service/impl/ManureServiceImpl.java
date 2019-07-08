@@ -83,7 +83,7 @@ public class ManureServiceImpl implements ManureService{
     }
 
     @Override
-    public boolean addManure(String dogmanure_code, Integer dogowner_id, Integer dog_id, String collection_person, String districtcode,Date date) {
+    public boolean addManure(String dogmanure_code, Integer dogowner_id, Integer dog_id, String collection_person, String districtcode,Date date, String managetype) {
         Manure manure = new Manure();
         manure.setDogmanureCode(dogmanure_code);
         manure.setDogownerId(dogowner_id);
@@ -91,6 +91,7 @@ public class ManureServiceImpl implements ManureService{
         manure.setCollectionDate(date);
         manure.setCollectionPerson(collection_person);
         manure.setDistrictcode(districtcode);
+        manure.setManageMethod(managetype);
         boolean flag = manureMapper.insert(manure)==1?true:false;
         return flag;
     }

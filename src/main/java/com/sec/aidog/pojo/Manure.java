@@ -25,7 +25,9 @@ public class Manure {
 
     private String testingPerson;
 
-    public Manure(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson) {
+    private String manageMethod;
+
+    public Manure(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson, String manageMethod) {
         this.id = id;
         this.dogmanureCode = dogmanureCode;
         this.dogownerId = dogownerId;
@@ -37,6 +39,7 @@ public class Manure {
         this.testingMethod = testingMethod;
         this.testingResult = testingResult;
         this.testingPerson = testingPerson;
+        this.manageMethod = manageMethod;
     }
 
     public Manure() {
@@ -129,5 +132,13 @@ public class Manure {
 
     public void setTestingPerson(String testingPerson) {
         this.testingPerson = testingPerson == null ? null : testingPerson.trim();
+    }
+
+    public String getManageMethod() {
+        return manageMethod;
+    }
+
+    public void setManageMethod(String manageMethod) {
+        this.manageMethod = manageMethod == null ? null : manageMethod.trim();
     }
 }

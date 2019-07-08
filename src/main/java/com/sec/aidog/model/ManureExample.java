@@ -824,6 +824,76 @@ public class ManureExample {
             addCriterion("testing_person not between", value1, value2, "testingPerson");
             return (Criteria) this;
         }
+
+        public Criteria andManageMethodIsNull() {
+            addCriterion("manage_method is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodIsNotNull() {
+            addCriterion("manage_method is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodEqualTo(String value) {
+            addCriterion("manage_method =", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodNotEqualTo(String value) {
+            addCriterion("manage_method <>", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodGreaterThan(String value) {
+            addCriterion("manage_method >", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("manage_method >=", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodLessThan(String value) {
+            addCriterion("manage_method <", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodLessThanOrEqualTo(String value) {
+            addCriterion("manage_method <=", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodLike(String value) {
+            addCriterion("manage_method like", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodNotLike(String value) {
+            addCriterion("manage_method not like", value, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodIn(List<String> values) {
+            addCriterion("manage_method in", values, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodNotIn(List<String> values) {
+            addCriterion("manage_method not in", values, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodBetween(String value1, String value2) {
+            addCriterion("manage_method between", value1, value2, "manageMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageMethodNotBetween(String value1, String value2) {
+            addCriterion("manage_method not between", value1, value2, "manageMethod");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

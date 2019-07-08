@@ -68,4 +68,7 @@ public interface DogMapper {
 
     @Select("select a.dog_id,a.nec_id FROM dog a inner join necklet b on a.districtcode = #{hamletcode} and a.dogowner_id = #{ownerid} and b.bind_time is not null and a.nec_id = b.nec_id")
     List<Dog> getUseNecListByHamletcode(@Param("hamletcode")String hamletcode,@Param("ownerid")Integer ownerid);
+
+    @Select("select a.dog_id,a.app_id FROM dog a inner join apparatus b on a.districtcode = #{hamletcode} and a.dogowner_id = #{ownerid} and b.bind_time is not null and a.app_id = b.app_id")
+    List<Dog> getUseAppListByHamletcode(@Param("hamletcode")String hamletcode,@Param("ownerid")Integer ownerid);
 }
