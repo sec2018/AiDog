@@ -183,21 +183,21 @@ $(function () {
                         "dom": 'Bfrtip',
                         "processing": true,
                         "columns": [
-                            {
-                                "class":          "details-control",
-                                "orderable":      false,
-                                "data":           null,
-                                "defaultContent": "",
-                                "width": "1px"
-                            },
+                            // {
+                            //     "class":          "details-control",
+                            //     "orderable":      false,
+                            //     "data":           null,
+                            //     "defaultContent": "",
+                            //     "width": "1px"
+                            // },
                             { "data": "countnum","width":"50px" },
                             { "data": "districtname","width":"130px"  },
-                            { "data": "dognum","width":"70px"},
-                            { "data": "managedognum","width":"80px" },
-                            { "data": "necdognum","width":"110px" },
-                            { "data": "necdognumper" ,"width":"90px"},
-                            { "data": "appdognum" ,"width":"110px"},
-                            { "data": "appdognumper" ,"width":"90px"}
+                            { "data": "dognum","width":"80px"},
+                            { "data": "managedognum","width":"95px" },
+                            { "data": "necdognum","width":"120px" },
+                            { "data": "necdognumper" ,"width":"100px"},
+                            { "data": "appdognum" ,"width":"125px"},
+                            { "data": "appdognumper" ,"width":"110px"}
                         ],
                         buttons: [
                             'pageLength',

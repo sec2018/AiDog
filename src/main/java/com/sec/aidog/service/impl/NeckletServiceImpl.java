@@ -366,10 +366,21 @@ public class NeckletServiceImpl implements NeckletService{
     public Map<String, Object> getNeckletLngLat(String districtcode, Date begintime, Date endtime, String necid) {
         Map<String, Object> map = new HashMap<String,Object>();
         List<LngLat> lnglatlist = new ArrayList<>();
+
         if(necid == null || necid.trim().equals("")){
             lnglatlist = necareabackMapper.selectLngLatByDistrictcode(districtcode,begintime,endtime);
         }else{
-            lnglatlist = necareabackMapper.selectLngLatByNecId(necid,begintime,endtime);
+            if(necid.contains("|")){
+                String[] necarr = necid.split("\\|");
+                List<LngLat> lnglatlisttemp;
+                for(int i=0;i<necarr.length;i++){
+                    lnglatlisttemp = new ArrayList<>();
+                    lnglatlisttemp = necareabackMapper.selectLngLatByNecId(necarr[i],begintime,endtime);
+                    lnglatlist.addAll(lnglatlisttemp);
+                }
+            }else{
+                lnglatlist = necareabackMapper.selectLngLatByNecId(necid,begintime,endtime);
+            }
         }
 //        List<String> lnglatli = new ArrayList<>();
 //        for (LngLat lnglat:lnglatlist) {
