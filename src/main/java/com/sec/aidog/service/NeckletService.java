@@ -21,4 +21,8 @@ public interface NeckletService {
     Map<String,Object> getNeckletLngLat(String districtcode, Date begintime, Date endtime,String necid);
 
     Map<String, Object> getCommonNeckletList(String districtcode);
+
+    Map<String,Object> getNeckletVolAndTemp(String districtcode, Date begintime, Date endtime,String necid);
+
+    Map<String,Object> getNeckletTemp(String districtcode, Date begintime, Date endtime,String necid);
 }

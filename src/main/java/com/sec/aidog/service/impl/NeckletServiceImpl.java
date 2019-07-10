@@ -395,6 +395,62 @@ public class NeckletServiceImpl implements NeckletService{
     }
 
     @Override
+    public Map<String, Object> getNeckletVolAndTemp(String districtcode, Date begintime, Date endtime, String necid) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        List<VolTemp> voltemplist = new ArrayList<>();
+
+        if(necid == null || necid.trim().equals("")){
+            voltemplist = necareabackMapper.selectVolTempByDistrictcode(districtcode,begintime,endtime);
+        }else{
+            if(necid.contains("|")){
+                String[] necarr = necid.split("\\|");
+                List<VolTemp> voltemplisttemp;
+                for(int i=0;i<necarr.length;i++){
+                    voltemplisttemp = new ArrayList<>();
+                    voltemplisttemp = necareabackMapper.selectVolTempByNecId(necarr[i],begintime,endtime);
+                    voltemplist.addAll(voltemplisttemp);
+                }
+            }else{
+                voltemplist = necareabackMapper.selectVolTempByNecId(necid,begintime,endtime);
+            }
+        }
+//        List<String> lnglatli = new ArrayList<>();
+//        for (LngLat lnglat:lnglatlist) {
+//            lnglatli.add("\'center\':\'"+lnglat.getLng()+","+lnglat.getLat()+"\'");
+//        }
+        map.put("voltemplist", voltemplist);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getNeckletTemp(String districtcode, Date begintime, Date endtime, String necid) {
+        Map<String, Object> map = new HashMap<String,Object>();
+        List<LngLat> lnglatlist = new ArrayList<>();
+
+        if(necid == null || necid.trim().equals("")){
+            lnglatlist = necareabackMapper.selectLngLatByDistrictcode(districtcode,begintime,endtime);
+        }else{
+            if(necid.contains("|")){
+                String[] necarr = necid.split("\\|");
+                List<LngLat> lnglatlisttemp;
+                for(int i=0;i<necarr.length;i++){
+                    lnglatlisttemp = new ArrayList<>();
+                    lnglatlisttemp = necareabackMapper.selectLngLatByNecId(necarr[i],begintime,endtime);
+                    lnglatlist.addAll(lnglatlisttemp);
+                }
+            }else{
+                lnglatlist = necareabackMapper.selectLngLatByNecId(necid,begintime,endtime);
+            }
+        }
+//        List<String> lnglatli = new ArrayList<>();
+//        for (LngLat lnglat:lnglatlist) {
+//            lnglatli.add("\'center\':\'"+lnglat.getLng()+","+lnglat.getLat()+"\'");
+//        }
+        map.put("lnglatlist", lnglatlist);
+        return map;
+    }
+
+    @Override
     public Map<String, Object> getCommonNeckletList(String districtcode) {
         List<NeckletView> neckletViewList = new ArrayList<>();
         List<SysLaytime> SysLaytimelist = neckletMapper.selectViewLayTime(districtcode);
