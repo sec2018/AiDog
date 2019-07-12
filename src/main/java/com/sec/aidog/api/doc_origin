@@ -1012,3 +1012,337 @@ public class Analyse {
         map.put("totalNum", page.getTotal());
         return map;
     }
+
+
+
+
+
+
+ if(necnum>1){
+                option = {
+                    title : {
+                        text: '地区项圈电压分布'
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        showDelay : 0,
+                        formatter : function (params) {
+                            if (params[0].value.length > 1) {
+                                return params[0].seriesName + ' :<br/>'
+                                    + timetrans(params[0].value[0]) + ' '
+                                    + params[0].value[1] + 'V ';
+                            }
+                            else {
+                                return params.seriesName + ' :<br/>'
+                                    + timetrans(params.name) + '  '
+                                    + params.value + 'V ';
+                            }
+                        },
+                        axisPointer:{
+                            show: true,
+                            type : 'cross',
+                            lineStyle: {
+                                type : 'dashed',
+                                width : 1
+                            }
+                        }
+                    },
+                    legend: {
+                        data:['电压']
+                    },
+//                    toolbox: {
+//                        show : true,
+//                        feature : {
+//                            mark : {show: true},
+//                            dataZoom : {show: true},
+//                            dataView : {show: true, readOnly: false},
+//                            restore : {show: true},
+//                            saveAsImage : {show: true}
+//                        }
+//                    },
+                    xAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter:  function (params) {
+                                    return timetrans(params)
+                                }
+
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter: '{value} V'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'电压',
+                            type:'scatter',
+                            data: vols,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+                option2 = {
+                    title : {
+                        text: '地区项圈温度分布'
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        showDelay : 0,
+                        formatter : function (params) {
+                            if (params[0].value.length > 1) {
+                                return params[0].seriesName + ' :<br/>'
+                                    + timetrans(params[0].value[0]) + ' '
+                                    + params[0].value[1] + '℃';
+                            }
+                            else {
+                                return params.seriesName + ' :<br/>'
+                                    + timetrans(params.name) + '  '
+                                    + params.value + '℃ ';
+                            }
+                        },
+                        axisPointer:{
+                            show: true,
+                            type : 'cross',
+                            lineStyle: {
+                                type : 'dashed',
+                                width : 1
+                            }
+                        }
+                    },
+                    legend: {
+                        data:['温度']
+                    },
+//                    toolbox: {
+//                        show : true,
+//                        feature : {
+//                            mark : {show: true},
+//                            dataZoom : {show: true},
+//                            dataView : {show: true, readOnly: false},
+//                            restore : {show: true},
+//                            saveAsImage : {show: true}
+//                        }
+//                    },
+                    xAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter:  function (params) {
+                                    return timetrans(params)
+                                }
+
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter: '{value} ℃'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'温度',
+                            type:'scatter',
+                            data: temps,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                myChart2.setOption(option2);
+            }else if(necnum == 1){
+                option = {
+                    title : {
+                        text: '单只项圈电压趋势',
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        showDelay : 0,
+                        formatter : function (params) {
+                            if (params[0].value.length > 1) {
+                                return params[0].seriesName + ' :<br/>'
+                                    + timetrans(params[0].value[0]) + ' '
+                                    + params[0].value[1] + 'V ';
+                            }
+                            else {
+                                return params.seriesName + ' :<br/>'
+                                    + timetrans(params.name) + '  '
+                                    + params.value + 'V ';
+                            }
+                        },
+                        axisPointer:{
+                            show: true,
+                            type : 'cross',
+                            lineStyle: {
+                                type : 'dashed',
+                                width : 1
+                            }
+                        }
+                    },
+//                    toolbox: {
+//                        show : true,
+//                        feature : {
+//                            mark : {show: true},
+//                            dataView : {show: true, readOnly: false},
+//                            magicType : {show: true, type: ['line', 'bar']},
+//                            restore : {show: true},
+//                            saveAsImage : {show: true}
+//                        }
+//                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter:  function (params) {
+                                    return timetrans(params)
+                                }
+
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            axisLabel : {
+                                formatter: '{value} V'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'电压',
+                            type:'line',
+                            data: vols,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+
+                option2 = {
+                    title : {
+                        text: '单只项圈温度趋势',
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        showDelay: 0,
+                        formatter: function (params) {
+                            if (params[0].value.length > 1) {
+                                return params[0].seriesName + ' :<br/>'
+                                    + timetrans(params[0].value[0]) + ' '
+                                    + params[0].value[1] + '℃';
+                            }
+                            else {
+                                return params.seriesName + ' :<br/>'
+                                    + timetrans(params.name) + '  '
+                                    + params.value + '℃ ';
+                            }
+                        },
+                        axisPointer:{
+                            show: true,
+                            type : 'cross',
+                            lineStyle: {
+                                type : 'dashed',
+                                width : 1
+                            }
+                        }
+                    },
+//                    toolbox: {
+//                        show : true,
+//                        feature : {
+//                            mark : {show: true},
+//                            dataView : {show: true, readOnly: false},
+//                            magicType : {show: true, type: ['line', 'bar']},
+//                            restore : {show: true},
+//                            saveAsImage : {show: true}
+//                        }
+//                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            scale:true,
+                            axisLabel : {
+                                formatter:  function (params) {
+                                    return timetrans(params)
+                                }
+
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            axisLabel : {
+                                formatter: '{value}  ℃'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'温度',
+                            type:'line',
+                            data: temps,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                myChart2.setOption(option2);
+            }
+
+

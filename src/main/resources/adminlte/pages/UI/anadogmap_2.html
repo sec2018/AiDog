@@ -94,7 +94,7 @@
                 <div class="row">
                     <div class="col-md-4" style="margin-bottom:5px;margin-left: 3px">
                         <span class="col-md-8" style="padding-left: 5px;padding-right: 0;">
-                            <input type="text" class="form-control" placeholder="输入项圈编号"  id="input_neckletid" />
+                            <input type="text" class="form-control" placeholder="请选择项圈"  id="input_neckletid" disabled/>
                         </span>
                         <span class="col-md-3">
                             <button type="button" id="btn_neckletlist" class="btn btn-info btn-flat">批量选择项圈</button>
@@ -297,46 +297,12 @@
             $("#select_hamlet").on('change', function () {
                 districtcode = $(this).find('option:selected').val();
                 level = "hamlet";
-                var senddata = {};
-                senddata.startitem = 1;
-                senddata.pagesize = 100000;
-                senddata.districtcode = districtcode;
-                senddata.level = "hamlet";
-                $.ajax({
-                    url: "/aidog/api/getdoglist",
-                    type: "POST",
-                    data: senddata,
-                    beforeSend: function (request) {
-                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
-                    },
-                    success: function (data) {
-                        if (data.data.data == null) {
-                            alert(data.data.msg);
-                            return;
-                        }
-                        else {
-//                            var select_necklet = document.getElementById("select_necklet");
-                            viewdata = $.extend(true,[],data.data.data);
-                            for(var i = viewdata.length-1;i>=0;i--){
-//                                if(data.data.data[i].necId!="-1"){
-//                                    //遍历后台传回的结果，一项项往select中添加option
-//                                    select_necklet.options.add(new Option(data.data.data[i].necId, data.data.data[i].dogId));
-
-//                                }
-                                viewdata[i].check = "<input name='check' id='\""+viewdata[i].necId+"\"' class=\"checkbox neccheck\" type=\"checkbox\" />";
-                                if(viewdata[i].necId == "-1"){
-                                    viewdata.splice(i,1);
-                                }
-                            }
-                        }
-                    }
-                })
             });
 
             $("#a_getdogstalist").click(function () {
                 var senddata = {};
                 var necid = null;
-                if($("#input_neckletid").val()!=null && $("#input_neckletid").val()!="" && $("#input_neckletid").val()!="输入项圈编号"){
+                if($("#input_neckletid").val()!=null && $("#input_neckletid").val()!="" && $("#input_neckletid").val()!="请选择项圈"){
                     necid = $("#input_neckletid").val();
                     necnum = necid.split("|").length == 1?1:necid.split("|").length-1;
                 }else{
@@ -372,10 +338,41 @@
             });
 
             $("#btn_neckletlist").click(function () {
-                if(viewdata == null || viewdata == ""){
-                    alert("请先选择行政村！");
-                    return;
-                }
+                var senddata = {};
+                senddata.startitem = 1;
+                senddata.pagesize = 100000;
+                senddata.districtcode = districtcode;
+                senddata.level = level;
+                $.ajax({
+                    url: "/aidog/api/getdoglist",
+                    type: "POST",
+                    data: senddata,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                    },
+                    success: function (data) {
+                        if (data.data.data == null) {
+                            alert(data.data.msg);
+                            return;
+                        }
+                        else {
+//                            var select_necklet = document.getElementById("select_necklet");
+                            viewdata = $.extend(true,[],data.data.data);
+                            for(var i = viewdata.length-1;i>=0;i--){
+//                                if(data.data.data[i].necId!="-1"){
+//                                    //遍历后台传回的结果，一项项往select中添加option
+//                                    select_necklet.options.add(new Option(data.data.data[i].necId, data.data.data[i].dogId));
+
+//                                }
+                                viewdata[i].check = "<input name='check' id='\""+viewdata[i].necId+"\"' class=\"checkbox neccheck\" type=\"checkbox\" />";
+                                if(viewdata[i].necId == "-1"){
+                                    viewdata.splice(i,1);
+                                }
+                            }
+                        }
+                    }
+                })
+
                 $("#doglist").modal('show');
                 $("#doglist").on("shown.bs.modal",function(){
                     var dt = $('#datatable').DataTable({
@@ -478,7 +475,7 @@
                 var marker;
                 var icon = new AMap.Icon({
 //                    image: 'https://vdata.amap.com/icons/b18/1/2.png',
-                    image: '../../../img/1.png',
+                    image: '../../../img/3.png',
                     size: new AMap.Size(24, 24)
                 });
                 marker = new AMap.Marker({
