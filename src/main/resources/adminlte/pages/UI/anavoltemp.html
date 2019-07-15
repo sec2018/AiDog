@@ -204,7 +204,20 @@
                 </div>
             </div>
         </div>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4" style="margin-bottom:5px;margin-left: 3px">
+                        <span class="col-md-3">
+                            <button type="button" id="btn_exportExcel" class="btn btn-info btn-flat">导出Excel表</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id = "export_form" style="display:none"></div>
         <div id="dogid" style="display: none">0</div>
+
         <div class="modal fade" id="dogInfoDiv" tabindex="-1" role="dialog">
             <div class="modal-dialog model80" >
 
@@ -271,6 +284,9 @@
             });
             var districtcode = "";
             var level = "";
+            var excelnecid = "";
+            var excelbegintime = "";
+            var excelendtime = "";
             $("#select_province").on('change', function () {
                 districtcode = $(this).find('option:selected').val();
                 // if(districtcode == "0"){
@@ -394,6 +410,10 @@
                 senddata.begintime = begintime;
                 senddata.endtime = endtime;
                 senddata.necid = necid;
+
+                excelnecid = necid;
+                excelbegintime = begintime;
+                excelendtime = endtime;
                 $.ajax({
                     url: "/aidog/api/getnecvoltemplist",
                     type: "POST",
@@ -526,6 +546,30 @@
 
             $("#btn_stanum").click(function () {
                 alert("项圈数量： "+ necnum + "\r" + "位置总数： "+ posnum);
+            });
+
+            $("#btn_exportExcel").click(function () {
+                if($("#input_neckletid").val()!=null && $("#input_neckletid").val()!="" && $("#input_neckletid").val()!="输入项圈编号"){
+                    necid = $("#input_neckletid").val();
+                    necnum = necid.split("|").length == 1?1:necid.split("|").length-1;
+                }else{
+                    alert("未选择项圈！");
+                    necnum = 0;
+                    posnum = 0;
+                    return;
+                }
+                $("#export_form").html(
+                    "<form action='/aidog/api/exportExcel' method='post' id='btn_export' style='display:none'>"+
+                    "<input type=hidden name='token' value='"+window.localStorage.getItem("aidog_token")+"' />"+
+                    "<input type=hidden name='level' value='"+level+"' />"+
+                    "<input type=hidden name='necid' value='"+excelnecid+"' />"+
+                    "<input type=hidden name='begintime' value='"+excelbegintime+"' />"+
+                    "<input type=hidden name='endtime' value='"+excelendtime+"' />"+
+                    "<input type=hidden name='districtcode' value='"+districtcode+"' />"+
+                    "</form>"
+                );
+                $("#btn_export").submit(); //提交
+                $("#export_form").html(""); //清空div
             });
 
         });

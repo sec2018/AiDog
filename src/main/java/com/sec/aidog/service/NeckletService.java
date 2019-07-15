@@ -1,6 +1,7 @@
 package com.sec.aidog.service;
 
 import com.sec.aidog.pojo.Necklet;
+import com.sec.aidog.pojo.VolTemp;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ public interface NeckletService {
     Map<String,Object> getNeckletLngLat(String districtcode, Date begintime, Date endtime,String necid);
 
     Map<String, Object> getCommonNeckletList(String districtcode);
+
+    List<VolTemp> getNeckletVolAndTempVoltemplist(String districtcode, Date begintime, Date endtime, String necid);
 
     Map<String,Object> getNeckletVolAndTemp(String districtcode, Date begintime, Date endtime,String necid);
 

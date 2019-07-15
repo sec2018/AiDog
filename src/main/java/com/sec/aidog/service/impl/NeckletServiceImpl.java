@@ -397,6 +397,12 @@ public class NeckletServiceImpl implements NeckletService{
     @Override
     public Map<String, Object> getNeckletVolAndTemp(String districtcode, Date begintime, Date endtime, String necid) {
         Map<String, Object> map = new HashMap<String,Object>();
+        map.put("voltemplist", getNeckletVolAndTempVoltemplist(districtcode,begintime,endtime,necid));
+        return map;
+    }
+
+    @Override
+    public List<VolTemp> getNeckletVolAndTempVoltemplist(String districtcode, Date begintime, Date endtime, String necid) {
         List<VolTemp> voltemplist = new ArrayList<>();
 
         if(necid == null || necid.trim().equals("")){
@@ -414,12 +420,7 @@ public class NeckletServiceImpl implements NeckletService{
                 voltemplist = necareabackMapper.selectVolTempByNecId(necid,begintime,endtime);
             }
         }
-//        List<String> lnglatli = new ArrayList<>();
-//        for (LngLat lnglat:lnglatlist) {
-//            lnglatli.add("\'center\':\'"+lnglat.getLng()+","+lnglat.getLat()+"\'");
-//        }
-        map.put("voltemplist", voltemplist);
-        return map;
+        return voltemplist;
     }
 
     @Override
