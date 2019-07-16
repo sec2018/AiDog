@@ -102,7 +102,8 @@ $(function () {
         $("#input_dogbelonghamlet").val(selectvalue);
     });
 
-
+    var unbindneclist = [];
+    var necflag = false;
     $("#a_checkowner").click(function () {
         if(hamletcode == ""){
             alert("请先选定行政村！");
@@ -157,16 +158,17 @@ $(function () {
                             for (var i = 0; i < data.data.govcodelist.length; i++) {
                                 if(data.data.govcodelist[i].ownerName == $("#input_ownername").val()){
                                     //遍历后台传回的结果，一项项往select中添加option
-                                    select_doggovcode.options.add(new Option(data.data.govcodelist[i].dogGovcode, data.data.govcodelist[i].dogId));
+                                    select_doggovcode.options.add(new Option(data.data.govcodelist[i].dogGovcode, data.data.govcodelist[i].dogId+" "+data.data.govcodelist[i].dogName));
                                 }
                              }
 
-                            var select_dognecid = document.getElementById("select_dognecid");
-                            // data.data = objToArray(data.data);
-                            for (var i = 0; i < data.data.neclist.length; i++) {
-                                //遍历后台传回的结果，一项项往select中添加option
-                                select_dognecid.options.add(new Option(data.data.neclist[i], data.data.neclist[i]));
-                            }
+                            // var select_dognecid = document.getElementById("select_dognecid");
+                            // // data.data = objToArray(data.data);
+                            // for (var i = 0; i < data.data.neclist.length; i++) {
+                            //     //遍历后台传回的结果，一项项往select中添加option
+                            //     select_dognecid.options.add(new Option(data.data.neclist[i], data.data.neclist[i]));
+                            // }
+                            unbindneclist = data.data.neclist;
                             //
                             // $("#input_dogownername").val(data.data.govcodelist[0].ownerName);
                             $("#input_dogname").val(data.data.govcodelist[0].dogName);
@@ -174,7 +176,7 @@ $(function () {
                                 var selectvalue = $(this).find('option:selected').val();
                                 var index = $(this).find('option:selected').index();
                                 // $("#input_dogownername").val(data.data.govcodelist[index].ownerName);
-                                $("#input_dogname").val(data.data.govcodelist[index].dogName);
+                                $("#input_dogname").val(selectvalue.split(' ')[1]);
                             });
                         }
                     })
@@ -196,8 +198,9 @@ $(function () {
         document.getElementById("input_telphone").readOnly = false;
         var select_doggovcode = document.getElementById("select_doggovcode");
         select_doggovcode.options.length = 0;
-        var select_dognecid = document.getElementById("select_dognecid");
-        select_dognecid.options.length = 0;
+        // var select_dognecid = document.getElementById("select_dognecid");
+        // select_dognecid.options.length = 0;
+        $("#input_dognecid").val("");
         $("#input_dogname").val("");
     });
 
@@ -209,8 +212,13 @@ $(function () {
             alert("请先选择主人所属行政村！");
             return;
         }
+        if(necflag){
+            alert("填写的项圈不符合绑定要求！");
+            return;
+        }
         var dogid = $("#select_doggovcode").find('option:selected').val();
-        var necid = $("#select_dognecid").find('option:selected').text();
+        // var necid = $("#select_dognecid").find('option:selected').text();
+        var necid = $("#input_dognecid").val();
         var senddata = {};
         senddata.dogid = dogid;
         senddata.necid = necid;
@@ -223,11 +231,27 @@ $(function () {
             },
             success: function (data) {
                 alert(data.msg);
-                window.location.reload();
+                $("#select_dognecid").val("");
+                necflag =false;
             }
         })
     });
 
+
+    $("#a_checknec").click(function () {
+        if($("#input_dognecid").val()==""){
+            alert("请输入项圈编号，然后校验！");
+            return;
+        }
+        if(unbindneclist.indexOf($("#input_dognecid").val())!="-1"){
+            alert("填写项圈符合要求！");
+            necflag = true;
+            return;
+        }else{
+            alert("不符合要求的项圈！");
+            return;
+        }
+    });
 })
 
 

@@ -155,7 +155,7 @@
         <div class="box-body">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-4" style="margin-bottom:5px;margin-left: 3px">
+                    <div class="col-md-8" style="margin-bottom:5px;margin-left: 3px">
                         <span class="col-md-8" style="padding-left: 5px;padding-right: 0;">
                             <input type="text" class="form-control" placeholder="请选择项圈"  id="input_neckletid" disabled/>
                         </span>
@@ -163,10 +163,16 @@
                             <button type="button" id="btn_neckletlist" class="btn btn-info btn-flat">批量选择项圈</button>
                         </span>
                     </div>
-                    <div class="col-md-6 cc_from_item" style="margin-bottom:5px;width:500px;">
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 cc_from_item" style="margin-left:5px;margin-bottom:5px;width:500px;">
                         起止时间:
                         <input id="input_begintime" class="form-control cc_from_item" style="display:inline-block;width: 200px;" type="datetime-local" value="2019-06-23T00:00"/>
-                    <span style="display:inline-block;">-</span>
+                        <span style="display:inline-block;">-</span>
                         <input id="input_endtime" class="form-control cc_from_item" style="display:inline-block;width:200px;" type="datetime-local" value="2019-06-24T10:00"/>
                     </div>
                     <div class="col-md-2" style="padding-right: 0;">
@@ -174,11 +180,15 @@
                             <button type="button" id="btn_drawvol" class="btn btn-info btn-flat">绘制电压温度图表</button>
                         </span>
                         <!--<span class="col-md-3">-->
-                            <!--<button type="button" id="btn_drawtemp" class="btn btn-info btn-flat">绘制温度图表</button>-->
+                        <!--<button type="button" id="btn_drawtemp" class="btn btn-info btn-flat">绘制温度图表</button>-->
                         <!--</span>-->
                     </div>
+                    <div class="col-md-4" style="margin-bottom:5px;padding-left: 0px">
+                        <span class="col-md-3">
+                            <button type="button" id="btn_exportExcel" class="btn btn-info btn-flat">导出Excel表</button>
+                        </span>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -200,17 +210,6 @@
                                 <div id="main2" style="width: 100%;height:100%;"></div>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-4" style="margin-bottom:5px;margin-left: 3px">
-                        <span class="col-md-3">
-                            <button type="button" id="btn_exportExcel" class="btn btn-info btn-flat">导出Excel表</button>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -721,7 +720,14 @@
                     {
                         type : 'value',
                         axisLabel : {
-                            formatter: '{value} V'
+//                            formatter: '{value} .00V'
+                            formatter:  function (params) {
+                                if(params==0){
+                                    return params;
+                                }else{
+                                    return params+'.00 V';
+                                }
+                            }
                         }
                     }
                 ],

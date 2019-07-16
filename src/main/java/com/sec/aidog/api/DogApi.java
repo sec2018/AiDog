@@ -623,6 +623,38 @@ public class DogApi {
         return ResponseEntity.ok(r);
     }
 
+    @ApiOperation(value = "采集犬粪犬只列表", notes = "采集犬粪犬只列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "token", value = "通行证", required = true, dataType = "String",paramType = "header"),
+            @ApiImplicitParam(name = "hamletcode", value = "村行政编码", required = true , dataType = "String",paramType = "query")
+    })
+    @RequestMapping(value="getmanureDogGovcodeList",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<JsonResult> GetManureDogGovcodeList(@RequestParam(value = "hamletcode",required = true)String hamletcode, HttpServletRequest request){
+        String token = request.getHeader("token");
+        JsonResult r = new JsonResult();
+        try {
+            //取出存在缓存中的已登录用户的信息
+            String managerstr = RedisUtil.RedisGetValue("token:"+token);
+            //权限控制
+
+            Map<String, Object> map = new HashMap<>();
+            List<DogView> unusedoggovcodelist = dogMapper.getManureDogGovcodeList(hamletcode);
+            map.put("govcodelist",unusedoggovcodelist);
+            r.setCode(200);
+            r.setMsg("获取列表信息成功！");
+            r.setData(map);
+            r.setSuccess(true);
+        } catch (Exception e) {
+            r.setCode(500);
+            r.setData(e.getClass().getName() + ":" + e.getMessage());
+            r.setMsg("获取列表信息失败");
+            r.setSuccess(false);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(r);
+    }
+
 
     // excel导入
     @ApiOperation(value = "从excel中批量注册犬只及犬主人", notes = "从excel中批量注册犬只及犬主人")

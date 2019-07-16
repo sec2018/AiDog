@@ -66,6 +66,9 @@ public interface DogMapper {
     @Select("select a.dog_id,a.dog_govcode,a.dog_name,b.owner_name FROM dog a inner join dogowner b on a.nec_id='-1' and a.app_id='-1' and a.dogowner_id=b.owner_id and a.districtcode=#{districtcode}")
     List<DogView> getUnuseDogGovcodeList(String districtcode);
 
+    @Select("select a.dog_id,a.dog_govcode,a.dog_name,a.nec_id,a.app_id,b.owner_name FROM dog a inner join dogowner b on a.dogowner_id=b.owner_id and a.districtcode=#{districtcode}")
+    List<DogView> getManureDogGovcodeList(String districtcode);
+
     @Select("select a.dog_id,a.nec_id FROM dog a inner join necklet b on a.districtcode = #{hamletcode} and a.dogowner_id = #{ownerid} and b.bind_time is not null and a.nec_id = b.nec_id")
     List<Dog> getUseNecListByHamletcode(@Param("hamletcode")String hamletcode,@Param("ownerid")Integer ownerid);
 
