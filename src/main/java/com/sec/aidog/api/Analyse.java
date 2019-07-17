@@ -302,10 +302,10 @@ public class Analyse {
         String midstr = ScheduleCheck.bytesToHexString(v).toUpperCase();
 
         //服务器IP地址
-//        String ip = "122.112.252.45";
+//        String ip = "119.3.177.203";
         String ip = sysDeviceconf.getIp();
         if(ip==null){
-            ip = "122.112.252.45";
+            ip = "119.3.177.203";
         }
         String[] iparr = ip.split("\\.");
         String ipres = "";

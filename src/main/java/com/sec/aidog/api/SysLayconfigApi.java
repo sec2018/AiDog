@@ -336,6 +336,7 @@ public class SysLayconfigApi {
 					sysDeviceconf.setUpdatetime(new Date());
 					if(zeroflag){
 						sysDeviceconf.setStatus(0);
+						sysDeviceconf.setFactory(Byte.valueOf("1"));
 					}
 					flag3 = sysDeviceconfMapper.updateByPrimaryKey(sysDeviceconf)==1?true:false;
 				}else{
@@ -348,6 +349,7 @@ public class SysLayconfigApi {
 					sysDeviceconf.setUpdatetime(new Date());
 					if(zeroflag){
 						sysDeviceconf.setStatus(0);
+						sysDeviceconf.setFactory(Byte.valueOf("1"));
 					}
 					flag3 = sysDeviceconfMapper.insert(sysDeviceconf)==1?true:false;
 				}
