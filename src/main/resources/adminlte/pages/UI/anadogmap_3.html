@@ -106,12 +106,12 @@
                     <input id="input_endtime" class="form-control cc_from_item" style="display:inline-block;width:200px;" type="datetime-local" value="2019-06-24T10:00"/>
                 </div>
                 <div class="col-md-2" style="padding-right: 0;">
-                        <span class="col-md-8" style="padding-left: 0;">
-                            <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">绘制犬只活动地图</button>
-                        </span>
+                    <span class="col-md-8" style="padding-left: 0;">
+                        <button type="button" id="a_getdogstalist" class="btn btn-info btn-flat">绘制活动地图</button>
+                    </span>
                     <span class="col-md-3">
-                            <button type="button" id="btn_stanum" class="btn btn-info btn-flat">统计</button>
-                        </span>
+                        <button type="button" id="btn_stanum" class="btn btn-info btn-flat">统计</button>
+                    </span>
                 </div>
             </div>
 
@@ -198,6 +198,14 @@
             {
                 datares = data;
             });
+
+            //日历控件
+            var date2 = new Date();
+            date2.setDate(new Date().getDate() - 30);
+            $("#input_endtime").val(timetrans((new Date()).valueOf()));
+            $("#input_begintime").val(timetrans(date2));
+
+
             var districtcode = "";
             var level = "";
             $("#select_province").on('change', function () {
@@ -331,6 +339,7 @@
                     },
                     success: function (data) {
                         if (data.success) {
+                            lnglatlist = [];
                             lnglatlist = data.data.lnglatlist;
                             drawMap();
                             posnum = data.data.lnglatlist.length;
@@ -613,7 +622,8 @@
                 datatempstr = datatempstr + lnglatlist[i].lng + "," + lnglatlist[i].lat+"\n";
             }
             var data = datatempstr.split('\n');
-            distCluster.setData(lines);
+            data.slice().pop();
+            distCluster.setData(data);
         }
 
         function timetrans(date){
@@ -621,11 +631,13 @@
             var date = new Date(date);
             var Y = date.getFullYear() + '-';
             var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
             var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-            var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
-            return Y+M+D+h+m+s;
+            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
+//            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+//            var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
+//            return Y+M+D+h+m+s;
+            return Y+M+D+h+m;
         }
 
         function choosedog() {

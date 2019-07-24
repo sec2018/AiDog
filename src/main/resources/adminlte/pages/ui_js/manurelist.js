@@ -21,6 +21,8 @@ $(function () {
     });
     var districtcode = "";
     var level = "";
+
+
     $("#select_province").on('change', function () {
         districtcode = $(this).find('option:selected').val();
         level = "province";
@@ -280,6 +282,8 @@ $(function () {
         return '主人姓名: '+viewdata[index].ownerName+'';
     }
 
+    var dt = $('#datatable').dataTable();
+
     $("#a_manurereg").click(function () {
         var manureid = $('#manureid').html();
         //修改或录入犬粪信息
@@ -313,7 +317,48 @@ $(function () {
             },
             success: function (data) {
                 alert(data);
-                window.location.reload();
+
+                var tableSetings = dt.fnSettings();
+                var paging_length = tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start = tableSetings._iDisplayStart;//当前页开始
+                var page = (page_start/paging_length); //得到页数值  比页码小1
+                $("#dogManureReg").modal('hide');
+
+                dt.fnClearTable();
+                var senddata = {};
+                senddata.startitem = 1;
+                senddata.pagesize = 100000;
+                senddata.districtcode = districtcode;
+                senddata.level = level;
+                $.ajax({
+                    url:  "/aidog/api/getmanurelist",
+                    type: "POST",
+                    data:  senddata,
+                    beforeSend: function (request) {
+                        request.setRequestHeader("token", window.localStorage.getItem("aidog_token"));
+                    },
+                    success: function (data) {
+                        if (data.data.data.length == 0) {
+                            return;
+                        }else{
+                            for(var i = 0;i<data.data.data.length;i++){
+                                data.data.data[i].collectionDate = timetrans(data.data.data[i].collectionDate).replace('T'," ");
+                                if(data.data.data[i].testingDate != null){
+                                    data.data.data[i].testingDate = timetrans(data.data.data[i].testingDate).replace('T'," ");
+                                }
+                                var valueStr = JSON.stringify(data.data.data[i]);  //对象转字符串
+                                if(data.data.data[i].testingResult != null){
+                                    data.data.data[i].action = "<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                                }else{
+                                    data.data.data[i].action = "<a href='javascript:void(0);'onclick='TestThisRow("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 录入检测结果</a>&nbsp;&nbsp<a href='javascript:void(0);'onclick='ShowRowDetail("+ valueStr + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 详情</a>";
+                                }
+                            }
+                            viewdata = $.extend(true,[],data.data.data);
+                            dt.fnAddData(viewdata);
+                            dt.fnPageChange(page);//加载跳转
+                        }
+                    }
+                })
             }
         })
     });
@@ -347,6 +392,8 @@ function TestThisRow(data) {
             $("#reginput_testperson").val(data.testingPerson);
         }
     }
+    //日历控件
+    $("#reginput_testdate").val(timeinput((new Date()).valueOf()));
     $("#dogManureReg").modal('show');
 }
 
@@ -360,6 +407,17 @@ function timetrans(date){
     var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
     var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
     return Y+M+D+h+m+s;
+}
+
+function timeinput(date){
+//    var date = new Date(date*1000);//如果date为13位不需要乘1000
+    var date = new Date(date);
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
+    return Y+M+D+h+m;
 }
 
 function ShowRowDetail(data) {
