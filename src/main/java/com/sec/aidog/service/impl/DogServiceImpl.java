@@ -3,6 +3,7 @@ package com.sec.aidog.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sec.aidog.dao.*;
+import com.sec.aidog.model.AnaallillExample;
 import com.sec.aidog.model.AnalyzeillExample;
 import com.sec.aidog.model.DogExample;
 import com.sec.aidog.pojo.*;
@@ -39,6 +40,9 @@ public class DogServiceImpl implements DogService{
 
     @Autowired
     private AnalyzeillMapper analyzeillMapper;
+
+    @Autowired
+    private AnaallillMapper anaallillMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
@@ -380,6 +384,52 @@ public class DogServiceImpl implements DogService{
                 AnalyzeillExample example5 = new AnalyzeillExample();
                 example5.createCriteria().andDistrictLevelEqualTo(4).andDistrictcodeLike(districtcode.substring(0,9)+"%");
                 illstalist = analyzeillMapper.selectByExample(example5);
+                break;
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", illstalist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getBillStaList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<Anaallill> illstalist = new ArrayList<>();
+        Analyzeill illsta = null;
+        int count = 1;
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                AnaallillExample example1 = new AnaallillExample();
+                example1.createCriteria().andDistrictLevelEqualTo(0);
+                illstalist = anaallillMapper.selectByExample(example1);
+                break;
+            case 2:
+                //省级管理员
+                AnaallillExample example2 = new AnaallillExample();
+                example2.createCriteria().andDistrictLevelEqualTo(1).andDistrictcodeLike(districtcode.substring(0,2)+"%");
+                illstalist = anaallillMapper.selectByExample(example2);
+                break;
+            case 4:
+                //市级管理员
+                AnaallillExample example3 = new AnaallillExample();
+                example3.createCriteria().andDistrictLevelEqualTo(2).andDistrictcodeLike(districtcode.substring(0,4)+"%");
+                illstalist = anaallillMapper.selectByExample(example3);
+                break;
+            case 6:
+                //县级管理员
+                AnaallillExample example4 = new AnaallillExample();
+                example4.createCriteria().andDistrictLevelEqualTo(3).andDistrictcodeLike(districtcode.substring(0,6)+"%");
+                illstalist = anaallillMapper.selectByExample(example4);
+                break;
+            case 9:
+                //乡级管理员
+                AnaallillExample example5 = new AnaallillExample();
+                example5.createCriteria().andDistrictLevelEqualTo(4).andDistrictcodeLike(districtcode.substring(0,9)+"%");
+                illstalist = anaallillMapper.selectByExample(example5);
                 break;
         }
         Map<String, Object> map = new HashMap<String,Object>();
