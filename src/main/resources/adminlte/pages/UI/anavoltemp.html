@@ -281,6 +281,14 @@
             {
                 datares = data;
             });
+
+            //日历控件
+            var date2 = new Date();
+            date2.setDate(new Date().getDate() - 30);
+            $("#input_endtime").val(timeinput((new Date()).valueOf()));
+            $("#input_begintime").val(timeinput(date2));
+
+
             var districtcode = "";
             var level = "";
             var excelnecid = "";
@@ -799,6 +807,16 @@
             var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
             var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
             return Y+M+D+h+m+s;
+        }
+
+        function timeinput(date){
+            var date = new Date(date);
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + 'T';
+            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+            var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes());
+            return Y+M+D+h+m;
         }
 
         function choosedog() {
