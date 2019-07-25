@@ -25,7 +25,11 @@ $(function () {
         districtcode = $(this).find('option:selected').val();
         level = "province";
         var selectvalue = $(this).find('option:selected').val();
-        selectvalue = selectvalue.substring(0,2);
+        if(selectvalue == "0"){
+            level = "";
+        }else{
+            selectvalue = selectvalue.substring(0,2);
+        }
         $("#select_city").find("option").remove();
         var select_city = document.getElementById("select_city");
         select_city.options.add(new Option("请选择", "-1"));
@@ -126,13 +130,13 @@ $(function () {
             }else if(parseInt($("#modalinput_bpersonillnum").val()) > parseInt($("#modalinput_bpersonnum").val())){
                 alert("患病人数大于筛查人数！");
             }else{
-                $("#modalinput_illlv").val(($("#modalinput_bpersonillnum").val()*1.00/$("#modalinput_bpersonnum").val()).toFixed(2));
+                $("#modalinput_illlv").val(($("#modalinput_bpersonillnum").val()*1.00/$("#modalinput_bpersonnum").val()).toFixed(4)*100);
             }
         }
     });
 
     $("#a_illmodify").click(function () {
-        var illid = $('#illid').html();
+        var id = $('#illid').html();
         //修改录入信息
         var clicktype = "bpersonillmodify";
         var bpersonnum = $("#modalinput_bpersonnum").val();
@@ -142,7 +146,7 @@ $(function () {
 
         var illsenddata = {};
         illsenddata.clicktype = clicktype;
-        illsenddata.illid = illid;
+        illsenddata.id = id;
         illsenddata.bpersonnum = bpersonnum;
         illsenddata.bpersonillnum = bpersonillnum;
         illsenddata.checklv = checklv;
@@ -173,7 +177,7 @@ $(function () {
                 senddata.districtcode = districtcode;
                 senddata.level = level;
                 $.ajax({
-                    url:  "/aidog/api/getillstalist",
+                    url:  "/aidog/api/getbillstalist",
                     type: "POST",
                     data:  senddata,
                     beforeSend: function (request) {
@@ -186,10 +190,10 @@ $(function () {
                         }else{
                             for(var i = 0;i<data.data.data.length;i++){
                                 data.data.data[i].countnum = i+1;
-                                data.data.data[i].bpersonnum = data.data.data[i].bpersonnum || 0;
-                                data.data.data[i].bpersonillnum = data.data.data[i].bpersonillnum || 0;
-                                data.data.data[i].checklv = data.data.data[i].checklv || 0;
-                                data.data.data[i].illlv = data.data.data[i].illlv || 0;
+                                data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
+                                data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
+                                data.data.data[i].bcheckoutlv = data.data.data[i].bcheckoutlv || 0;
+                                data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
                                 data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                             }
                             viewdata = $.extend(true,[],data.data.data);
@@ -211,7 +215,7 @@ $(function () {
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
-            url:  "/aidog/api/getillstalist",
+            url:  "/aidog/api/getbillstalist",
             type: "POST",
             data:  senddata,
             beforeSend: function (request) {
@@ -224,10 +228,10 @@ $(function () {
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
                         data.data.data[i].countnum = i+1;
-                        data.data.data[i].bpersonnum = data.data.data[i].bpersonnum || 0;
-                        data.data.data[i].bpersonillnum = data.data.data[i].bpersonillnum || 0;
-                        data.data.data[i].checklv = data.data.data[i].checklv || 0;
-                        data.data.data[i].illlv = data.data.data[i].illlv || 0;
+                        data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
+                        data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
+                        data.data.data[i].bcheckoutlv = data.data.data[i].bcheckoutlv || 0;
+                        data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
                         data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
@@ -274,22 +278,13 @@ $(function () {
                         "dom": 'Bfrtip',
                         "processing": true,
                         "columns": [
-                            {
-                                "class":          "details-control",
-                                "orderable":      false,
-                                "data":           null,
-                                "defaultContent": "",
-                                "width": "1px"
-                            },
                             { "data": "countnum","width":"40px" },
                             { "data": "districtName","width":"125px"  },
-                            { "data": "personnum","width":"75px"},
-                            { "data": "personillnum","width":"70px" },
-                            { "data": "personilllevel","width":"70px" },
-                            { "data": "dognum" ,"width":"85px"},
-                            { "data": "dogillnum" ,"width":"85px"},
-                            { "data": "dogilllevel" ,"width":"70px"},
-                            { "data": "action" ,"width":"90px"}
+                            { "data": "bcheckpnum","width":"80px"},
+                            { "data": "pillnum","width":"75px" },
+                            { "data": "bcheckoutlv","width":"70px" },
+                            { "data": "pilllv" ,"width":"85px"},
+                            { "data": "action" ,"width":"85px"}
                         ],
                         buttons: [
                             'pageLength',
@@ -375,10 +370,10 @@ $(function () {
 function modifyIll(obj) {
     $('#illid').html(obj.id);
     $("#modalinput_districtname").val(obj.districtName);
-    $("#modalinput_bpersonnum").val(obj.bpersonnum);
-    $("#modalinput_bpersonillnum").val(obj.bpersonillnum);
-    $("#modalinput_checklv").val(obj.checklv);
-    $("#modalinput_illlv").val(obj.illlv);
+    $("#modalinput_bpersonnum").val(obj.bcheckpnum);
+    $("#modalinput_bpersonillnum").val(obj.pillnum);
+    $("#modalinput_checklv").val(obj.bcheckoutlv);
+    $("#modalinput_illlv").val(obj.pilllv);
 
     $("#illModifyDiv").modal('show');
 }

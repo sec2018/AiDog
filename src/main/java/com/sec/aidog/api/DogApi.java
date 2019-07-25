@@ -70,6 +70,9 @@ public class DogApi {
     @Autowired
     private AnalyzeillMapper analyzeillMapper;
 
+    @Autowired
+    private AnaallillMapper anaallillMapper;
+
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -461,6 +464,37 @@ public class DogApi {
                     r.setCode(500);
                     r.setData(e.getClass().getName() + ":" + e.getMessage());
                     r.setMsg("录入抽检信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }else if(clicktype.equals("bpersonillmodify")) {
+                String id = json.getString("id");
+                String bpersonnum  = json.getString("bpersonnum");
+                String bpersonillnum = json.getString("bpersonillnum");
+                String checklv = json.getString("checklv");
+                String illlv = json.getString("illlv");
+                try {
+                    Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    anaallill.setBcheckpnum(Integer.parseInt(bpersonnum));
+                    anaallill.setPillnum(Integer.parseInt(bpersonillnum));
+                    anaallill.setBcheckoutlv(checklv);
+                    anaallill.setPilllv(illlv);
+                    boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入6-12岁儿童患病信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入6-12岁儿童患病信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入6-12岁儿童患病信息失败!");
                     r.setSuccess(false);
                     e.printStackTrace();
                 }
