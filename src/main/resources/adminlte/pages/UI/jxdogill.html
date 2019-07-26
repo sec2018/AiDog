@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>人群患病情况</title>
+    <title>犬感染情况</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -111,7 +111,7 @@
         </div>
         <div class="box-body">
             <div class="col-md-8">
-                <button type="button" id="a_getillstalist" class="btn btn-info btn-flat">获取当前区域人群患病列表</button>
+                <button type="button" id="a_getillstalist" class="btn btn-info btn-flat">获取当前区域犬感染列表</button>
             </div>
         </div>
     </div>
@@ -128,10 +128,9 @@
                             <tr>
                                 <th>序号</th>
                                 <th>行政名</th>
-                                <th>B超筛查人数(人)</th>
-                                <th>患病人数(人)</th>
-                                <th>检出率(%)</th>
-                                <th>标化患病率(%)</th>
+                                <th>检查犬粪数(份)</th>
+                                <th>阳性份数(份)</th>
+                                <th>阳性率(%)</th>
                                 <th>调查年份</th>
                                 <th>操作</th>
                             </tr>
@@ -167,20 +166,16 @@
                         </div>
                         <!-- text input -->
                         <div class="form-group  has-success">
-                            <label>B超筛查人数（人）：</label>
-                            <input type="text" class="form-control" placeholder="B超筛查人数" id="modalinput_bpersonnum">
+                            <label>检查犬粪数(份)：</label>
+                            <input type="text" class="form-control" placeholder="检查犬粪数" id="modalinput_bpersonnum">
                         </div>
                         <div class="form-group  has-success">
-                            <label>患病人数（人）</label>
-                            <input type="text" class="form-control" placeholder="患病人数" id="modalinput_bpersonillnum">
+                            <label>阳性份数(份)</label>
+                            <input type="text" class="form-control" placeholder="阳性份数" id="modalinput_bpersonillnum">
                         </div>
                         <div class="form-group  has-success">
-                            <label>检出率（%）</label>
-                            <input type="text" class="form-control" placeholder="检出率" id="modalinput_checklv" disabled/>
-                        </div>
-                        <div class="form-group  has-success">
-                            <label>标化患病率（%）</label>
-                            <input type="text" class="form-control" placeholder="标化患病率" id="modalinput_illlv" />
+                            <label>阳性率（%）</label>
+                            <input type="text" class="form-control" placeholder="阳性率" id="modalinput_checklv" disabled/>
                         </div>
                         <div class="form-group  has-success">
                             <label>调查年份</label>
@@ -198,6 +193,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <script type="text/javascript" src="../ui_js/bpersonill.js"></script>
+    <script type="text/javascript" src="../ui_js/jxdogill.js"></script>
 </body>
 </html>

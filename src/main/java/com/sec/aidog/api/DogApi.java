@@ -471,14 +471,48 @@ public class DogApi {
                 String id = json.getString("id");
                 String bpersonnum  = json.getString("bpersonnum");
                 String bpersonillnum = json.getString("bpersonillnum");
-                String checklv = json.getString("checklv");
+                String pcheckoutlv = json.getString("pcheckoutlv");
                 String illlv = json.getString("illlv");
+                String pchechyear = json.getString("pchechyear");
                 try {
                     Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
                     anaallill.setBcheckpnum(Integer.parseInt(bpersonnum));
                     anaallill.setPillnum(Integer.parseInt(bpersonillnum));
-                    anaallill.setBcheckoutlv(checklv);
+                    anaallill.setPcheckoutlv(pcheckoutlv);
                     anaallill.setPilllv(illlv);
+                    anaallill.setPchechyear(pchechyear);
+                    boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入人群患病情况成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入人群患病情况失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入人群患病情况失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("bchildillmodify")) {
+                String id = json.getString("id");
+                String bcheckcnum  = json.getString("bcheckcnum");
+                String cillnum = json.getString("cillnum");
+                String ccheckoutlv = json.getString("ccheckoutlv");
+                String ccheckyear = json.getString("ccheckyear");
+                try {
+                    Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    anaallill.setBcheckcnum(Integer.parseInt(bcheckcnum));
+                    anaallill.setCillnum(Integer.parseInt(cillnum));
+                    anaallill.setCcheckoutlv(ccheckoutlv);
+                    anaallill.setCcheckyear(ccheckyear);
                     boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
                     if(flag){
                         r.setCode(200);
@@ -495,6 +529,102 @@ public class DogApi {
                     r.setCode(500);
                     r.setData(e.getClass().getName() + ":" + e.getMessage());
                     r.setMsg("录入6-12岁儿童患病信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("bloodchildillmodify")) {
+                String id = json.getString("id");
+                String bchecknum  = json.getString("bchecknum");
+                String byangnum = json.getString("byangnum");
+                String bcheckoutlv = json.getString("bcheckoutlv");
+                String bcheckyear = json.getString("bcheckyear");
+                try {
+                    Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    anaallill.setBchecknum(Integer.parseInt(bchecknum));
+                    anaallill.setByangnum(Integer.parseInt(byangnum));
+                    anaallill.setBcheckoutlv(bcheckoutlv);
+                    anaallill.setBcheckyear(bcheckyear);
+                    boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入6-12岁儿童血清学检查情况信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入6-12岁儿童血清学检查情况信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入6-12岁儿童血清学检查情况信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("animalillmodify")) {
+                String id = json.getString("id");
+                String achecknum  = json.getString("achecknum");
+                String aillnum = json.getString("aillnum");
+                String ailllv = json.getString("ailllv");
+                String acheckyear = json.getString("acheckyear");
+                try {
+                    Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    anaallill.setAchecknum(Integer.parseInt(achecknum));
+                    anaallill.setAillnum(Integer.parseInt(aillnum));
+                    anaallill.setAilllv(ailllv);
+                    anaallill.setAcheckyear(acheckyear);
+                    boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入2岁及以下家畜患情况信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入2岁及以下家畜患情况信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入2岁及以下家畜患情况信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("dogillmodify")) {
+                String id = json.getString("id");
+                String mchecknum  = json.getString("mchecknum");
+                String myangnum = json.getString("myangnum");
+                String myanglv = json.getString("myanglv");
+                String mcheckyear = json.getString("mcheckyear");
+                try {
+                    Anaallill anaallill = anaallillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    anaallill.setMchecknum(Integer.parseInt(mchecknum));
+                    anaallill.setMyangnum(Integer.parseInt(myangnum));
+                    anaallill.setMyanglv(myanglv);
+                    anaallill.setMcheckyear(mcheckyear);
+                    boolean flag = anaallillMapper.updateByPrimaryKey(anaallill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入犬感染情况信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入犬感染情况信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入犬感染情况信息失败!");
                     r.setSuccess(false);
                     e.printStackTrace();
                 }

@@ -138,21 +138,19 @@ $(function () {
     $("#a_illmodify").click(function () {
         var id = $('#illid').html();
         //修改录入信息
-        var clicktype = "bpersonillmodify";
-        var bpersonnum = $("#modalinput_bpersonnum").val();
-        var bpersonillnum = $("#modalinput_bpersonillnum").val();
-        var pcheckoutlv = $("#modalinput_checklv").val();
-        var illlv = $("#modalinput_illlv").val();
-        var pchechyear = $("#modalinput_pchechyear").val();
+        var clicktype = "bchildillmodify";
+        var bcheckcnum = $("#modalinput_bpersonnum").val();
+        var cillnum = $("#modalinput_bpersonillnum").val();
+        var ccheckoutlv = $("#modalinput_checklv").val();
+        var ccheckyear = $("#modalinput_pchechyear").val();
 
         var illsenddata = {};
         illsenddata.clicktype = clicktype;
         illsenddata.id = id;
-        illsenddata.bpersonnum = bpersonnum;
-        illsenddata.bpersonillnum = bpersonillnum;
-        illsenddata.pcheckoutlv = pcheckoutlv;
-        illsenddata.illlv = illlv;
-        illsenddata.pchechyear = pchechyear;
+        illsenddata.bcheckcnum = bcheckcnum;
+        illsenddata.cillnum = cillnum;
+        illsenddata.ccheckoutlv = ccheckoutlv;
+        illsenddata.ccheckyear = ccheckyear;
 
         $.ajax({
             url: "/aidog/api/operateapi",
@@ -193,11 +191,11 @@ $(function () {
                         }else{
                             for(var i = 0;i<data.data.data.length;i++){
                                 data.data.data[i].countnum = i+1;
-                                data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
-                                data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
-                                data.data.data[i].pcheckoutlv = data.data.data[i].pcheckoutlv || 0;
-                                data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
-                                data.data.data[i].pchechyear =  data.data.data[i].pchechyear || "--";
+
+                                data.data.data[i].bcheckcnum = data.data.data[i].bcheckcnum || 0;
+                                data.data.data[i].cillnum = data.data.data[i].cillnum || 0;
+                                data.data.data[i].ccheckoutlv = data.data.data[i].ccheckoutlv || 0;
+                                data.data.data[i].ccheckyear =  data.data.data[i].ccheckyear || "--";
                                 data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                             }
                             viewdata = $.extend(true,[],data.data.data);
@@ -232,11 +230,10 @@ $(function () {
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
                         data.data.data[i].countnum = i+1;
-                        data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
-                        data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
-                        data.data.data[i].pcheckoutlv = data.data.data[i].pcheckoutlv || 0;
-                        data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
-                        data.data.data[i].pchechyear =  data.data.data[i].pchechyear || "--";
+                        data.data.data[i].bcheckcnum = data.data.data[i].bcheckcnum || 0;
+                        data.data.data[i].cillnum = data.data.data[i].cillnum || 0;
+                        data.data.data[i].ccheckoutlv = data.data.data[i].ccheckoutlv || 0;
+                        data.data.data[i].ccheckyear =  data.data.data[i].ccheckyear || "--";
                         data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
@@ -285,11 +282,10 @@ $(function () {
                         "columns": [
                             { "data": "countnum","width":"40px" },
                             { "data": "districtName","width":"125px"  },
-                            { "data": "bcheckpnum","width":"85px"},
-                            { "data": "pillnum","width":"75px" },
-                            { "data": "pcheckoutlv","width":"70px" },
-                            { "data": "pilllv" ,"width":"85px"},
-                            { "data": "pchechyear" ,"width":"60px"},
+                            { "data": "bcheckcnum","width":"85px"},
+                            { "data": "cillnum","width":"75px" },
+                            { "data": "ccheckoutlv","width":"70px" },
+                            { "data": "ccheckyear" ,"width":"60px"},
                             { "data": "action" ,"width":"85px"}
                         ],
                         buttons: [
@@ -374,13 +370,13 @@ $(function () {
 })
 
 function modifyIll(obj) {
+
     $('#illid').html(obj.id);
     $("#modalinput_districtname").val(obj.districtName);
-    $("#modalinput_bpersonnum").val(obj.bcheckpnum);
-    $("#modalinput_bpersonillnum").val(obj.pillnum);
-    $("#modalinput_checklv").val(obj.pcheckoutlv);
-    $("#modalinput_illlv").val(obj.pilllv);
-    $("#modalinput_pchechyear").val(obj.pchechyear);
+    $("#modalinput_bpersonnum").val(obj.bcheckcnum);
+    $("#modalinput_bpersonillnum").val(obj.cillnum);
+    $("#modalinput_checklv").val(obj.ccheckoutlv);
+    $("#modalinput_pchechyear").val(obj.ccheckyear);
     $("#illModifyDiv").modal('show');
 }
 

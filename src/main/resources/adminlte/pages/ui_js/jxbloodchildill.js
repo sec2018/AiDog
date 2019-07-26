@@ -123,12 +123,12 @@ $(function () {
 
     $("#modalinput_bpersonillnum").blur(function () {
         if($("#modalinput_bpersonnum").val() == null || $("#modalinput_bpersonnum").val == ""){
-            alert("请先输入B超筛查人数！");
+            alert("请先输入血清学检查份数！");
         }else{
             if(parseInt($("#modalinput_bpersonillnum").val()) == 0){
                 $("#modalinput_checklv").val(0);
             }else if(parseInt($("#modalinput_bpersonillnum").val()) > parseInt($("#modalinput_bpersonnum").val())){
-                alert("患病人数大于筛查人数！");
+                alert("阳性份数大于血清学检查份数！");
             }else{
                 $("#modalinput_checklv").val((($("#modalinput_bpersonillnum").val()*1.00/$("#modalinput_bpersonnum").val())*100).toFixed(2));
             }
@@ -138,21 +138,19 @@ $(function () {
     $("#a_illmodify").click(function () {
         var id = $('#illid').html();
         //修改录入信息
-        var clicktype = "bpersonillmodify";
-        var bpersonnum = $("#modalinput_bpersonnum").val();
-        var bpersonillnum = $("#modalinput_bpersonillnum").val();
-        var pcheckoutlv = $("#modalinput_checklv").val();
-        var illlv = $("#modalinput_illlv").val();
-        var pchechyear = $("#modalinput_pchechyear").val();
+        var clicktype = "bloodchildillmodify";
+        var bchecknum = $("#modalinput_bpersonnum").val();
+        var byangnum = $("#modalinput_bpersonillnum").val();
+        var bcheckoutlv = $("#modalinput_checklv").val();
+        var bcheckyear = $("#modalinput_pchechyear").val();
 
         var illsenddata = {};
         illsenddata.clicktype = clicktype;
         illsenddata.id = id;
-        illsenddata.bpersonnum = bpersonnum;
-        illsenddata.bpersonillnum = bpersonillnum;
-        illsenddata.pcheckoutlv = pcheckoutlv;
-        illsenddata.illlv = illlv;
-        illsenddata.pchechyear = pchechyear;
+        illsenddata.bchecknum = bchecknum;
+        illsenddata.byangnum = byangnum;
+        illsenddata.bcheckoutlv = bcheckoutlv;
+        illsenddata.bcheckyear = bcheckyear;
 
         $.ajax({
             url: "/aidog/api/operateapi",
@@ -193,11 +191,12 @@ $(function () {
                         }else{
                             for(var i = 0;i<data.data.data.length;i++){
                                 data.data.data[i].countnum = i+1;
-                                data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
-                                data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
-                                data.data.data[i].pcheckoutlv = data.data.data[i].pcheckoutlv || 0;
-                                data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
-                                data.data.data[i].pchechyear =  data.data.data[i].pchechyear || "--";
+
+
+                                data.data.data[i].bchecknum = data.data.data[i].bchecknum || 0;
+                                data.data.data[i].byangnum = data.data.data[i].byangnum || 0;
+                                data.data.data[i].bcheckoutlv = data.data.data[i].bcheckoutlv || 0;
+                                data.data.data[i].bcheckyear =  data.data.data[i].bcheckyear || "--";
                                 data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                             }
                             viewdata = $.extend(true,[],data.data.data);
@@ -232,11 +231,10 @@ $(function () {
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
                         data.data.data[i].countnum = i+1;
-                        data.data.data[i].bcheckpnum = data.data.data[i].bcheckpnum || 0;
-                        data.data.data[i].pillnum = data.data.data[i].pillnum || 0;
-                        data.data.data[i].pcheckoutlv = data.data.data[i].pcheckoutlv || 0;
-                        data.data.data[i].pilllv = data.data.data[i].pilllv || 0;
-                        data.data.data[i].pchechyear =  data.data.data[i].pchechyear || "--";
+                        data.data.data[i].bchecknum = data.data.data[i].bchecknum || 0;
+                        data.data.data[i].byangnum = data.data.data[i].byangnum || 0;
+                        data.data.data[i].bcheckoutlv = data.data.data[i].bcheckoutlv || 0;
+                        data.data.data[i].bcheckyear =  data.data.data[i].bcheckyear || "--";
                         data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
@@ -285,11 +283,10 @@ $(function () {
                         "columns": [
                             { "data": "countnum","width":"40px" },
                             { "data": "districtName","width":"125px"  },
-                            { "data": "bcheckpnum","width":"85px"},
-                            { "data": "pillnum","width":"75px" },
-                            { "data": "pcheckoutlv","width":"70px" },
-                            { "data": "pilllv" ,"width":"85px"},
-                            { "data": "pchechyear" ,"width":"60px"},
+                            { "data": "bchecknum","width":"85px"},
+                            { "data": "byangnum","width":"75px" },
+                            { "data": "bcheckoutlv","width":"70px" },
+                            { "data": "bcheckyear" ,"width":"60px"},
                             { "data": "action" ,"width":"85px"}
                         ],
                         buttons: [
@@ -374,13 +371,13 @@ $(function () {
 })
 
 function modifyIll(obj) {
+
     $('#illid').html(obj.id);
     $("#modalinput_districtname").val(obj.districtName);
-    $("#modalinput_bpersonnum").val(obj.bcheckpnum);
-    $("#modalinput_bpersonillnum").val(obj.pillnum);
-    $("#modalinput_checklv").val(obj.pcheckoutlv);
-    $("#modalinput_illlv").val(obj.pilllv);
-    $("#modalinput_pchechyear").val(obj.pchechyear);
+    $("#modalinput_bpersonnum").val(obj.bchecknum);
+    $("#modalinput_bpersonillnum").val(obj.byangnum);
+    $("#modalinput_checklv").val(obj.bcheckoutlv);
+    $("#modalinput_pchechyear").val(obj.bcheckyear);
     $("#illModifyDiv").modal('show');
 }
 
