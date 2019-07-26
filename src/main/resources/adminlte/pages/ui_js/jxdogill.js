@@ -196,7 +196,7 @@ $(function () {
                                 data.data.data[i].myangnum = data.data.data[i].myangnum || 0;
                                 data.data.data[i].myanglv = data.data.data[i].myanglv || 0;
                                 data.data.data[i].mcheckyear =  data.data.data[i].mcheckyear || "--";
-                                data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
+                                data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 基线数据录入</a>";
                             }
                             viewdata = $.extend(true,[],data.data.data);
                             dt.fnAddData(viewdata);
@@ -234,7 +234,7 @@ $(function () {
                         data.data.data[i].myangnum = data.data.data[i].myangnum || 0;
                         data.data.data[i].myanglv = data.data.data[i].myanglv || 0;
                         data.data.data[i].mcheckyear =  data.data.data[i].mcheckyear || "--";
-                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 人群患病情况录入</a>";
+                        data.data.data[i].action = "<a href='javascript:void(0);'onclick='modifyIll("+ JSON.stringify(data.data.data[i]) + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 基线数据录入</a>";
                     }
                     viewdata = $.extend(true,[],data.data.data);
                     dt = $('#datatable').dataTable({
