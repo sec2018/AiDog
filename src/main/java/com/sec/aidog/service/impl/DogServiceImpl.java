@@ -3,9 +3,7 @@ package com.sec.aidog.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sec.aidog.dao.*;
-import com.sec.aidog.model.AnaallillExample;
-import com.sec.aidog.model.AnalyzeillExample;
-import com.sec.aidog.model.DogExample;
+import com.sec.aidog.model.*;
 import com.sec.aidog.pojo.*;
 import com.sec.aidog.service.DogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,12 @@ public class DogServiceImpl implements DogService{
 
     @Autowired
     private AnaallillMapper anaallillMapper;
+
+    @Autowired
+    private ChildcheckMapper childcheckMapper;
+
+    @Autowired
+    private ChildillMapper childillMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
@@ -435,6 +439,108 @@ public class DogServiceImpl implements DogService{
         Map<String, Object> map = new HashMap<String,Object>();
         //每页信息
         map.put("data", illstalist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getChildCheckList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<Childcheck> childchecklist = new ArrayList<>();
+        Childcheck childcheck = null;
+        int count = 1;
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                ChildcheckExample example1 = new ChildcheckExample();
+                childchecklist = childcheckMapper.selectByExample(example1);
+                break;
+            case 2:
+                //省级管理员
+                ChildcheckExample example2 = new ChildcheckExample();
+                example2.createCriteria().andNumLike(districtcode.substring(0,2)+"%");
+                childchecklist = childcheckMapper.selectByExample(example2);
+                break;
+            case 4:
+                //市级管理员
+                ChildcheckExample example3 = new ChildcheckExample();
+                example3.createCriteria().andNumLike(districtcode.substring(0,4)+"%");
+                childchecklist = childcheckMapper.selectByExample(example3);
+                break;
+            case 6:
+                //县级管理员
+                ChildcheckExample example4 = new ChildcheckExample();
+                example4.createCriteria().andNumLike(districtcode.substring(0,6)+"%");
+                childchecklist = childcheckMapper.selectByExample(example4);
+                break;
+            case 9:
+                //乡级管理员
+                ChildcheckExample example5 = new ChildcheckExample();
+                example5.createCriteria().andNumLike(districtcode.substring(0,9)+"%");
+                childchecklist = childcheckMapper.selectByExample(example5);
+                break;
+            case 12:
+                //乡级管理员
+                ChildcheckExample example6 = new ChildcheckExample();
+                example6.createCriteria().andNumEqualTo(districtcode);
+                childchecklist = childcheckMapper.selectByExample(example6);
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", childchecklist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+
+    @Override
+    public Map<String, Object> getChildIllList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<Childill> childilllist = new ArrayList<>();
+        Childill childill = null;
+        int count = 1;
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                ChildillExample example1 = new ChildillExample();
+                childilllist = childillMapper.selectByExample(example1);
+                break;
+            case 2:
+                //省级管理员
+                ChildillExample example2 = new ChildillExample();
+                example2.createCriteria().andNumLike(districtcode.substring(0,2)+"%");
+                childilllist = childillMapper.selectByExample(example2);
+                break;
+            case 4:
+                //市级管理员
+                ChildillExample example3 = new ChildillExample();
+                example3.createCriteria().andNumLike(districtcode.substring(0,4)+"%");
+                childilllist = childillMapper.selectByExample(example3);
+                break;
+            case 6:
+                //县级管理员
+                ChildillExample example4 = new ChildillExample();
+                example4.createCriteria().andNumLike(districtcode.substring(0,6)+"%");
+                childilllist = childillMapper.selectByExample(example4);
+                break;
+            case 9:
+                //乡级管理员
+                ChildillExample example5 = new ChildillExample();
+                example5.createCriteria().andNumLike(districtcode.substring(0,9)+"%");
+                childilllist = childillMapper.selectByExample(example5);
+                break;
+            case 12:
+                //乡级管理员
+                ChildillExample example6 = new ChildillExample();
+                example6.createCriteria().andNumEqualTo(districtcode);
+                childilllist = childillMapper.selectByExample(example6);
+                break;
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", childilllist);
         //管理员总数
         map.put("totalNum", page.getTotal());
         return map;

@@ -22,7 +22,6 @@ $(function () {
     var districtcode = "";
     var level = "";
 
-
     $("#select_province").on('change', function () {
         districtcode = $(this).find('option:selected').val();
         level = "province";

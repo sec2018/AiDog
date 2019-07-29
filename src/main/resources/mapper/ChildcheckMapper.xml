@@ -10,11 +10,14 @@
       <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="classname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="elisa" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="method" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pcr" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="checkres" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="checkperson" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="checkdate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="pcr_sqjqdc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pcr_dfjqdc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pcr_xljqdc" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="note" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
@@ -77,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, num, school, name, age, sex, classname, elisa, pcr, checkres, checkperson, checkdate, 
-    note
+    id, num, school, name, age, sex, classname, method, pcr, checkres, checkperson, checkdate, 
+    pcr_sqjqdc, pcr_dfjqdc, pcr_xljqdc, note
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sec.aidog.model.ChildcheckExample" >
     select
@@ -113,13 +116,15 @@
   <insert id="insert" parameterType="com.sec.aidog.pojo.Childcheck" >
     insert into childcheck (id, num, school, 
       name, age, sex, classname, 
-      elisa, pcr, checkres, 
-      checkperson, checkdate, note
+      method, pcr, checkres, 
+      checkperson, checkdate, pcr_sqjqdc, 
+      pcr_dfjqdc, pcr_xljqdc, note
       )
     values (#{id,jdbcType=INTEGER}, #{num,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, 
-      #{elisa,jdbcType=VARCHAR}, #{pcr,jdbcType=VARCHAR}, #{checkres,jdbcType=VARCHAR}, 
-      #{checkperson,jdbcType=VARCHAR}, #{checkdate,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR}
+      #{method,jdbcType=VARCHAR}, #{pcr,jdbcType=VARCHAR}, #{checkres,jdbcType=VARCHAR}, 
+      #{checkperson,jdbcType=VARCHAR}, #{checkdate,jdbcType=TIMESTAMP}, #{pcrSqjqdc,jdbcType=VARCHAR}, 
+      #{pcrDfjqdc,jdbcType=VARCHAR}, #{pcrXljqdc,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sec.aidog.pojo.Childcheck" >
@@ -146,8 +151,8 @@
       <if test="classname != null" >
         classname,
       </if>
-      <if test="elisa != null" >
-        elisa,
+      <if test="method != null" >
+        method,
       </if>
       <if test="pcr != null" >
         pcr,
@@ -160,6 +165,15 @@
       </if>
       <if test="checkdate != null" >
         checkdate,
+      </if>
+      <if test="pcrSqjqdc != null" >
+        pcr_sqjqdc,
+      </if>
+      <if test="pcrDfjqdc != null" >
+        pcr_dfjqdc,
+      </if>
+      <if test="pcrXljqdc != null" >
+        pcr_xljqdc,
       </if>
       <if test="note != null" >
         note,
@@ -187,8 +201,8 @@
       <if test="classname != null" >
         #{classname,jdbcType=VARCHAR},
       </if>
-      <if test="elisa != null" >
-        #{elisa,jdbcType=VARCHAR},
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
       </if>
       <if test="pcr != null" >
         #{pcr,jdbcType=VARCHAR},
@@ -201,6 +215,15 @@
       </if>
       <if test="checkdate != null" >
         #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcrSqjqdc != null" >
+        #{pcrSqjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrDfjqdc != null" >
+        #{pcrDfjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrXljqdc != null" >
+        #{pcrXljqdc,jdbcType=VARCHAR},
       </if>
       <if test="note != null" >
         #{note,jdbcType=VARCHAR},
@@ -237,8 +260,8 @@
       <if test="record.classname != null" >
         classname = #{record.classname,jdbcType=VARCHAR},
       </if>
-      <if test="record.elisa != null" >
-        elisa = #{record.elisa,jdbcType=VARCHAR},
+      <if test="record.method != null" >
+        method = #{record.method,jdbcType=VARCHAR},
       </if>
       <if test="record.pcr != null" >
         pcr = #{record.pcr,jdbcType=VARCHAR},
@@ -251,6 +274,15 @@
       </if>
       <if test="record.checkdate != null" >
         checkdate = #{record.checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pcrSqjqdc != null" >
+        pcr_sqjqdc = #{record.pcrSqjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcrDfjqdc != null" >
+        pcr_dfjqdc = #{record.pcrDfjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcrXljqdc != null" >
+        pcr_xljqdc = #{record.pcrXljqdc,jdbcType=VARCHAR},
       </if>
       <if test="record.note != null" >
         note = #{record.note,jdbcType=VARCHAR},
@@ -269,11 +301,14 @@
       age = #{record.age,jdbcType=INTEGER},
       sex = #{record.sex,jdbcType=VARCHAR},
       classname = #{record.classname,jdbcType=VARCHAR},
-      elisa = #{record.elisa,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
       pcr = #{record.pcr,jdbcType=VARCHAR},
       checkres = #{record.checkres,jdbcType=VARCHAR},
       checkperson = #{record.checkperson,jdbcType=VARCHAR},
       checkdate = #{record.checkdate,jdbcType=TIMESTAMP},
+      pcr_sqjqdc = #{record.pcrSqjqdc,jdbcType=VARCHAR},
+      pcr_dfjqdc = #{record.pcrDfjqdc,jdbcType=VARCHAR},
+      pcr_xljqdc = #{record.pcrXljqdc,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -300,8 +335,8 @@
       <if test="classname != null" >
         classname = #{classname,jdbcType=VARCHAR},
       </if>
-      <if test="elisa != null" >
-        elisa = #{elisa,jdbcType=VARCHAR},
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
       </if>
       <if test="pcr != null" >
         pcr = #{pcr,jdbcType=VARCHAR},
@@ -314,6 +349,15 @@
       </if>
       <if test="checkdate != null" >
         checkdate = #{checkdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pcrSqjqdc != null" >
+        pcr_sqjqdc = #{pcrSqjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrDfjqdc != null" >
+        pcr_dfjqdc = #{pcrDfjqdc,jdbcType=VARCHAR},
+      </if>
+      <if test="pcrXljqdc != null" >
+        pcr_xljqdc = #{pcrXljqdc,jdbcType=VARCHAR},
       </if>
       <if test="note != null" >
         note = #{note,jdbcType=VARCHAR},
@@ -329,11 +373,14 @@
       age = #{age,jdbcType=INTEGER},
       sex = #{sex,jdbcType=VARCHAR},
       classname = #{classname,jdbcType=VARCHAR},
-      elisa = #{elisa,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
       pcr = #{pcr,jdbcType=VARCHAR},
       checkres = #{checkres,jdbcType=VARCHAR},
       checkperson = #{checkperson,jdbcType=VARCHAR},
       checkdate = #{checkdate,jdbcType=TIMESTAMP},
+      pcr_sqjqdc = #{pcrSqjqdc,jdbcType=VARCHAR},
+      pcr_dfjqdc = #{pcrDfjqdc,jdbcType=VARCHAR},
+      pcr_xljqdc = #{pcrXljqdc,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

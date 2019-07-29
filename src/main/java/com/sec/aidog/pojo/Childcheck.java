@@ -17,7 +17,7 @@ public class Childcheck {
 
     private String classname;
 
-    private String elisa;
+    private String method;
 
     private String pcr;
 
@@ -27,9 +27,15 @@ public class Childcheck {
 
     private Date checkdate;
 
+    private String pcrSqjqdc;
+
+    private String pcrDfjqdc;
+
+    private String pcrXljqdc;
+
     private String note;
 
-    public Childcheck(Integer id, String num, String school, String name, Integer age, String sex, String classname, String elisa, String pcr, String checkres, String checkperson, Date checkdate, String note) {
+    public Childcheck(Integer id, String num, String school, String name, Integer age, String sex, String classname, String method, String pcr, String checkres, String checkperson, Date checkdate, String pcrSqjqdc, String pcrDfjqdc, String pcrXljqdc, String note) {
         this.id = id;
         this.num = num;
         this.school = school;
@@ -37,11 +43,14 @@ public class Childcheck {
         this.age = age;
         this.sex = sex;
         this.classname = classname;
-        this.elisa = elisa;
+        this.method = method;
         this.pcr = pcr;
         this.checkres = checkres;
         this.checkperson = checkperson;
         this.checkdate = checkdate;
+        this.pcrSqjqdc = pcrSqjqdc;
+        this.pcrDfjqdc = pcrDfjqdc;
+        this.pcrXljqdc = pcrXljqdc;
         this.note = note;
     }
 
@@ -105,12 +114,12 @@ public class Childcheck {
         this.classname = classname == null ? null : classname.trim();
     }
 
-    public String getElisa() {
-        return elisa;
+    public String getMethod() {
+        return method;
     }
 
-    public void setElisa(String elisa) {
-        this.elisa = elisa == null ? null : elisa.trim();
+    public void setMethod(String method) {
+        this.method = method == null ? null : method.trim();
     }
 
     public String getPcr() {
@@ -143,6 +152,30 @@ public class Childcheck {
 
     public void setCheckdate(Date checkdate) {
         this.checkdate = checkdate;
+    }
+
+    public String getPcrSqjqdc() {
+        return pcrSqjqdc;
+    }
+
+    public void setPcrSqjqdc(String pcrSqjqdc) {
+        this.pcrSqjqdc = pcrSqjqdc == null ? null : pcrSqjqdc.trim();
+    }
+
+    public String getPcrDfjqdc() {
+        return pcrDfjqdc;
+    }
+
+    public void setPcrDfjqdc(String pcrDfjqdc) {
+        this.pcrDfjqdc = pcrDfjqdc == null ? null : pcrDfjqdc.trim();
+    }
+
+    public String getPcrXljqdc() {
+        return pcrXljqdc;
+    }
+
+    public void setPcrXljqdc(String pcrXljqdc) {
+        this.pcrXljqdc = pcrXljqdc == null ? null : pcrXljqdc.trim();
     }
 
     public String getNote() {

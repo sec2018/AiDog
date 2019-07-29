@@ -575,73 +575,73 @@ public class ChildcheckExample {
             return (Criteria) this;
         }
 
-        public Criteria andElisaIsNull() {
-            addCriterion("elisa is null");
+        public Criteria andMethodIsNull() {
+            addCriterion("method is null");
             return (Criteria) this;
         }
 
-        public Criteria andElisaIsNotNull() {
-            addCriterion("elisa is not null");
+        public Criteria andMethodIsNotNull() {
+            addCriterion("method is not null");
             return (Criteria) this;
         }
 
-        public Criteria andElisaEqualTo(String value) {
-            addCriterion("elisa =", value, "elisa");
+        public Criteria andMethodEqualTo(String value) {
+            addCriterion("method =", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaNotEqualTo(String value) {
-            addCriterion("elisa <>", value, "elisa");
+        public Criteria andMethodNotEqualTo(String value) {
+            addCriterion("method <>", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaGreaterThan(String value) {
-            addCriterion("elisa >", value, "elisa");
+        public Criteria andMethodGreaterThan(String value) {
+            addCriterion("method >", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaGreaterThanOrEqualTo(String value) {
-            addCriterion("elisa >=", value, "elisa");
+        public Criteria andMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("method >=", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaLessThan(String value) {
-            addCriterion("elisa <", value, "elisa");
+        public Criteria andMethodLessThan(String value) {
+            addCriterion("method <", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaLessThanOrEqualTo(String value) {
-            addCriterion("elisa <=", value, "elisa");
+        public Criteria andMethodLessThanOrEqualTo(String value) {
+            addCriterion("method <=", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaLike(String value) {
-            addCriterion("elisa like", value, "elisa");
+        public Criteria andMethodLike(String value) {
+            addCriterion("method like", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaNotLike(String value) {
-            addCriterion("elisa not like", value, "elisa");
+        public Criteria andMethodNotLike(String value) {
+            addCriterion("method not like", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaIn(List<String> values) {
-            addCriterion("elisa in", values, "elisa");
+        public Criteria andMethodIn(List<String> values) {
+            addCriterion("method in", values, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaNotIn(List<String> values) {
-            addCriterion("elisa not in", values, "elisa");
+        public Criteria andMethodNotIn(List<String> values) {
+            addCriterion("method not in", values, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaBetween(String value1, String value2) {
-            addCriterion("elisa between", value1, value2, "elisa");
+        public Criteria andMethodBetween(String value1, String value2) {
+            addCriterion("method between", value1, value2, "method");
             return (Criteria) this;
         }
 
-        public Criteria andElisaNotBetween(String value1, String value2) {
-            addCriterion("elisa not between", value1, value2, "elisa");
+        public Criteria andMethodNotBetween(String value1, String value2) {
+            addCriterion("method not between", value1, value2, "method");
             return (Criteria) this;
         }
 
@@ -912,6 +912,216 @@ public class ChildcheckExample {
 
         public Criteria andCheckdateNotBetween(Date value1, Date value2) {
             addCriterion("checkdate not between", value1, value2, "checkdate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIsNull() {
+            addCriterion("pcr_sqjqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIsNotNull() {
+            addCriterion("pcr_sqjqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcEqualTo(String value) {
+            addCriterion("pcr_sqjqdc =", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotEqualTo(String value) {
+            addCriterion("pcr_sqjqdc <>", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcGreaterThan(String value) {
+            addCriterion("pcr_sqjqdc >", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_sqjqdc >=", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLessThan(String value) {
+            addCriterion("pcr_sqjqdc <", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_sqjqdc <=", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLike(String value) {
+            addCriterion("pcr_sqjqdc like", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotLike(String value) {
+            addCriterion("pcr_sqjqdc not like", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIn(List<String> values) {
+            addCriterion("pcr_sqjqdc in", values, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotIn(List<String> values) {
+            addCriterion("pcr_sqjqdc not in", values, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcBetween(String value1, String value2) {
+            addCriterion("pcr_sqjqdc between", value1, value2, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_sqjqdc not between", value1, value2, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIsNull() {
+            addCriterion("pcr_dfjqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIsNotNull() {
+            addCriterion("pcr_dfjqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcEqualTo(String value) {
+            addCriterion("pcr_dfjqdc =", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotEqualTo(String value) {
+            addCriterion("pcr_dfjqdc <>", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcGreaterThan(String value) {
+            addCriterion("pcr_dfjqdc >", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_dfjqdc >=", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLessThan(String value) {
+            addCriterion("pcr_dfjqdc <", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_dfjqdc <=", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLike(String value) {
+            addCriterion("pcr_dfjqdc like", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotLike(String value) {
+            addCriterion("pcr_dfjqdc not like", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIn(List<String> values) {
+            addCriterion("pcr_dfjqdc in", values, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotIn(List<String> values) {
+            addCriterion("pcr_dfjqdc not in", values, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcBetween(String value1, String value2) {
+            addCriterion("pcr_dfjqdc between", value1, value2, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_dfjqdc not between", value1, value2, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIsNull() {
+            addCriterion("pcr_xljqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIsNotNull() {
+            addCriterion("pcr_xljqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcEqualTo(String value) {
+            addCriterion("pcr_xljqdc =", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotEqualTo(String value) {
+            addCriterion("pcr_xljqdc <>", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcGreaterThan(String value) {
+            addCriterion("pcr_xljqdc >", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_xljqdc >=", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLessThan(String value) {
+            addCriterion("pcr_xljqdc <", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_xljqdc <=", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLike(String value) {
+            addCriterion("pcr_xljqdc like", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotLike(String value) {
+            addCriterion("pcr_xljqdc not like", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIn(List<String> values) {
+            addCriterion("pcr_xljqdc in", values, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotIn(List<String> values) {
+            addCriterion("pcr_xljqdc not in", values, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcBetween(String value1, String value2) {
+            addCriterion("pcr_xljqdc between", value1, value2, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_xljqdc not between", value1, value2, "pcrXljqdc");
             return (Criteria) this;
         }
 

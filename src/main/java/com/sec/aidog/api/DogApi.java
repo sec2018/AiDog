@@ -73,6 +73,15 @@ public class DogApi {
     @Autowired
     private AnaallillMapper anaallillMapper;
 
+    @Autowired
+    private ChildcheckMapper childcheckMapper;
+
+    @Autowired
+    private ChildillMapper childillMapper;
+
+    @Autowired
+    private CheckresMapper checkresMapper;
+
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -625,6 +634,152 @@ public class DogApi {
                     r.setCode(500);
                     r.setData(e.getClass().getName() + ":" + e.getMessage());
                     r.setMsg("录入犬感染情况信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("addchildcheck")) {
+                String districtcode = json.getString("districtcode");
+                String school  = json.getString("school");
+                String name = json.getString("name");
+                String age = json.getString("age");
+                String classname = json.getString("classname");
+                String sex = json.getString("sex");
+                try {
+                    Childcheck childcheck = new Childcheck();
+                    childcheck.setNum(districtcode);
+                    childcheck.setSchool(school);
+                    childcheck.setName(name);
+                    childcheck.setAge(Integer.parseInt(age));
+                    childcheck.setClassname(classname);
+                    childcheck.setSex(sex);
+                    boolean flag = childcheckMapper.insert(childcheck) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("新增儿童信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("新增儿童信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("新增儿童信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("modifychildcheck")) {
+                String id  = json.getString("id");
+                String sex = json.getString("sex");
+                String checkdate = json.getString("checkdate");
+                String res = json.getString("checkres");
+                String checkperson = json.getString("checkperson");
+                String checkmethod = json.getString("method");
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                    Childcheck childcheck = childcheckMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    childcheck.setCheckres(res);
+                    childcheck.setMethod(checkmethod);
+                    if(checkmethod.equals("PCR") && res.equals("阳性")){
+                        String PcrSqjqdc = json.getString("PcrSqjqdc");
+                        String PcrDfjqdc = json.getString("PcrDfjqdc");
+                        String PcrXljqdc = json.getString("PcrXljqdc");
+                        childcheck.setPcrSqjqdc(PcrSqjqdc);
+                        childcheck.setPcrDfjqdc(PcrDfjqdc);
+                        childcheck.setPcrXljqdc(PcrXljqdc);
+                    }
+                    childcheck.setSex(sex);
+                    childcheck.setCheckdate(format.parse(checkdate));
+                    childcheck.setCheckperson(checkperson);
+                    boolean flag = childcheckMapper.updateByPrimaryKey(childcheck) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入儿童检测信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入儿童检测信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入儿童检测信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("addchildill")) {
+                String districtcode = json.getString("districtcode");
+                String school  = json.getString("school");
+                String name = json.getString("name");
+                String age = json.getString("age");
+                String classname = json.getString("classname");
+                String sex = json.getString("sex");
+                try {
+                    Childill childill = new Childill();
+                    childill.setNum(districtcode);
+                    childill.setSchool(school);
+                    childill.setName(name);
+                    childill.setAge(Integer.parseInt(age));
+                    childill.setClassname(classname);
+                    childill.setSex(sex);
+                    boolean flag = childillMapper.insert(childill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("新增儿童信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("新增儿童信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("新增儿童信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("modifychildill")) {
+                String id  = json.getString("id");
+                String sex = json.getString("sex");
+                String checkdate = json.getString("checkdate");
+                String bcheckres = json.getString("bcheckres");
+                String checkperson = json.getString("checkperson");
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                    Childill childill = childillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    childill.setCheckdate(format.parse(checkdate));
+                    childill.setBcheckres(bcheckres);
+                    childill.setCheckperson(checkperson);
+                    childill.setSex(sex);
+                    boolean flag = childillMapper.updateByPrimaryKey(childill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入儿童检测结果成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入儿童检测结果失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("新增儿童信息失败!");
                     r.setSuccess(false);
                     e.printStackTrace();
                 }
