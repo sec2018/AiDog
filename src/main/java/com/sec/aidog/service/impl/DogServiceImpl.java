@@ -48,6 +48,9 @@ public class DogServiceImpl implements DogService{
     @Autowired
     private ChildillMapper childillMapper;
 
+    @Autowired
+    private AnimalillMapper animalillMapper;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
     public Dog addDog(String username, String dogname, String dogsex, String dogbelonghamlet, String ownerhamletcode, int dogownerid,
@@ -481,7 +484,7 @@ public class DogServiceImpl implements DogService{
                 childchecklist = childcheckMapper.selectByExample(example5);
                 break;
             case 12:
-                //乡级管理员
+                //村级管理员
                 ChildcheckExample example6 = new ChildcheckExample();
                 example6.createCriteria().andNumEqualTo(districtcode);
                 childchecklist = childcheckMapper.selectByExample(example6);
@@ -489,6 +492,57 @@ public class DogServiceImpl implements DogService{
         Map<String, Object> map = new HashMap<String,Object>();
         //每页信息
         map.put("data", childchecklist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
+
+    @Override
+    public Map<String, Object> getAnimalillList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<Animalill> animalillList = new ArrayList<>();
+        Animalill animalill = null;
+        int count = 1;
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                AnimalillExample example1 = new AnimalillExample();
+                animalillList = animalillMapper.selectByExample(example1);
+                break;
+            case 2:
+                //省级管理员
+                AnimalillExample example2 = new AnimalillExample();
+                example2.createCriteria().andNumLike(districtcode.substring(0,2)+"%");
+                animalillList = animalillMapper.selectByExample(example2);
+                break;
+            case 4:
+                //市级管理员
+                AnimalillExample example3 = new AnimalillExample();
+                example3.createCriteria().andNumLike(districtcode.substring(0,4)+"%");
+                animalillList = animalillMapper.selectByExample(example3);
+                break;
+            case 6:
+                //县级管理员
+                AnimalillExample example4 = new AnimalillExample();
+                example4.createCriteria().andNumLike(districtcode.substring(0,6)+"%");
+                animalillList = animalillMapper.selectByExample(example4);
+                break;
+            case 9:
+                //乡级管理员
+                AnimalillExample example5 = new AnimalillExample();
+                example5.createCriteria().andNumLike(districtcode.substring(0,9)+"%");
+                animalillList = animalillMapper.selectByExample(example5);
+                break;
+            case 12:
+                //村级管理员
+                AnimalillExample example6 = new AnimalillExample();
+                example6.createCriteria().andNumEqualTo(districtcode);
+                animalillList = animalillMapper.selectByExample(example6);
+        }
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", animalillList);
         //管理员总数
         map.put("totalNum", page.getTotal());
         return map;
@@ -532,7 +586,7 @@ public class DogServiceImpl implements DogService{
                 childilllist = childillMapper.selectByExample(example5);
                 break;
             case 12:
-                //乡级管理员
+                //村级管理员
                 ChildillExample example6 = new ChildillExample();
                 example6.createCriteria().andNumEqualTo(districtcode);
                 childilllist = childillMapper.selectByExample(example6);

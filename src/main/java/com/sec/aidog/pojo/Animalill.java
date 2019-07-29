@@ -17,9 +17,21 @@ public class Animalill {
 
     private Integer age;
 
-    private String eyecheck;
+    private String method;
 
     private String pcr;
+
+    private String pcrSqjqdc;
+
+    private String pcrDfjqdc;
+
+    private String pcrXljqdc;
+
+    private String eyeIllplace;
+
+    private String eyeSize;
+
+    private Integer eyeNum;
 
     private String checkres;
 
@@ -29,7 +41,7 @@ public class Animalill {
 
     private String note;
 
-    public Animalill(Integer id, String num, String killplace, String code, String type, String sex, Integer age, String eyecheck, String pcr, String checkres, String checkperson, Date checkdate, String note) {
+    public Animalill(Integer id, String num, String killplace, String code, String type, String sex, Integer age, String method, String pcr, String pcrSqjqdc, String pcrDfjqdc, String pcrXljqdc, String eyeIllplace, String eyeSize, Integer eyeNum, String checkres, String checkperson, Date checkdate, String note) {
         this.id = id;
         this.num = num;
         this.killplace = killplace;
@@ -37,8 +49,14 @@ public class Animalill {
         this.type = type;
         this.sex = sex;
         this.age = age;
-        this.eyecheck = eyecheck;
+        this.method = method;
         this.pcr = pcr;
+        this.pcrSqjqdc = pcrSqjqdc;
+        this.pcrDfjqdc = pcrDfjqdc;
+        this.pcrXljqdc = pcrXljqdc;
+        this.eyeIllplace = eyeIllplace;
+        this.eyeSize = eyeSize;
+        this.eyeNum = eyeNum;
         this.checkres = checkres;
         this.checkperson = checkperson;
         this.checkdate = checkdate;
@@ -105,12 +123,12 @@ public class Animalill {
         this.age = age;
     }
 
-    public String getEyecheck() {
-        return eyecheck;
+    public String getMethod() {
+        return method;
     }
 
-    public void setEyecheck(String eyecheck) {
-        this.eyecheck = eyecheck == null ? null : eyecheck.trim();
+    public void setMethod(String method) {
+        this.method = method == null ? null : method.trim();
     }
 
     public String getPcr() {
@@ -119,6 +137,54 @@ public class Animalill {
 
     public void setPcr(String pcr) {
         this.pcr = pcr == null ? null : pcr.trim();
+    }
+
+    public String getPcrSqjqdc() {
+        return pcrSqjqdc;
+    }
+
+    public void setPcrSqjqdc(String pcrSqjqdc) {
+        this.pcrSqjqdc = pcrSqjqdc == null ? null : pcrSqjqdc.trim();
+    }
+
+    public String getPcrDfjqdc() {
+        return pcrDfjqdc;
+    }
+
+    public void setPcrDfjqdc(String pcrDfjqdc) {
+        this.pcrDfjqdc = pcrDfjqdc == null ? null : pcrDfjqdc.trim();
+    }
+
+    public String getPcrXljqdc() {
+        return pcrXljqdc;
+    }
+
+    public void setPcrXljqdc(String pcrXljqdc) {
+        this.pcrXljqdc = pcrXljqdc == null ? null : pcrXljqdc.trim();
+    }
+
+    public String getEyeIllplace() {
+        return eyeIllplace;
+    }
+
+    public void setEyeIllplace(String eyeIllplace) {
+        this.eyeIllplace = eyeIllplace == null ? null : eyeIllplace.trim();
+    }
+
+    public String getEyeSize() {
+        return eyeSize;
+    }
+
+    public void setEyeSize(String eyeSize) {
+        this.eyeSize = eyeSize == null ? null : eyeSize.trim();
+    }
+
+    public Integer getEyeNum() {
+        return eyeNum;
+    }
+
+    public void setEyeNum(Integer eyeNum) {
+        this.eyeNum = eyeNum;
     }
 
     public String getCheckres() {

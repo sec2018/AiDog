@@ -63,6 +63,6 @@
                          targetProject="src/main/java" type="XMLMAPPER">
         <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
-    <table tableName="childcheck"></table>
+    <table tableName="animalill"></table>
 </context>
 </generatorConfiguration>

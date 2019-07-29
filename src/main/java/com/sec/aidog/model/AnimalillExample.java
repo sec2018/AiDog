@@ -575,73 +575,73 @@ public class AnimalillExample {
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckIsNull() {
-            addCriterion("eyecheck is null");
+        public Criteria andMethodIsNull() {
+            addCriterion("method is null");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckIsNotNull() {
-            addCriterion("eyecheck is not null");
+        public Criteria andMethodIsNotNull() {
+            addCriterion("method is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckEqualTo(String value) {
-            addCriterion("eyecheck =", value, "eyecheck");
+        public Criteria andMethodEqualTo(String value) {
+            addCriterion("method =", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckNotEqualTo(String value) {
-            addCriterion("eyecheck <>", value, "eyecheck");
+        public Criteria andMethodNotEqualTo(String value) {
+            addCriterion("method <>", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckGreaterThan(String value) {
-            addCriterion("eyecheck >", value, "eyecheck");
+        public Criteria andMethodGreaterThan(String value) {
+            addCriterion("method >", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckGreaterThanOrEqualTo(String value) {
-            addCriterion("eyecheck >=", value, "eyecheck");
+        public Criteria andMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("method >=", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckLessThan(String value) {
-            addCriterion("eyecheck <", value, "eyecheck");
+        public Criteria andMethodLessThan(String value) {
+            addCriterion("method <", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckLessThanOrEqualTo(String value) {
-            addCriterion("eyecheck <=", value, "eyecheck");
+        public Criteria andMethodLessThanOrEqualTo(String value) {
+            addCriterion("method <=", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckLike(String value) {
-            addCriterion("eyecheck like", value, "eyecheck");
+        public Criteria andMethodLike(String value) {
+            addCriterion("method like", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckNotLike(String value) {
-            addCriterion("eyecheck not like", value, "eyecheck");
+        public Criteria andMethodNotLike(String value) {
+            addCriterion("method not like", value, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckIn(List<String> values) {
-            addCriterion("eyecheck in", values, "eyecheck");
+        public Criteria andMethodIn(List<String> values) {
+            addCriterion("method in", values, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckNotIn(List<String> values) {
-            addCriterion("eyecheck not in", values, "eyecheck");
+        public Criteria andMethodNotIn(List<String> values) {
+            addCriterion("method not in", values, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckBetween(String value1, String value2) {
-            addCriterion("eyecheck between", value1, value2, "eyecheck");
+        public Criteria andMethodBetween(String value1, String value2) {
+            addCriterion("method between", value1, value2, "method");
             return (Criteria) this;
         }
 
-        public Criteria andEyecheckNotBetween(String value1, String value2) {
-            addCriterion("eyecheck not between", value1, value2, "eyecheck");
+        public Criteria andMethodNotBetween(String value1, String value2) {
+            addCriterion("method not between", value1, value2, "method");
             return (Criteria) this;
         }
 
@@ -712,6 +712,416 @@ public class AnimalillExample {
 
         public Criteria andPcrNotBetween(String value1, String value2) {
             addCriterion("pcr not between", value1, value2, "pcr");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIsNull() {
+            addCriterion("pcr_sqjqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIsNotNull() {
+            addCriterion("pcr_sqjqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcEqualTo(String value) {
+            addCriterion("pcr_sqjqdc =", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotEqualTo(String value) {
+            addCriterion("pcr_sqjqdc <>", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcGreaterThan(String value) {
+            addCriterion("pcr_sqjqdc >", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_sqjqdc >=", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLessThan(String value) {
+            addCriterion("pcr_sqjqdc <", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_sqjqdc <=", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcLike(String value) {
+            addCriterion("pcr_sqjqdc like", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotLike(String value) {
+            addCriterion("pcr_sqjqdc not like", value, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcIn(List<String> values) {
+            addCriterion("pcr_sqjqdc in", values, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotIn(List<String> values) {
+            addCriterion("pcr_sqjqdc not in", values, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcBetween(String value1, String value2) {
+            addCriterion("pcr_sqjqdc between", value1, value2, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrSqjqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_sqjqdc not between", value1, value2, "pcrSqjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIsNull() {
+            addCriterion("pcr_dfjqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIsNotNull() {
+            addCriterion("pcr_dfjqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcEqualTo(String value) {
+            addCriterion("pcr_dfjqdc =", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotEqualTo(String value) {
+            addCriterion("pcr_dfjqdc <>", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcGreaterThan(String value) {
+            addCriterion("pcr_dfjqdc >", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_dfjqdc >=", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLessThan(String value) {
+            addCriterion("pcr_dfjqdc <", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_dfjqdc <=", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcLike(String value) {
+            addCriterion("pcr_dfjqdc like", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotLike(String value) {
+            addCriterion("pcr_dfjqdc not like", value, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcIn(List<String> values) {
+            addCriterion("pcr_dfjqdc in", values, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotIn(List<String> values) {
+            addCriterion("pcr_dfjqdc not in", values, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcBetween(String value1, String value2) {
+            addCriterion("pcr_dfjqdc between", value1, value2, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrDfjqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_dfjqdc not between", value1, value2, "pcrDfjqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIsNull() {
+            addCriterion("pcr_xljqdc is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIsNotNull() {
+            addCriterion("pcr_xljqdc is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcEqualTo(String value) {
+            addCriterion("pcr_xljqdc =", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotEqualTo(String value) {
+            addCriterion("pcr_xljqdc <>", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcGreaterThan(String value) {
+            addCriterion("pcr_xljqdc >", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcGreaterThanOrEqualTo(String value) {
+            addCriterion("pcr_xljqdc >=", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLessThan(String value) {
+            addCriterion("pcr_xljqdc <", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLessThanOrEqualTo(String value) {
+            addCriterion("pcr_xljqdc <=", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcLike(String value) {
+            addCriterion("pcr_xljqdc like", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotLike(String value) {
+            addCriterion("pcr_xljqdc not like", value, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcIn(List<String> values) {
+            addCriterion("pcr_xljqdc in", values, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotIn(List<String> values) {
+            addCriterion("pcr_xljqdc not in", values, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcBetween(String value1, String value2) {
+            addCriterion("pcr_xljqdc between", value1, value2, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andPcrXljqdcNotBetween(String value1, String value2) {
+            addCriterion("pcr_xljqdc not between", value1, value2, "pcrXljqdc");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceIsNull() {
+            addCriterion("eye_illplace is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceIsNotNull() {
+            addCriterion("eye_illplace is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceEqualTo(String value) {
+            addCriterion("eye_illplace =", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceNotEqualTo(String value) {
+            addCriterion("eye_illplace <>", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceGreaterThan(String value) {
+            addCriterion("eye_illplace >", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceGreaterThanOrEqualTo(String value) {
+            addCriterion("eye_illplace >=", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceLessThan(String value) {
+            addCriterion("eye_illplace <", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceLessThanOrEqualTo(String value) {
+            addCriterion("eye_illplace <=", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceLike(String value) {
+            addCriterion("eye_illplace like", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceNotLike(String value) {
+            addCriterion("eye_illplace not like", value, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceIn(List<String> values) {
+            addCriterion("eye_illplace in", values, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceNotIn(List<String> values) {
+            addCriterion("eye_illplace not in", values, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceBetween(String value1, String value2) {
+            addCriterion("eye_illplace between", value1, value2, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeIllplaceNotBetween(String value1, String value2) {
+            addCriterion("eye_illplace not between", value1, value2, "eyeIllplace");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeIsNull() {
+            addCriterion("eye_size is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeIsNotNull() {
+            addCriterion("eye_size is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeEqualTo(String value) {
+            addCriterion("eye_size =", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeNotEqualTo(String value) {
+            addCriterion("eye_size <>", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeGreaterThan(String value) {
+            addCriterion("eye_size >", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeGreaterThanOrEqualTo(String value) {
+            addCriterion("eye_size >=", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeLessThan(String value) {
+            addCriterion("eye_size <", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeLessThanOrEqualTo(String value) {
+            addCriterion("eye_size <=", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeLike(String value) {
+            addCriterion("eye_size like", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeNotLike(String value) {
+            addCriterion("eye_size not like", value, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeIn(List<String> values) {
+            addCriterion("eye_size in", values, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeNotIn(List<String> values) {
+            addCriterion("eye_size not in", values, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeBetween(String value1, String value2) {
+            addCriterion("eye_size between", value1, value2, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeSizeNotBetween(String value1, String value2) {
+            addCriterion("eye_size not between", value1, value2, "eyeSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumIsNull() {
+            addCriterion("eye_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumIsNotNull() {
+            addCriterion("eye_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumEqualTo(Integer value) {
+            addCriterion("eye_num =", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumNotEqualTo(Integer value) {
+            addCriterion("eye_num <>", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumGreaterThan(Integer value) {
+            addCriterion("eye_num >", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("eye_num >=", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumLessThan(Integer value) {
+            addCriterion("eye_num <", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumLessThanOrEqualTo(Integer value) {
+            addCriterion("eye_num <=", value, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumIn(List<Integer> values) {
+            addCriterion("eye_num in", values, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumNotIn(List<Integer> values) {
+            addCriterion("eye_num not in", values, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumBetween(Integer value1, Integer value2) {
+            addCriterion("eye_num between", value1, value2, "eyeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andEyeNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("eye_num not between", value1, value2, "eyeNum");
             return (Criteria) this;
         }
 

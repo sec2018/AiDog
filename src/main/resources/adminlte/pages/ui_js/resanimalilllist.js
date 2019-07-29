@@ -133,6 +133,11 @@ $(function () {
         }else{
             $(".pcryang").css("display","none");
         }
+        if($("#regmodalselect_method").find('option:selected').text() == "视觉触检" && $(this).find('option:selected').text()  == "阳性"){
+            $(".eyeyang").css("display","block");
+        }else{
+            $(".eyeyang").css("display","none");
+        }
     });
 
     $("#regmodalselect_method").on('change', function () {
@@ -141,19 +146,10 @@ $(function () {
         }else{
             $(".pcryang").css("display","none");
         }
-    });
-
-    $("#modalinput_bpersonillnum").blur(function () {
-        if($("#modalinput_bpersonnum").val() == null || $("#modalinput_bpersonnum").val == ""){
-            alert("请先输入B超筛查人数！");
+        if($(this).find('option:selected').text() == "PCR" && $("#regmodalselect_checkres").find('option:selected').text()  == "阳性"){
+            $(".eyeyang").css("display","block");
         }else{
-            if(parseInt($("#modalinput_bpersonillnum").val()) == 0){
-                $("#modalinput_checklv").val(0);
-            }else if(parseInt($("#modalinput_bpersonillnum").val()) > parseInt($("#modalinput_bpersonnum").val())){
-                alert("患病人数大于筛查人数！");
-            }else{
-                $("#modalinput_checklv").val((($("#modalinput_bpersonillnum").val()*1.00/$("#modalinput_bpersonnum").val())*100).toFixed(2));
-            }
+            $(".eyeyang").css("display","none");
         }
     });
 
@@ -163,24 +159,24 @@ $(function () {
         $("#addNew").modal('show');
     });
 
-    $("#a_addchildcheck").click(function () {
+    $("#a_addanimalill").click(function () {
         // if(viewdata == null || viewdata){
         //     alert("请先获取当前区域儿童列表！");
         //     return;
         // }
-        var clicktype = "addchildcheck";
-        var school = $("#addinput_school").val();
-        var name = $("#addinput_name").val();
+        var clicktype = "addanimalill";
+        var killplace = $("#addinput_killplace").val();
+        var code = $("#addinput_code").val();
+        var type = $("#addinput_type").val();
         var age = $("#addinput_age").val();
-        var classname = $("#addinput_classname").val();
         var sex = $("#addmodalselect_sex").find('option:selected').text();
         var ressenddata = {};
         ressenddata.clicktype = clicktype;
         ressenddata.districtcode = districtcode;
-        ressenddata.school = school;
-        ressenddata.name = name;
+        ressenddata.killplace = killplace;
+        ressenddata.code = code;
         ressenddata.age = age;
-        ressenddata.classname = classname;
+        ressenddata.type = type;
         ressenddata.sex = sex;
 
         $.ajax({
@@ -209,7 +205,7 @@ $(function () {
                 senddata.districtcode = districtcode;
                 senddata.level = level;
                 $.ajax({
-                    url:  "/aidog/api/getchildchecklist",
+                    url:  "/aidog/api/getanimallist",
                     type: "POST",
                     data:  senddata,
                     beforeSend: function (request) {
@@ -247,12 +243,12 @@ $(function () {
 
     });
 
-    $("#a_childmodify").click(function () {
+    $("#a_animalmodify").click(function () {
         var id = $('#illid').html();
         //修改录入信息
-        var clicktype = "modifychildcheck";
+        var clicktype = "modifyanimalill";
         var checkdate = $("#reginput_checkdate").val()+":00";
-        var sex = $("#regmodalselect_sex").find("option:selected").text();
+        var sex = $("#addmodalselect_sex").find('option:selected').text()
         var method = $("#regmodalselect_method").find("option:selected").text();
         var checkres = $("#regmodalselect_checkres").find("option:selected").text();
         var checkperson = $("#reginput_checkperson").val();
@@ -266,6 +262,10 @@ $(function () {
         var PcrDfjqdc = $("#reginput_dfjqdcnum").val();
         var PcrXljqdc = $("#reginput_xljqdcnum").val();
 
+        var illplace = $("#reginput_illplace").val();
+        var illsize = $("#reginput_illsize").val();
+        var illnum = $("#reginput_illnum").val();
+
         var inputsenddata = {};
         inputsenddata.clicktype = clicktype;
         inputsenddata.id = id;
@@ -277,6 +277,9 @@ $(function () {
         inputsenddata.PcrSqjqdc = PcrSqjqdc;
         inputsenddata.PcrDfjqdc = PcrDfjqdc;
         inputsenddata.PcrXljqdc = PcrXljqdc;
+        inputsenddata.illplace = illplace;
+        inputsenddata.illsize = illsize;
+        inputsenddata.illnum = illnum;
 
         $.ajax({
             url: "/aidog/api/operateapi",
@@ -304,7 +307,7 @@ $(function () {
                 senddata.districtcode = districtcode;
                 senddata.level = level;
                 $.ajax({
-                    url:  "/aidog/api/getchildchecklist",
+                    url:  "/aidog/api/getanimallist",
                     type: "POST",
                     data:  senddata,
                     beforeSend: function (request) {
@@ -317,11 +320,11 @@ $(function () {
                         }else{
                             for(var i = 0;i<data.data.data.length;i++){
                                 data.data.data[i].countnum = i+1;
-                                data.data.data[i].school = data.data.data[i].school || "--";
-                                data.data.data[i].name = data.data.data[i].name || "--";
-                                data.data.data[i].age = data.data.data[i].age || 0;
-                                data.data.data[i].classname =  data.data.data[i].classname || "--";
+                                data.data.data[i].killplace = data.data.data[i].killplace || "--";
+                                data.data.data[i].code = data.data.data[i].code || "--";
+                                data.data.data[i].type = data.data.data[i].type || 0;
                                 data.data.data[i].sex =  data.data.data[i].sex || "--";
+                                data.data.data[i].age =  data.data.data[i].age || "--";
                                 data.data.data[i].method = data.data.data[i].method;
                                 data.data.data[i].checkres = data.data.data[i].checkres;
                                 data.data.data[i].checkperson = data.data.data[i].checkperson;
@@ -345,14 +348,14 @@ $(function () {
 
     var dt = $('#datatable').dataTable();
 
-    $("#a_getchildrenlist").click(function () {
+    $("#a_getanimallist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
         senddata.pagesize = 100000;
         senddata.districtcode = districtcode;
         senddata.level = level;
         $.ajax({
-            url:  "/aidog/api/getchildchecklist",
+            url:  "/aidog/api/getanimallist",
             type: "POST",
             data:  senddata,
             beforeSend: function (request) {
@@ -365,11 +368,11 @@ $(function () {
                 }else{
                     for(var i = 0;i<data.data.data.length;i++){
                         data.data.data[i].countnum = i+1;
-                        data.data.data[i].school = data.data.data[i].school || "--";
-                        data.data.data[i].name = data.data.data[i].name || "--";
-                        data.data.data[i].age = data.data.data[i].age || 0;
-                        data.data.data[i].classname =  data.data.data[i].classname || "--";
+                        data.data.data[i].killplace = data.data.data[i].killplace || "--";
+                        data.data.data[i].code = data.data.data[i].code || "--";
+                        data.data.data[i].type = data.data.data[i].type || 0;
                         data.data.data[i].sex =  data.data.data[i].sex || "--";
+                        data.data.data[i].age =  data.data.data[i].age || "--";
                         data.data.data[i].method = data.data.data[i].method;
                         data.data.data[i].checkres = data.data.data[i].checkres;
                         data.data.data[i].checkperson = data.data.data[i].checkperson;
@@ -426,11 +429,11 @@ $(function () {
                         "processing": true,
                         "columns": [
                             { "data": "countnum","width":"40px" },
-                            { "data": "school","width":"80px"  },
-                            { "data": "name","width":"85px"},
-                            { "data": "age","width":"40px" },
-                            { "data": "classname","width":"70px" },
-                            { "data": "sex" ,"width":"50px"},
+                            { "data": "killplace","width":"80px"  },
+                            { "data": "code","width":"85px"},
+                            { "data": "type","width":"40px" },
+                            { "data": "sex","width":"70px" },
+                            { "data": "age" ,"width":"50px"},
                             { "data": "method" ,"width":"90px"},
                             { "data": "checkres" ,"width":"90px"},
                             { "data": "checkperson" ,"width":"50px"},
@@ -532,13 +535,14 @@ function timeinput(date){
 
 function modifyIll(obj) {
     $(".pcryang").css("display","none");
+    $(".eyeyang").css("display","none");
 
     $('#illid').html(obj.id);
-    $("#reginput_school").val(obj.school);
-    $("#reginput_name").val(obj.name);
+    $("#reginput_killplace").val(obj.killplace);
+    $("#reginput_code").val(obj.code);
+    $("#reginput_type").val(obj.type);
+    $("#reginput_sex").val(obj.sex);
     $("#reginput_age").val(obj.age);
-    $("#reginput_classname").val(obj.classname);
-    $("#regmodalselect_sex").val(obj.sex);
     $("#regmodalselect_method").val(obj.method);
     $("#regmodalselect_checkres").val(obj.checkres);
     $("#reginput_checkperson").val(obj.checkperson);
@@ -549,23 +553,33 @@ function modifyIll(obj) {
     }
 
     if(obj.method!=null && obj.method =="PCR" && obj.checkres!=null && obj.checkres =="阳性"){
-        $("#reginput_sqjqdcnum").val(obj.PcrSqjqdc);
-        $("#reginput_dfjqdcnum").val(obj.PcrDfjqdc);
-        $("#reginput_xljqdcnum").val(obj.PcrXljqdc);
+        $("#reginput_illplace").val(null);
+        $("#reginput_illsize").val(null);
+        $("#reginput_illnum").val(null);
+        $("#reginput_sqjqdcnum").val(obj.pcrSqjqdc);
+        $("#reginput_dfjqdcnum").val(obj.pcrDfjqdc);
+        $("#reginput_xljqdcnum").val(obj.pcrXljqdc);
         $(".pcryang").css("display","block");
+    }
+    if(obj.method!=null && obj.method =="视检触检" && obj.checkres!=null && obj.checkres =="阳性"){
+        $("#reginput_illplace").val(obj.eyeIllplace);
+        $("#reginput_illsize").val(obj.eyeSize);
+        $("#reginput_illnum").val(obj.eyeNum);
+        $("#reginput_sqjqdcnum").val(null);
+        $("#reginput_dfjqdcnum").val(null);
+        $("#reginput_xljqdcnum").val(null);
+        $(".eyeyang").css("display","block");
     }
     $("#checkModifyDiv").modal('show');
 }
 
 function ShowRowDetail(obj) {
-    $(".pcryang").css("display","none");
-
     $('#illid').html(obj.id);
-    $("#input_school").val(obj.school);
-    $("#input_name").val(obj.name);
-    $("#input_age").val(obj.age);
-    $("#input_classname").val(obj.classname);
+    $("#input_killplace").val(obj.killplace);
+    $("#input_code").val(obj.code);
+    $("#input_type").val(obj.type);
     $("#input_sex").val(obj.sex);
+    $("#input_age").val(obj.age);
     $("#input_method").val(obj.method);
     $("#input_checkres").val(obj.checkres);
     $("#input_checkperson").val(obj.checkperson);
@@ -576,14 +590,22 @@ function ShowRowDetail(obj) {
     }
 
     if(obj.method!=null && obj.method =="PCR" && obj.checkres!=null && obj.checkres =="阳性"){
-        $("#input_sqjqdcnum").val(obj.PcrSqjqdc);
-        $("#input_dfjqdcnum").val(obj.PcrDfjqdc);
-        $("#input_xljqdcnum").val(obj.PcrXljqdc);
+        $("#input_illplace").val(null);
+        $("#input_illsize").val(null);
+        $("#input_illnum").val(null);
+        $("#input_sqjqdcnum").val(obj.pcrSqjqdc);
+        $("#input_dfjqdcnum").val(obj.pcrDfjqdc);
+        $("#input_xljqdcnum").val(obj.pcrXljqdc);
         $(".pcryang").css("display","block");
-    }else{
+    }
+    if(obj.method!=null && obj.method =="视检触检" && obj.checkres!=null && obj.checkres =="阳性"){
+        $("#input_illplace").val(obj.eyeIllplace);
+        $("#input_illsize").val(obj.eyeSize);
+        $("#input_illnum").val(obj.eyeNum);
         $("#input_sqjqdcnum").val(null);
         $("#input_dfjqdcnum").val(null);
         $("#input_xljqdcnum").val(null);
+        $(".eyeyang").css("display","block");
     }
     $("#checkInfoDiv").modal('show');
 }

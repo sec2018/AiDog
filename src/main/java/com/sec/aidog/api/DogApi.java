@@ -82,6 +82,9 @@ public class DogApi {
     @Autowired
     private CheckresMapper checkresMapper;
 
+    @Autowired
+    private AnimalillMapper animalillMapper;
+
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -780,6 +783,91 @@ public class DogApi {
                     r.setCode(500);
                     r.setData(e.getClass().getName() + ":" + e.getMessage());
                     r.setMsg("新增儿童信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("addanimalill")) {
+                String districtcode = json.getString("districtcode");
+                String killplace  = json.getString("killplace");
+                String code = json.getString("code");
+                String age = json.getString("age");
+                String type = json.getString("type");
+                String sex = json.getString("sex");
+                try {
+                    Animalill animalill = new Animalill();
+                    animalill.setNum(districtcode);
+                    animalill.setKillplace(killplace);
+                    animalill.setCode(code);
+                    animalill.setAge(Integer.parseInt(age));
+                    animalill.setType(type);
+                    animalill.setSex(sex);
+                    boolean flag = animalillMapper.insert(animalill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("新增家畜信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("新增家畜信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("新增家畜信息失败!");
+                    r.setSuccess(false);
+                    e.printStackTrace();
+                }
+            }
+            else if(clicktype.equals("modifyanimalill")) {
+                String id  = json.getString("id");
+                String sex = json.getString("sex");
+                String checkdate = json.getString("checkdate");
+                String res = json.getString("checkres");
+                String checkperson = json.getString("checkperson");
+                String checkmethod = json.getString("method");
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
+                    Animalill animalill = animalillMapper.selectByPrimaryKey(Integer.parseInt(id));
+                    animalill.setCheckres(res);
+                    animalill.setMethod(checkmethod);
+                    if(checkmethod.equals("PCR") && res.equals("阳性")){
+                        String PcrSqjqdc = json.getString("PcrSqjqdc");
+                        String PcrDfjqdc = json.getString("PcrDfjqdc");
+                        String PcrXljqdc = json.getString("PcrXljqdc");
+                        animalill.setPcrSqjqdc(PcrSqjqdc);
+                        animalill.setPcrDfjqdc(PcrDfjqdc);
+                        animalill.setPcrXljqdc(PcrXljqdc);
+                    }else if(checkmethod.equals("视检触检") && res.equals("阳性")){
+                        String illplace = json.getString("illplace");
+                        String illsize = json.getString("illsize");
+                        String illnum = json.getString("illnum");
+                        animalill.setEyeIllplace(illplace);
+                        animalill.setEyeSize(illsize);
+                        animalill.setEyeNum(Integer.parseInt(illnum));
+                    }
+                    animalill.setSex(sex);
+                    animalill.setCheckdate(format.parse(checkdate));
+                    animalill.setCheckperson(checkperson);
+                    boolean flag = animalillMapper.updateByPrimaryKey(animalill) == 1?true:false;
+                    if(flag){
+                        r.setCode(200);
+                        r.setMsg("录入家畜检测信息成功!");
+                        r.setData(null);
+                        r.setSuccess(true);
+                    }else{
+                        r.setCode(500);
+                        r.setMsg("录入家畜检测信息失败!");
+                        r.setSuccess(false);
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    r.setCode(500);
+                    r.setData(e.getClass().getName() + ":" + e.getMessage());
+                    r.setMsg("录入家畜检测信息失败!");
                     r.setSuccess(false);
                     e.printStackTrace();
                 }
