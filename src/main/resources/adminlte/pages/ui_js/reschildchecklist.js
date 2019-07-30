@@ -531,7 +531,10 @@ function timeinput(date){
 }
 
 function modifyIll(obj) {
-    $(".pcryang").css("display","none");
+    $("#div_regsqjqdcnum").css("display","none");
+    $("#div_regdfjqdcnum").css("display","none");
+    $("#div_regxljqdcnum").css("display","none");
+
 
     $('#illid').html(obj.id);
     $("#reginput_school").val(obj.school);
@@ -552,13 +555,18 @@ function modifyIll(obj) {
         $("#reginput_sqjqdcnum").val(obj.PcrSqjqdc);
         $("#reginput_dfjqdcnum").val(obj.PcrDfjqdc);
         $("#reginput_xljqdcnum").val(obj.PcrXljqdc);
-        $(".pcryang").css("display","block");
+        $("#div_regsqjqdcnum").css("display","block");
+        $("#div_regdfjqdcnum").css("display","block");
+        $("#div_regxljqdcnum").css("display","block");
     }
     $("#checkModifyDiv").modal('show');
 }
 
 function ShowRowDetail(obj) {
-    $(".pcryang").css("display","none");
+    $("#div_sqjqdcnum").css("display","none");
+    $("#div_dfjqdcnum").css("display","none");
+    $("#div_xljqdcnum").css("display","none");
+
 
     $('#illid').html(obj.id);
     $("#input_school").val(obj.school);
@@ -576,10 +584,12 @@ function ShowRowDetail(obj) {
     }
 
     if(obj.method!=null && obj.method =="PCR" && obj.checkres!=null && obj.checkres =="阳性"){
-        $("#input_sqjqdcnum").val(obj.PcrSqjqdc);
-        $("#input_dfjqdcnum").val(obj.PcrDfjqdc);
-        $("#input_xljqdcnum").val(obj.PcrXljqdc);
-        $(".pcryang").css("display","block");
+        $("#input_sqjqdcnum").val(obj.pcrDfjqdc);
+        $("#input_dfjqdcnum").val(obj.pcrSqjqdc);
+        $("#input_xljqdcnum").val(obj.pcrXljqdc);
+        $("#div_sqjqdcnum").css("display","block");
+        $("#div_dfjqdcnum").css("display","block");
+        $("#div_xljqdcnum").css("display","block");
     }else{
         $("#input_sqjqdcnum").val(null);
         $("#input_dfjqdcnum").val(null);

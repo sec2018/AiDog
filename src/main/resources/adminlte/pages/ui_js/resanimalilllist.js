@@ -534,8 +534,13 @@ function timeinput(date){
 }
 
 function modifyIll(obj) {
-    $(".pcryang").css("display","none");
-    $(".eyeyang").css("display","none");
+    $("#div_regsqjqdcnum").css("display","none");
+    $("#div_regdfjqdcnum").css("display","none");
+    $("#div_regxljqdcnum").css("display","none");
+    $("#div_regillplace").css("display","none");
+    $("#div_regillsize").css("display","none");
+    $("#div_regillnum").css("display","none");
+
 
     $('#illid').html(obj.id);
     $("#reginput_killplace").val(obj.killplace);
@@ -559,7 +564,12 @@ function modifyIll(obj) {
         $("#reginput_sqjqdcnum").val(obj.pcrSqjqdc);
         $("#reginput_dfjqdcnum").val(obj.pcrDfjqdc);
         $("#reginput_xljqdcnum").val(obj.pcrXljqdc);
-        $(".pcryang").css("display","block");
+        $("#div_regsqjqdcnum").css("display","block");
+        $("#div_regdfjqdcnum").css("display","block");
+        $("#div_regxljqdcnum").css("display","block");
+        $("#div_regillplace").css("display","none");
+        $("#div_regillsize").css("display","none");
+        $("#div_regillnum").css("display","none");
     }
     if(obj.method!=null && obj.method =="视检触检" && obj.checkres!=null && obj.checkres =="阳性"){
         $("#reginput_illplace").val(obj.eyeIllplace);
@@ -568,12 +578,26 @@ function modifyIll(obj) {
         $("#reginput_sqjqdcnum").val(null);
         $("#reginput_dfjqdcnum").val(null);
         $("#reginput_xljqdcnum").val(null);
-        $(".eyeyang").css("display","block");
+        $("#div_regsqjqdcnum").css("display","none");
+        $("#div_regdfjqdcnum").css("display","none");
+        $("#div_regxljqdcnum").css("display","none");
+        $("#div_regillplace").css("display","block");
+        $("#div_regillsize").css("display","block");
+        $("#div_regillnum").css("display","block");
     }
     $("#checkModifyDiv").modal('show');
 }
 
 function ShowRowDetail(obj) {
+
+    $("#div_sqjqdcnum").css("display","none");
+    $("#div_dfjqdcnum").css("display","none");
+    $("#div_xljqdcnum").css("display","none");
+    $("#div_illplace").css("display","none");
+    $("#div_illsize").css("display","none");
+    $("#div_illnum").css("display","none");
+
+
     $('#illid').html(obj.id);
     $("#input_killplace").val(obj.killplace);
     $("#input_code").val(obj.code);
@@ -596,7 +620,12 @@ function ShowRowDetail(obj) {
         $("#input_sqjqdcnum").val(obj.pcrSqjqdc);
         $("#input_dfjqdcnum").val(obj.pcrDfjqdc);
         $("#input_xljqdcnum").val(obj.pcrXljqdc);
-        $(".pcryang").css("display","block");
+        $("#div_sqjqdcnum").css("display","block");
+        $("#div_dfjqdcnum").css("display","block");
+        $("#div_xljqdcnum").css("display","block");
+        $("#div_illplace").css("display","none");
+        $("#div_illsize").css("display","none");
+        $("#div_illnum").css("display","none");
     }
     if(obj.method!=null && obj.method =="视检触检" && obj.checkres!=null && obj.checkres =="阳性"){
         $("#input_illplace").val(obj.eyeIllplace);
@@ -605,7 +634,12 @@ function ShowRowDetail(obj) {
         $("#input_sqjqdcnum").val(null);
         $("#input_dfjqdcnum").val(null);
         $("#input_xljqdcnum").val(null);
-        $(".eyeyang").css("display","block");
+        $("#div_sqjqdcnum").css("display","none");
+        $("#div_dfjqdcnum").css("display","none");
+        $("#div_xljqdcnum").css("display","none");
+        $("#div_illplace").css("display","block");
+        $("#div_illsize").css("display","block");
+        $("#div_illnum").css("display","block");
     }
     $("#checkInfoDiv").modal('show');
 }
