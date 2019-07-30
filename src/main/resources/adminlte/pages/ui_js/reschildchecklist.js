@@ -129,17 +129,25 @@ $(function () {
 
     $("#regmodalselect_checkres").on('change', function () {
         if($("#regmodalselect_method").find('option:selected').text() == "PCR" && $(this).find('option:selected').text()  == "阳性"){
-            $(".pcryang").css("display","block");
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
         }else{
-            $(".pcryang").css("display","none");
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
         }
     });
 
     $("#regmodalselect_method").on('change', function () {
         if($(this).find('option:selected').text() == "PCR" && $("#regmodalselect_checkres").find('option:selected').text()  == "阳性"){
-            $(".pcryang").css("display","block");
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
         }else{
-            $(".pcryang").css("display","none");
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
         }
     });
 

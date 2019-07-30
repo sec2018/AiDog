@@ -120,6 +120,30 @@ $(function () {
 
     });
 
+    $("#regselect_testresult").on('change', function () {
+        if($("#regselect_testmethod").find('option:selected').text() == "PCR" && $(this).find('option:selected').text()  == "阳性"){
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
+        }else{
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+        }
+    });
+
+    $("#regselect_testmethod").on('change', function () {
+        if($(this).find('option:selected').text() == "PCR" && $("#regselect_testresult").find('option:selected').text()  == "阳性"){
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
+        }else{
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+        }
+    });
+
     $("#a_getmanurelist").click(function () {
         var senddata = {};
         senddata.startitem = 1;
@@ -298,6 +322,11 @@ $(function () {
             alert("信息填写不完整！");
             return;
         }
+
+        var PcrSqjqdc = $("#reginput_sqjqdcnum").val();
+        var PcrDfjqdc = $("#reginput_dfjqdcnum").val();
+        var PcrXljqdc = $("#reginput_xljqdcnum").val();
+
         var senddata = {};
         senddata.clicktype = clicktype;
         senddata.manureid = manureid;
@@ -305,6 +334,9 @@ $(function () {
         senddata.testmethod = testmethod;
         senddata.testresult = testresult;
         senddata.testperson = testperson;
+        senddata.PcrSqjqdc = PcrSqjqdc;
+        senddata.PcrDfjqdc = PcrDfjqdc;
+        senddata.PcrXljqdc = PcrXljqdc;
         $.ajax({
             url: "/aidog/api/bindoraddapi",
             type: "POST",
@@ -365,6 +397,11 @@ $(function () {
 
 
 function TestThisRow(data) {
+
+    $("#div_regsqjqdcnum").css("display","none");
+    $("#div_regdfjqdcnum").css("display","none");
+    $("#div_regxljqdcnum").css("display","none");
+
     if (data != null) {
         //牧犬信息
         $('#manureid').html(data.id);
@@ -390,6 +427,14 @@ function TestThisRow(data) {
         }else{
             $("#reginput_testperson").val(data.testingPerson);
         }
+    }
+    if(data.testingMethod!=null && data.testingMethod =="PCR" && data.testingResult!=null && data.testingResult =="阳性"){
+        $("#reginput_sqjqdcnum").val(data.PcrSqjqdc);
+        $("#reginput_dfjqdcnum").val(data.PcrDfjqdc);
+        $("#reginput_xljqdcnum").val(data.PcrXljqdc);
+        $("#div_regsqjqdcnum").css("display","block");
+        $("#div_regdfjqdcnum").css("display","block");
+        $("#div_regxljqdcnum").css("display","block");
     }
     //日历控件
     $("#reginput_testdate").val(timeinput((new Date()).valueOf()));
@@ -420,6 +465,10 @@ function timeinput(date){
 }
 
 function ShowRowDetail(data) {
+    $("#div_sqjqdcnum").css("display","none");
+    $("#div_dfjqdcnum").css("display","none");
+    $("#div_xljqdcnum").css("display","none");
+
     if (data != null) {
         //牧犬信息
         $("#input_manurecode").val(data.dogmanureCode);
@@ -434,6 +483,18 @@ function ShowRowDetail(data) {
         $("#input_testmethod").val(data.testingMethod);
         $("#input_testresult").val(data.testingResult);
         $("#input_testperson").val(data.testingPerson);
+        if(data.testingMethod!=null && data.testingMethod =="PCR" && data.testingResult!=null && data.testingResult =="阳性"){
+            $("#input_sqjqdcnum").val(data.pcrDfjqdc);
+            $("#input_dfjqdcnum").val(data.pcrSqjqdc);
+            $("#input_xljqdcnum").val(data.pcrXljqdc);
+            $("#div_sqjqdcnum").css("display","block");
+            $("#div_dfjqdcnum").css("display","block");
+            $("#div_xljqdcnum").css("display","block");
+        }else{
+            $("#input_sqjqdcnum").val(null);
+            $("#input_dfjqdcnum").val(null);
+            $("#input_xljqdcnum").val(null);
+        }
     }
     $("#manureInfoDiv").modal('show');
 }

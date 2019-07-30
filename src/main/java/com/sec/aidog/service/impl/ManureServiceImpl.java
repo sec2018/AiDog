@@ -50,6 +50,9 @@ public class ManureServiceImpl implements ManureService{
             manureView.setTestingMethod(manure.getTestingMethod());
             manureView.setTestingPerson(manure.getTestingPerson());
             manureView.setTestingResult(manure.getTestingResult());
+            manureView.setPcrSqjqdc(manure.getPcrSqjqdc());
+            manureView.setPcrDfjqdc(manure.getPcrDfjqdc());
+            manureView.setPcrXljqdc(manure.getPcrXljqdc());
             Dogowner dogowner = dogownerMapper.selectByPrimaryKey(manure.getDogownerId());
             String ownername = dogowner.getOwnerName();
             String owneridentity = dogowner.getOwnerIdentity();

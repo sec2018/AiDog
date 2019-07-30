@@ -129,27 +129,51 @@ $(function () {
 
     $("#regmodalselect_checkres").on('change', function () {
         if($("#regmodalselect_method").find('option:selected').text() == "PCR" && $(this).find('option:selected').text()  == "阳性"){
-            $(".pcryang").css("display","block");
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
+            $("#div_regillplace").css("display","none");
+            $("#div_regillsize").css("display","none");
+            $("#div_regillnum").css("display","none");
+        }else if($("#regmodalselect_method").find('option:selected').text() == "视检触检" && $(this).find('option:selected').text()  == "阳性"){
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+            $("#div_regillplace").css("display","block");
+            $("#div_regillsize").css("display","block");
+            $("#div_regillnum").css("display","block");
         }else{
-            $(".pcryang").css("display","none");
-        }
-        if($("#regmodalselect_method").find('option:selected').text() == "视觉触检" && $(this).find('option:selected').text()  == "阳性"){
-            $(".eyeyang").css("display","block");
-        }else{
-            $(".eyeyang").css("display","none");
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+            $("#div_regillplace").css("display","none");
+            $("#div_regillsize").css("display","none");
+            $("#div_regillnum").css("display","none");
         }
     });
 
     $("#regmodalselect_method").on('change', function () {
         if($(this).find('option:selected').text() == "PCR" && $("#regmodalselect_checkres").find('option:selected').text()  == "阳性"){
-            $(".pcryang").css("display","block");
+            $("#div_regsqjqdcnum").css("display","block");
+            $("#div_regdfjqdcnum").css("display","block");
+            $("#div_regxljqdcnum").css("display","block");
+            $("#div_regillplace").css("display","none");
+            $("#div_regillsize").css("display","none");
+            $("#div_regillnum").css("display","none");
+        }else if($(this).find('option:selected').text() == "视检触检" && $("#regmodalselect_checkres").find('option:selected').text()  == "阳性"){
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+            $("#div_regillplace").css("display","block");
+            $("#div_regillsize").css("display","block");
+            $("#div_regillnum").css("display","block");
         }else{
-            $(".pcryang").css("display","none");
-        }
-        if($(this).find('option:selected').text() == "PCR" && $("#regmodalselect_checkres").find('option:selected').text()  == "阳性"){
-            $(".eyeyang").css("display","block");
-        }else{
-            $(".eyeyang").css("display","none");
+            $("#div_regsqjqdcnum").css("display","none");
+            $("#div_regdfjqdcnum").css("display","none");
+            $("#div_regxljqdcnum").css("display","none");
+            $("#div_regillplace").css("display","none");
+            $("#div_regillsize").css("display","none");
+            $("#div_regillnum").css("display","none");
         }
     });
 

@@ -85,6 +85,8 @@ public class DogApi {
     @Autowired
     private AnimalillMapper animalillMapper;
 
+    @Autowired
+    private ManureMapper manureMapper;
 
     @RequestMapping(value = "bindoraddapi",produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -156,8 +158,22 @@ public class DogApi {
                 String testperson = json.getString("testperson");
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");//注意格式化的表达式
                 Date testdate = format.parse(json.getString("testdate"));
+                Manure manure = manureMapper.selectByPrimaryKey(manureid);
+                manure.setTestingMethod(testmethod);
+                manure.setTestingDate(testdate);
+                manure.setTestingResult(testresult);
+                manure.setTestingPerson(testperson);
+                if(testmethod.equals("PCR") && testresult.equals("阳性")){
+                    String PcrSqjqdc = json.getString("PcrSqjqdc");
+                    String PcrDfjqdc = json.getString("PcrDfjqdc");
+                    String PcrXljqdc = json.getString("PcrXljqdc");
+                    manure.setPcrSqjqdc(PcrSqjqdc);
+                    manure.setPcrDfjqdc(PcrDfjqdc);
+                    manure.setPcrXljqdc(PcrXljqdc);
+                }
                 try {
-                    result = manureService.modifyManure(manureid, testmethod, testdate, testresult,testperson)==true?"录入犬粪检测结果成功!":"录入犬粪检测结果失败!";
+                    result = manureMapper.updateByPrimaryKey(manure)==1?"录入犬粪检测结果成功!":"录入犬粪检测结果失败!";
+//                    result = manureService.modifyManure(manureid, testmethod, testdate, testresult,testperson)==true?"录入犬粪检测结果成功!":"录入犬粪检测结果失败!";
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     result = "录入犬粪检测结果失败!";

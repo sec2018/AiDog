@@ -27,7 +27,15 @@ public class Manure {
 
     private String manageMethod;
 
-    public Manure(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson, String manageMethod) {
+    private String pcr;
+
+    private String pcrSqjqdc;
+
+    private String pcrDfjqdc;
+
+    private String pcrXljqdc;
+
+    public Manure(Integer id, String dogmanureCode, Integer dogownerId, Integer dogId, Date collectionDate, String collectionPerson, String districtcode, Date testingDate, String testingMethod, String testingResult, String testingPerson, String manageMethod, String pcr, String pcrSqjqdc, String pcrDfjqdc, String pcrXljqdc) {
         this.id = id;
         this.dogmanureCode = dogmanureCode;
         this.dogownerId = dogownerId;
@@ -40,6 +48,10 @@ public class Manure {
         this.testingResult = testingResult;
         this.testingPerson = testingPerson;
         this.manageMethod = manageMethod;
+        this.pcr = pcr;
+        this.pcrSqjqdc = pcrSqjqdc;
+        this.pcrDfjqdc = pcrDfjqdc;
+        this.pcrXljqdc = pcrXljqdc;
     }
 
     public Manure() {
@@ -140,5 +152,37 @@ public class Manure {
 
     public void setManageMethod(String manageMethod) {
         this.manageMethod = manageMethod == null ? null : manageMethod.trim();
+    }
+
+    public String getPcr() {
+        return pcr;
+    }
+
+    public void setPcr(String pcr) {
+        this.pcr = pcr == null ? null : pcr.trim();
+    }
+
+    public String getPcrSqjqdc() {
+        return pcrSqjqdc;
+    }
+
+    public void setPcrSqjqdc(String pcrSqjqdc) {
+        this.pcrSqjqdc = pcrSqjqdc == null ? null : pcrSqjqdc.trim();
+    }
+
+    public String getPcrDfjqdc() {
+        return pcrDfjqdc;
+    }
+
+    public void setPcrDfjqdc(String pcrDfjqdc) {
+        this.pcrDfjqdc = pcrDfjqdc == null ? null : pcrDfjqdc.trim();
+    }
+
+    public String getPcrXljqdc() {
+        return pcrXljqdc;
+    }
+
+    public void setPcrXljqdc(String pcrXljqdc) {
+        this.pcrXljqdc = pcrXljqdc == null ? null : pcrXljqdc.trim();
     }
 }

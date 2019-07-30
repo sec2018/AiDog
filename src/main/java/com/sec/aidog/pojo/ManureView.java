@@ -41,6 +41,36 @@ public class ManureView {
 
     private String deviceId;
 
+    private String pcrSqjqdc;
+
+    private String pcrDfjqdc;
+
+    private String pcrXljqdc;
+
+    public String getPcrSqjqdc() {
+        return pcrSqjqdc;
+    }
+
+    public void setPcrSqjqdc(String pcrSqjqdc) {
+        this.pcrSqjqdc = pcrSqjqdc;
+    }
+
+    public String getPcrDfjqdc() {
+        return pcrDfjqdc;
+    }
+
+    public void setPcrDfjqdc(String pcrDfjqdc) {
+        this.pcrDfjqdc = pcrDfjqdc;
+    }
+
+    public String getPcrXljqdc() {
+        return pcrXljqdc;
+    }
+
+    public void setPcrXljqdc(String pcrXljqdc) {
+        this.pcrXljqdc = pcrXljqdc;
+    }
+
     public String getDeviceId() {
         return deviceId;
     }
