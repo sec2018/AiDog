@@ -212,7 +212,7 @@ $(function () {
             alert("请先选择主人所属行政村！");
             return;
         }
-        if(necflag){
+        if(!necflag){
             alert("填写的项圈不符合绑定要求！");
             return;
         }
