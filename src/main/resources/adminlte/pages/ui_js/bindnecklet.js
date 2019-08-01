@@ -216,7 +216,7 @@ $(function () {
             alert("填写的项圈不符合绑定要求！");
             return;
         }
-        var dogid = $("#select_doggovcode").find('option:selected').val();
+        var dogid = $("#select_doggovcode").find('option:selected').val().split(' ')[0];
         // var necid = $("#select_dognecid").find('option:selected').text();
         var necid = $("#input_dognecid").val();
         var senddata = {};
