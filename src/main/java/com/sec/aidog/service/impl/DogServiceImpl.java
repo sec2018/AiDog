@@ -447,6 +447,183 @@ public class DogServiceImpl implements DogService{
         return map;
     }
 
+
+    @Override
+    public Map<String, Object> getAnaBillStaList(String districtcode, int startPage, int pageSize) {
+        Page page = PageHelper.startPage(startPage, pageSize);
+        List<District> districtList = new ArrayList<>();
+        List<Childill> illAllstalist = new ArrayList<>();
+        List<Childill> illstalist = new ArrayList<>();
+        List<AnaChildill> anaillstalist = new ArrayList<>();
+        AnaChildill anaChildill = null;
+        int count = 1;
+        illAllstalist = childillMapper.selectByExample(new ChildillExample());
+        switch (districtcode.length()){
+            case 1:
+                //国家级管理员
+                districtList = districtMapper.getProvinces();
+                for(District di : districtList){
+                    anaChildill = new AnaChildill();
+                    anaChildill.setDistrictcode(di.getDistrictcode());
+                    anaChildill.setDistrictname(di.getDistrictName());
+                    int checknum = 0;
+                    int bcheckyang = 0;
+                    for(Childill cd : illAllstalist){
+                        if(cd.getBcheckres()!=null && cd.getBcheckres()!= "" && cd.getNum().substring(0,2).equals(di.getDistrictcode().substring(0,2))){
+                            checknum++;
+                            if(cd.getBcheckres().equals("阳性")){
+                                bcheckyang++;
+                            }
+                        }
+                    }
+                    anaChildill.setBchecknum(checknum);
+                    anaChildill.setIllnum(bcheckyang);
+                    if(bcheckyang == 0){
+                        anaChildill.setChecklv("0");
+                    }else{
+                        anaChildill.setChecklv(String.format("%.2f", bcheckyang*1.00/checknum).toString());
+                    }
+                    anaillstalist.add(anaChildill);
+                }
+                break;
+            case 2:
+                //省级管理员
+                districtList = districtMapper.getCities(districtcode);
+                for(Childill cd : illAllstalist){
+                    if(cd.getNum().substring(0,2).equals(districtcode)){
+                        illstalist.add(cd);
+                    }
+                }
+                for(District di : districtList){
+                    anaChildill = new AnaChildill();
+                    anaChildill.setDistrictcode(di.getDistrictcode());
+                    anaChildill.setDistrictname(di.getDistrictName());
+                    int checknum = 0;
+                    int bcheckyang = 0;
+                    for(Childill cd : illstalist){
+                        if(cd.getBcheckres()!=null && cd.getBcheckres()!= "" && cd.getNum().substring(0,4).equals(di.getDistrictcode().substring(0,4))){
+                            checknum++;
+                            if(cd.getBcheckres().equals("阳性")){
+                                bcheckyang++;
+                            }
+                        }
+                    }
+                    anaChildill.setBchecknum(checknum);
+                    anaChildill.setIllnum(bcheckyang);
+                    if(bcheckyang == 0){
+                        anaChildill.setChecklv("0");
+                    }else{
+                        anaChildill.setChecklv(String.format("%.2f", bcheckyang*1.00/checknum).toString());
+                    }
+                    anaillstalist.add(anaChildill);
+                }
+                break;
+            case 4:
+                //市级管理员
+                districtList = districtMapper.getCounties(districtcode);
+                for(Childill cd : illAllstalist){
+                    if(cd.getNum().substring(0,4).equals(districtcode)){
+                        illstalist.add(cd);
+                    }
+                }
+                for(District di : districtList){
+                    anaChildill = new AnaChildill();
+                    anaChildill.setDistrictcode(di.getDistrictcode());
+                    anaChildill.setDistrictname(di.getDistrictName());
+                    int checknum = 0;
+                    int bcheckyang = 0;
+                    for(Childill cd : illstalist){
+                        if(cd.getBcheckres()!=null && cd.getBcheckres()!= "" && cd.getNum().substring(0,6).equals(di.getDistrictcode().substring(0,6))){
+                            checknum++;
+                            if(cd.getBcheckres().equals("阳性")){
+                                bcheckyang++;
+                            }
+                        }
+                    }
+                    anaChildill.setBchecknum(checknum);
+                    anaChildill.setIllnum(bcheckyang);
+                    if(bcheckyang == 0){
+                        anaChildill.setChecklv("0");
+                    }else{
+                        anaChildill.setChecklv(String.format("%.2f", bcheckyang*1.00/checknum).toString());
+                    }
+                    anaillstalist.add(anaChildill);
+                }
+                break;
+            case 6:
+                //县级管理员
+                districtList = districtMapper.getVillages(districtcode);
+                for(Childill cd : illAllstalist){
+                    if(cd.getNum().substring(0,6).equals(districtcode)){
+                        illstalist.add(cd);
+                    }
+                }
+                for(District di : districtList){
+                    anaChildill = new AnaChildill();
+                    anaChildill.setDistrictcode(di.getDistrictcode());
+                    anaChildill.setDistrictname(di.getDistrictName());
+                    int checknum = 0;
+                    int bcheckyang = 0;
+                    for(Childill cd : illstalist){
+                        if(cd.getBcheckres()!=null && cd.getBcheckres()!= "" && cd.getNum().substring(0,9).equals(di.getDistrictcode().substring(0,9))){
+                            checknum++;
+                            if(cd.getBcheckres().equals("阳性")){
+                                bcheckyang++;
+                            }
+                        }
+                    }
+                    anaChildill.setBchecknum(checknum);
+                    anaChildill.setIllnum(bcheckyang);
+                    if(bcheckyang == 0){
+                        anaChildill.setChecklv("0");
+                    }else{
+                        anaChildill.setChecklv(String.format("%.2f", bcheckyang*1.00/checknum).toString());
+                    }
+                    anaillstalist.add(anaChildill);
+                }
+                break;
+            case 9:
+                //乡级管理员
+                districtList = districtMapper.getHamlets(districtcode);
+                for(Childill cd : illAllstalist){
+                    if(cd.getNum().substring(0,9).equals(districtcode)){
+                        illstalist.add(cd);
+                    }
+                }
+                for(District di : districtList){
+                    anaChildill = new AnaChildill();
+                    anaChildill.setDistrictcode(di.getDistrictcode());
+                    anaChildill.setDistrictname(di.getDistrictName());
+                    int checknum = 0;
+                    int bcheckyang = 0;
+                    for(Childill cd : illstalist){
+                        if(cd.getBcheckres()!=null && cd.getBcheckres()!= "" && cd.getNum().equals(di.getDistrictcode())){
+                            checknum++;
+                            if(cd.getBcheckres().equals("阳性")){
+                                bcheckyang++;
+                            }
+                        }
+                    }
+                    anaChildill.setBchecknum(checknum);
+                    anaChildill.setIllnum(bcheckyang);
+                    if(bcheckyang == 0){
+                        anaChildill.setChecklv("0");
+                    }else{
+                        anaChildill.setChecklv(String.format("%.2f", bcheckyang*1.00/checknum).toString());
+                    }
+                    anaillstalist.add(anaChildill);
+                }
+                break;
+        }
+
+        Map<String, Object> map = new HashMap<String,Object>();
+        //每页信息
+        map.put("data", anaillstalist);
+        //管理员总数
+        map.put("totalNum", page.getTotal());
+        return map;
+    }
+
     @Override
     public Map<String, Object> getChildCheckList(String districtcode, int startPage, int pageSize) {
         Page page = PageHelper.startPage(startPage, pageSize);
